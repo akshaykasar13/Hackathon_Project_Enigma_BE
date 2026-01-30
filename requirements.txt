@@ -35,7 +35,6 @@ uuid
 # Machine Learning (Optional - for semantic similarity)
 # scikit-learn>=1.3.0  # Not required - using numpy for cosine similarity
 
-# WebSocket/SSE Support (Optional)
-# websockets>=12.0  # Not required for basic functionality
-# sse-starlette>=1.8.0  # Optional - install if you want SSE endpoint
+# WebSocket/SSE Support (Required for live agent streaming)
+sse-starlette>=1.8.0
 

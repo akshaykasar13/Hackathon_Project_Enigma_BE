@@ -8,8 +8,8 @@ import pytest
 # Set test mode
 os.environ["TEST_MODE"] = "true"
 
-# Add parent directory to path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+# Add project root to path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from backend.agents.ingestion import ingest
 from backend.agents.planner import plan

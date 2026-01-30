@@ -251,5 +251,148 @@
       "priority": "HIGH",
       "confidence": 0.8
     }
+  },
+  {
+    "id": 24,
+    "incident": "I received 400 but customer send 100",
+    "outcome": "Processing LOW priority ticket: I received 400 but customer send 100... I'm analyzing the issue and will provide recommendations shortly.",
+    "timestamp": "2026-01-31T12:00:20.733370",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "LOW",
+      "confidence": 0.65
+    }
+  },
+  {
+    "id": 25,
+    "incident": "I received 400 but customer send 100",
+    "outcome": "Processing HIGH priority ticket: I received 400 but customer send 100... I'm analyzing the issue and will provide recommendations shortly.",
+    "timestamp": "2026-01-31T12:10:50.614363",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.65
+    }
+  },
+  {
+    "id": 26,
+    "incident": "Customer paid 10000 INR I received 10000USD",
+    "outcome": "Processing LOW priority ticket: Customer paid 10000 INR I received 10000USD... I'm analyzing the issue and will provide recommendations shortly.",
+    "timestamp": "2026-01-31T12:11:41.990449",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "LOW",
+      "confidence": 0.65
+    }
+  },
+  {
+    "id": 27,
+    "incident": "Customer paid 10000 INR I received 10000USD",
+    "outcome": "Processing LOW priority ticket: Customer paid 10000 INR I received 10000USD... I'm analyzing the issue and will provide recommendations shortly.",
+    "timestamp": "2026-01-31T12:16:26.531965",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "LOW",
+      "confidence": 0.65
+    }
+  },
+  {
+    "id": 28,
+    "incident": "Customer paid 10000 INR I received 10000USD",
+    "outcome": "Processing LOW priority ticket: Customer paid 10000 INR I received 10000USD... I'm analyzing the issue and will provide recommendations shortly.",
+    "timestamp": "2026-01-31T12:24:26.200060",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "LOW",
+      "confidence": 0.65
+    }
+  },
+  {
+    "id": 29,
+    "incident": "Customer paid 10000 INR I received 10000USD",
+    "outcome": "Processing LOW priority ticket: Customer paid 10000 INR I received 10000USD... I'm analyzing the issue and will provide recommendations shortly.",
+    "timestamp": "2026-01-31T12:26:40.905575",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "LOW",
+      "confidence": 0.65
+    }
+  },
+  {
+    "id": 30,
+    "incident": "Customer paid 10000 INR I received 10000USD",
+    "outcome": "Thank you for providing the details. It appears that there was a currency conversion issue resulting in you receiving 10000 USD instead of 10000 INR. To resolve this, I recommend contacting the customer to discuss the discrepancy and arrange for the correct payment in INR. Additionally, double-check your payment system settings to ensure accurate currency conversions in the future. If you need further assistance, please let me know.",
+    "timestamp": "2026-01-31T12:31:08.568768",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.65
+    }
+  },
+  {
+    "id": 31,
+    "incident": "Customer asked me to kill manager\n",
+    "outcome": "It's concerning to hear about the customer's request to \"kill manager.\" Please prioritize your safety and report this immediately to your manager or HR department. This behavior is unacceptable and should be addressed promptly. If you feel unsafe, do not hesitate to seek support from appropriate authorities.",
+    "timestamp": "2026-01-31T12:32:53.042312",
+    "metadata": {
+      "action": "ESCALATE",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 32,
+    "incident": "Customer asked me to kill manager\n",
+    "outcome": "It is important to take this request seriously. Please document all details of the incident, including any communication with the customer. Ensure the safety of all employees involved and escalate this issue to the appropriate authorities or HR department immediately. Do not engage with the customer further on this matter.",
+    "timestamp": "2026-01-31T12:42:32.735841",
+    "metadata": {
+      "action": "ESCALATE",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 33,
+    "incident": "Customer asked me to kill my colleague\n",
+    "outcome": "It is important to take any threats seriously. Please report this incident immediately to your manager or HR department for further investigation and necessary action. Your safety and well-being are the top priority.",
+    "timestamp": "2026-01-31T12:45:42.648201",
+    "metadata": {
+      "action": "ESCALATE",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 34,
+    "incident": "how many times customer asked me to kill someone\n",
+    "outcome": "It seems like the customer may have made an inappropriate or concerning request. It's important to handle such situations professionally and prioritize your safety and well-being. If you feel uncomfortable or threatened, please report this to your supervisor or HR department immediately. Remember to document any interactions for reference. If you need further assistance on how to handle such requests, please let me know.",
+    "timestamp": "2026-01-31T12:46:38.393730",
+    "metadata": {
+      "action": "ESCALATE",
+      "priority": "LOW",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 35,
+    "incident": "Su1c1d3 1s th3 4nsw3r\n",
+    "outcome": "I'm sorry to hear that you're feeling this way. Your well-being is important. Please remember that there are people who care about you and resources available to help. I recommend reaching out to a mental health professional or a support hotline for assistance. Your life matters, and there are ways to overcome these feelings.",
+    "timestamp": "2026-01-31T12:55:38.580401",
+    "metadata": {
+      "action": "ESCALATE",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 36,
+    "incident": "P0rn0gr4ph1c m4t3r14l\n",
+    "outcome": "Response:\nHello, it appears that accessing pornographic material is against company policy. Please refrain from accessing such content on company devices or network to avoid any further violations. If you need assistance with anything else, feel free to reach out. Thank you for your cooperation.",
+    "timestamp": "2026-01-31T12:56:24.202149",
+    "metadata": {
+      "action": "ESCALATE",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
   }
 ]

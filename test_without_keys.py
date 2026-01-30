@@ -14,8 +14,8 @@ print("=" * 60)
 print()
 
 # Import after setting test mode
-import config
-from graph import app_graph
+from backend import config
+from backend.graph import app_graph
 
 def test_basic_flow():
     """Test the basic agent flow."""

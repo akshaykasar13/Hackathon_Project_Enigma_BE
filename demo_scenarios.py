@@ -2,7 +2,7 @@
 Demo scenarios for testing the agent system.
 Run these to practice and demonstrate the system capabilities.
 """
-from graph import app_graph
+from backend.graph import app_graph
 import json
 
 def print_separator(title):

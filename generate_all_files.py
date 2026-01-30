@@ -1,5 +1,5 @@
 """
-Generate 100 test files: PDF, Word, TXT, PPTX with 5-6 pages each.
+Generate 100+ test files: PDF, Word, TXT, PPTX, Images with 5-6 pages each.
 All files are payment/financial service domain.
 """
 from reportlab.lib.pagesizes import letter
@@ -7,13 +7,15 @@ from reportlab.pdfgen import canvas
 import os
 import random
 import glob
+from pathlib import Path
 
-# Ensure the docs directory exists
-os.makedirs("backend/data/docs", exist_ok=True)
+# Resolve docs dir relative to this script (works from any CWD)
+DOCS_DIR = Path(__file__).resolve().parent / "data" / "docs"
+os.makedirs(DOCS_DIR, exist_ok=True)
 
 def cleanup_existing_files():
     """Remove all existing files in the docs directory before generating new ones."""
-    docs_dir = "backend/data/docs"
+    docs_dir = str(DOCS_DIR)
     if not os.path.exists(docs_dir):
         return
     
@@ -294,26 +296,42 @@ if __name__ == "__main__":
     # Generate files in rounds: 25 PDFs, 25 TXT, 25 Word, 25 PPTX
     for i in range(1, 26):
         # PDFs
-        filename = f"backend/data/docs/doc_{i:03d}.pdf"
+        filename = str(DOCS_DIR / f"doc_{i:03d}.pdf")
         generate_pdf(filename, i)
         file_count += 1
         
         # TXT files
-        filename = f"backend/data/docs/doc_{i+25:03d}.txt"
+        filename = str(DOCS_DIR / f"doc_{i+25:03d}.txt")
         generate_txt(filename, i+25)
         file_count += 1
         
-        # Word files (as TXT for now)
-        filename = f"backend/data/docs/doc_{i+50:03d}.docx"
+        # Word files
+        filename = str(DOCS_DIR / f"doc_{i+50:03d}.docx")
         generate_word(filename, i+50)
         file_count += 1
         
-        # PPTX files (as TXT for now)
-        filename = f"backend/data/docs/doc_{i+75:03d}.pptx"
+        # PPTX files
+        filename = str(DOCS_DIR / f"doc_{i+75:03d}.pptx")
         generate_pptx_content(filename, i+75)
         file_count += 1
     
-    print(f"\n[SUCCESS] Generated {file_count} files in backend/data/docs/")
+    # Generate sample images with text (for OCR indexing)
+    try:
+        from PIL import Image
+        from PIL import ImageDraw, ImageFont
+        for i in range(1, 6):
+            img_path = DOCS_DIR / f"doc_image_{i:03d}.png"
+            img = Image.new("RGB", (800, 200), color=(255, 255, 255))
+            d = ImageDraw.Draw(img)
+            text = f"Payment Service Document {i}. Payment gateway EU region. Error code 5003."
+            d.text((10, 80), text, fill=(0, 0, 0))
+            img.save(str(img_path))
+            file_count += 1
+            print(f"Generated image: {img_path.name}")
+    except ImportError:
+        print("Skipping images: Pillow not installed")
+    
+    print(f"\n[SUCCESS] Generated {file_count} files in {DOCS_DIR}/")
     print(f"\nBreakdown:")
     print(f"  - PDFs: 25 files")
     print(f"  - TXT files: 25 files")

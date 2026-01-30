@@ -8,9 +8,9 @@ import subprocess
 from pathlib import Path
 from dotenv import load_dotenv
 
-# Get the project root (parent of backend directory)
+# Project root: this folder (contains backend/ package)
 script_dir = Path(__file__).parent
-project_root = script_dir.parent
+project_root = script_dir
 
 # Load .env file from backend directory
 env_path = script_dir / ".env"
@@ -22,9 +22,9 @@ if not openai_key:
     print("=" * 60)
     print("  ❌ PRODUCTION MODE - OpenAI Key Required")
     print("=" * 60)
-    print("\nPlease set OPENAI_API_KEY in backend/.env file")
+    print("\nPlease set OPENAI_API_KEY in .env file at project root")
     print("\nSteps:")
-    print("  1. Copy backend/env.example to backend/.env")
+    print("  1. Copy env.example to .env")
     print("  2. Add: OPENAI_API_KEY=sk-your-key-here")
     print("  3. Get key from: https://platform.openai.com/api-keys")
     print()

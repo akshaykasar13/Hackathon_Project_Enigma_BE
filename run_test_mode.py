@@ -10,16 +10,14 @@ from pathlib import Path
 # Set test mode
 os.environ["TEST_MODE"] = "true"
 
-# Get the project root (parent of backend directory)
+# Project root: this folder (contains backend/ package)
 script_dir = Path(__file__).parent
-project_root = script_dir.parent
-
-# Change to project root so imports work
-os.chdir(project_root)
+project_root = script_dir
 
 # Add project root to Python path
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
+os.chdir(project_root)
 
 print("=" * 60)
 print("  STARTING SERVER IN TEST MODE")
