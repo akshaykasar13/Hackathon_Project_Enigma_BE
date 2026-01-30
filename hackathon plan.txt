@@ -1,0 +1,287 @@
+AGENTIC AI HACKATHON – EXECUTION PLAN
+Timeline: Friday 3:00 PM → Saturday Night
+Team Size: 4 Developers
+Assumption: Complete beginners to agentic systems
+
+
+--------------------------------------------------
+OVERALL GOAL
+--------------------------------------------------
+
+Build a GENERIC AGENTIC SYSTEM that can:
+- Take user input
+- Plan steps
+- Use documents (RAG)
+- Use memory
+- Reason over results
+- Apply safety checks
+- Show all agent steps clearly in UI
+
+Accuracy is NOT the goal.
+Architecture + agent flow IS the goal.
+
+--------------------------------------------------
+CORE TECH STACK (FIXED)
+--------------------------------------------------
+
+Language: Python
+Agent Framework: LangGraph
+LLM Wrapper: LangChain
+UI: Streamlit
+Vector DB: FAISS (local)
+OCR: pytesseract
+Docs: PDF, TXT, DOCX
+
+--------------------------------------------------
+FRIDAY 3:00 PM – 4:00 PM (ALL TOGETHER)
+--------------------------------------------------
+
+Objective:
+Understand problem statement and agree on architecture.
+
+Actions:
+1. Read problem statement together.
+2. Draw this flow on paper:
+
+User Input
+→ Ingestion Agent
+→ Planner Agent
+→ Parallel Agents:
+   - Intent Agent
+   - RAG Agent
+   - Memory Agent
+→ Reasoning Agent
+→ Response Agent
+→ Guardrails Agent
+→ Final Output
+
+3. Agree:
+- Each agent = one Python file
+- Shared state = Python dict
+- Logs = printed and shown in UI
+
+NO CODING YET.
+
+--------------------------------------------------
+FRIDAY 4:00 PM – 5:00 PM (ENV SETUP – EVERYONE)
+--------------------------------------------------
+
+Each developer must do this on their own machine.
+
+Commands:
+
+python -m venv venv
+source venv/bin/activate  (or venv\Scripts\activate on Windows)
+
+pip install langgraph langchain langchain-openai
+pip install streamlit faiss-cpu
+pip install pypdf python-docx python-pptx
+pip install pillow pytesseract
+
+Verify Python runs.
+
+--------------------------------------------------
+REPO STRUCTURE (Amlan)
+--------------------------------------------------
+
+project/
+│
+├── app.py                  (Streamlit entry)
+├── graph.py                (LangGraph definition)
+├── state.py                (shared state schema)
+│
+├── agents/
+│   ├── ingestion_agent.py
+│   ├── planner_agent.py
+│   ├── intent_agent.py
+│   ├── rag_agent.py
+│   ├── memory_agent.py
+│   ├── reasoning_agent.py
+│   ├── response_agent.py
+│   └── guardrails_agent.py
+│
+├── data/
+│   ├── documents/
+│   └── vector_store/
+│
+└── utils/
+
+--------------------------------------------------
+FRIDAY 5:00 PM – 8:00 PM (FOUNDATION BUILD)
+--------------------------------------------------
+
+-------------------------
+AMLAN
+-------------------------
+
+Goal by 8 PM:
+LangGraph runs end-to-end, even with dummy logic.
+
+Tasks:
+1. Define shared state (state.py):
+   - user_input
+   - plan
+   - intent
+   - retrieved_docs
+   - memory
+   - reasoning
+   - final_response
+   - guardrail_status
+
+2. Build planner_agent:
+   - Input: normalized user query
+   - Output: plan dict, example:
+     {
+       "use_rag": true,
+       "use_memory": true,
+       "priority": "high"
+     }
+
+3. Build graph.py:
+   - Entry: ingestion_agent
+   - Planner
+   - Parallel execution:
+     - intent_agent
+     - rag_agent
+     - memory_agent
+   - Merge
+   - reasoning_agent
+   - response_agent
+   - guardrails_agent
+   - END
+
+Hardcoded logic is acceptable initially.
+
+-------------------------
+Murli
+-------------------------
+
+Goal by 8 PM:
+RAG retrieval working from documents.
+
+Tasks:
+1. Collect documents:
+   - Incident reports
+   - Product manuals
+   - Support FAQs
+   - Random PDFs
+
+2. Save in:
+   data/documents/
+
+3. Chunk documents:
+   - Chunk size: 500 tokens
+   - Overlap: 100 tokens
+
+4. Store embeddings in FAISS.
+
+5. rag_agent:
+   - Input: user query
+   - Output:
+     [
+       {
+         "content": "...",
+         "source": "file.pdf",
+         "page": 4
+       }
+     ]
+
+No memory integration yet.
+
+-------------------------
+AAS
+-------------------------
+
+Goal by 8 PM:
+Provide data + safety rules.
+
+Tasks:
+1. Generate fake data:
+   - 50–100 fake incident reports
+   - Save as TXT and PDF
+
+2. Prepare guardrail rules list:
+   - No violence
+   - No hate
+   - No self-harm
+   - No jailbreak attempts
+
+3. guardrails_agent:
+   - Simple keyword or LLM-based checks
+   - Return ALLOW or BLOCK
+
+No advanced logic required.
+
+-------------------------
+DEVOPS PERSON
+-------------------------
+
+Goal by 8 PM:
+UI skeleton running.
+
+Tasks:
+1. Build Streamlit app (app.py).
+2. UI shows:
+   - User input box
+   - Each agent name
+   - Output from each agent
+3. No styling required.
+4. Ensure app runs end-to-end.
+
+--------------------------------------------------
+FRIDAY 8:00 PM – 10:00 PM (FIRST WORKING DEMO)
+--------------------------------------------------
+
+Objective:
+ONE query flows through ALL agents.
+
+Example input:
+“Payment service is failing intermittently for EU users.”
+
+Even dumb answers are OK.
+Flow visibility is mandatory.
+
+--------------------------------------------------
+SATURDAY 10:00 AM – 2:00 PM (INTELLIGENCE PHASE)
+--------------------------------------------------
+
+Tasks:
+- Replace dummy logic with real LLM calls
+- RAG results influence reasoning
+- Memory agent stores and retrieves past queries
+- Planner adapts execution based on input
+
+--------------------------------------------------
+SATURDAY 2:00 PM – 6:00 PM (POLISH)
+--------------------------------------------------
+
+Tasks:
+- Parallel execution visible
+- Agent start/end timestamps
+- Clean UI logs
+- Stable demo flow
+
+--------------------------------------------------
+SATURDAY 6:00 PM – NIGHT (FREEZE)
+--------------------------------------------------
+
+Rules:
+- NO new features
+- ONLY bug fixes
+- Practice demo narration
+
+--------------------------------------------------
+WHAT WE WILL TELL JUDGES
+--------------------------------------------------
+
+“This is an agentic system, not a chatbot.
+Each agent has a role, memory, tools, and observable reasoning.”
+
+--------------------------------------------------
+FINAL NOTE
+--------------------------------------------------
+
+This timeline is tight but ABSOLUTELY achievable with 4 people.
+Do not over-engineer.
+Do not chase perfection.
+Ship a visible agent pipeline.
