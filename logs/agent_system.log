@@ -1,0 +1,89 @@
+2026-01-30 18:49:05,672 - agent_system - INFO - [System] ticket_received
+2026-01-30 18:49:05,678 - agent_system - INFO - [IngestionAgent] Tool call: ticket_ingestion
+2026-01-30 18:49:05,679 - agent_system - INFO - [IngestionAgent] Tool ticket_ingestion completed in 0.71ms
+2026-01-30 18:49:05,679 - agent_system - INFO - [IngestionAgent] ticket_ingested
+2026-01-30 18:49:05,682 - agent_system - INFO - [PlannerAgent] Tool call: execution_planning
+2026-01-30 18:49:05,682 - agent_system - INFO - [PlannerAgent] Tool execution_planning completed in 0.62ms
+2026-01-30 18:49:05,683 - agent_system - INFO - [PlannerAgent] Decision: strategy_parallel | Reasoning: Selected parallel execution for ticket characteristics
+2026-01-30 18:49:05,684 - agent_system - INFO - [PlannerAgent] strategy_planned
+2026-01-30 18:49:05,687 - agent_system - INFO - [IntentAgent] Tool call: intent_classification
+2026-01-30 18:49:05,687 - agent_system - INFO - [MemoryAgent] Tool call: memory_load
+2026-01-30 18:49:05,688 - agent_system - INFO - [IntentAgent] Tool intent_classification completed in 1.07ms
+2026-01-30 18:49:05,689 - agent_system - INFO - [IntentAgent] Decision: Classified as HIGH | Reasoning: Keywords detected: fail/error
+2026-01-30 18:49:05,698 - agent_system - INFO - [MemoryAgent] Tool memory_load completed in 10.88ms
+2026-01-30 18:49:05,699 - agent_system - INFO - [MemoryAgent] memory_loaded
+2026-01-30 18:49:05,701 - agent_system - INFO - [RetrievalAgent] Tool call: document_retrieval
+2026-01-30 18:49:05,709 - agent_system - INFO - [RetrievalAgent] Tool document_retrieval completed in 7.70ms
+2026-01-30 18:49:05,710 - agent_system - INFO - [RetrievalAgent] retrieved_0_docs
+2026-01-30 18:49:05,712 - agent_system - INFO - [ReasoningAgent] Decision: correlation_analysis | Reasoning: Found 4 correlations, 2 patterns
+2026-01-30 18:49:05,713 - agent_system - INFO - [ReasoningAgent] correlation_complete
+2026-01-30 18:49:05,715 - agent_system - INFO - [ResponseAgent] Tool call: response_generation
+2026-01-30 18:49:05,715 - agent_system - INFO - [ResponseAgent] Tool response_generation completed in 0.45ms
+2026-01-30 18:49:05,716 - agent_system - INFO - [ResponseAgent] response_generated
+2026-01-30 18:49:05,718 - agent_system - INFO - [GuardrailsAgent] Tool call: safety_check
+2026-01-30 18:49:05,722 - agent_system - INFO - [GuardrailsAgent] Tool safety_check completed in 3.32ms
+2026-01-30 18:49:05,722 - agent_system - INFO - [GuardrailsAgent] Decision: AUTO_RESPOND | Reasoning: Confidence: 0.80 >= 0.6
+2026-01-30 18:49:05,725 - agent_system - INFO - [MemoryAgent] Tool call: memory_save
+2026-01-30 18:49:05,735 - agent_system - INFO - [MemoryAgent] Tool memory_save completed in 9.96ms
+2026-01-30 18:49:05,735 - agent_system - INFO - [MemoryAgent] memory_saved
+2026-01-30 18:49:05,738 - agent_system - INFO - [System] ticket_processed
+2026-01-30 18:57:42,887 - agent_system - INFO - [System] ticket_received
+2026-01-30 18:57:42,892 - agent_system - INFO - [IngestionAgent] Tool call: ticket_ingestion
+2026-01-30 18:57:42,893 - agent_system - INFO - [IngestionAgent] Tool ticket_ingestion completed in 0.67ms
+2026-01-30 18:57:42,894 - agent_system - INFO - [IngestionAgent] ticket_ingested
+2026-01-30 18:57:42,896 - agent_system - INFO - [PlannerAgent] Tool call: execution_planning
+2026-01-30 18:57:42,896 - agent_system - INFO - [PlannerAgent] Tool execution_planning completed in 0.40ms
+2026-01-30 18:57:42,897 - agent_system - INFO - [PlannerAgent] Decision: strategy_parallel | Reasoning: Selected parallel execution for ticket characteristics
+2026-01-30 18:57:42,897 - agent_system - INFO - [PlannerAgent] strategy_planned
+2026-01-30 18:57:42,900 - agent_system - INFO - [IntentAgent] Tool call: intent_classification
+2026-01-30 18:57:42,901 - agent_system - INFO - [MemoryAgent] Tool call: memory_load
+2026-01-30 18:57:42,901 - agent_system - INFO - [IntentAgent] Tool intent_classification completed in 1.46ms
+2026-01-30 18:57:42,903 - agent_system - INFO - [IntentAgent] Decision: Classified as HIGH | Reasoning: Keywords detected: fail/error
+2026-01-30 18:57:42,911 - agent_system - INFO - [MemoryAgent] Tool memory_load completed in 9.88ms
+2026-01-30 18:57:42,912 - agent_system - INFO - [MemoryAgent] memory_loaded
+2026-01-30 18:57:42,914 - agent_system - INFO - [RetrievalAgent] Tool call: document_retrieval
+2026-01-30 18:57:42,920 - agent_system - INFO - [RetrievalAgent] Tool document_retrieval completed in 5.98ms
+2026-01-30 18:57:42,920 - agent_system - INFO - [RetrievalAgent] retrieved_0_docs
+2026-01-30 18:57:42,922 - agent_system - INFO - [ReasoningAgent] Decision: correlation_analysis | Reasoning: Found 1 correlations, 1 patterns
+2026-01-30 18:57:42,923 - agent_system - INFO - [ReasoningAgent] correlation_complete
+2026-01-30 18:57:42,924 - agent_system - INFO - [ResponseAgent] Tool call: response_generation
+2026-01-30 18:57:42,925 - agent_system - INFO - [ResponseAgent] Tool response_generation completed in 0.42ms
+2026-01-30 18:57:42,926 - agent_system - INFO - [ResponseAgent] response_generated
+2026-01-30 18:57:42,928 - agent_system - INFO - [GuardrailsAgent] Tool call: safety_check
+2026-01-30 18:57:42,932 - agent_system - INFO - [GuardrailsAgent] Tool safety_check completed in 4.09ms
+2026-01-30 18:57:42,933 - agent_system - INFO - [GuardrailsAgent] Decision: AUTO_RESPOND | Reasoning: Confidence: 0.80 >= 0.6
+2026-01-30 18:57:42,936 - agent_system - INFO - [MemoryAgent] Tool call: memory_save
+2026-01-30 18:57:42,944 - agent_system - INFO - [MemoryAgent] Tool memory_save completed in 7.74ms
+2026-01-30 18:57:42,944 - agent_system - INFO - [MemoryAgent] memory_saved
+2026-01-30 18:57:42,946 - agent_system - INFO - [System] ticket_processed
+2026-01-30 19:02:05,128 - agent_system - INFO - [System] ticket_received
+2026-01-30 19:02:05,131 - agent_system - INFO - [IngestionAgent] Tool call: ticket_ingestion
+2026-01-30 19:02:05,131 - agent_system - INFO - [IngestionAgent] Tool ticket_ingestion completed in 0.39ms
+2026-01-30 19:02:05,131 - agent_system - INFO - [IngestionAgent] ticket_ingested
+2026-01-30 19:02:05,133 - agent_system - INFO - [PlannerAgent] Tool call: execution_planning
+2026-01-30 19:02:05,134 - agent_system - INFO - [PlannerAgent] Tool execution_planning completed in 0.43ms
+2026-01-30 19:02:05,134 - agent_system - INFO - [PlannerAgent] Decision: strategy_parallel | Reasoning: Selected parallel execution for ticket characteristics
+2026-01-30 19:02:05,134 - agent_system - INFO - [PlannerAgent] strategy_planned
+2026-01-30 19:02:05,136 - agent_system - INFO - [IntentAgent] Tool call: intent_classification
+2026-01-30 19:02:05,137 - agent_system - INFO - [MemoryAgent] Tool call: memory_load
+2026-01-30 19:02:05,137 - agent_system - INFO - [IntentAgent] Tool intent_classification completed in 0.80ms
+2026-01-30 19:02:05,138 - agent_system - INFO - [IntentAgent] Decision: Classified as HIGH | Reasoning: Keywords detected: fail/error
+2026-01-30 19:02:05,138 - agent_system - INFO - [IntentAgent] classified_high
+2026-01-30 19:02:05,145 - agent_system - INFO - [MemoryAgent] Tool memory_load completed in 8.27ms
+2026-01-30 19:02:05,146 - agent_system - INFO - [MemoryAgent] memory_loaded
+2026-01-30 19:02:05,148 - agent_system - INFO - [RetrievalAgent] Tool call: document_retrieval
+2026-01-30 19:02:05,154 - agent_system - INFO - [RetrievalAgent] Tool document_retrieval completed in 5.71ms
+2026-01-30 19:02:05,154 - agent_system - INFO - [RetrievalAgent] retrieved_0_docs
+2026-01-30 19:02:05,157 - agent_system - INFO - [ReasoningAgent] Decision: correlation_analysis | Reasoning: Found 1 correlations, 1 patterns
+2026-01-30 19:02:05,157 - agent_system - INFO - [ReasoningAgent] correlation_complete
+2026-01-30 19:02:05,159 - agent_system - INFO - [ResponseAgent] Tool call: response_generation
+2026-01-30 19:02:05,160 - agent_system - INFO - [ResponseAgent] Tool response_generation completed in 0.71ms
+2026-01-30 19:02:05,160 - agent_system - INFO - [ResponseAgent] response_generated
+2026-01-30 19:02:05,162 - agent_system - INFO - [GuardrailsAgent] Tool call: safety_check
+2026-01-30 19:02:05,164 - agent_system - INFO - [GuardrailsAgent] Tool safety_check completed in 2.12ms
+2026-01-30 19:02:05,164 - agent_system - INFO - [GuardrailsAgent] Decision: AUTO_RESPOND | Reasoning: Confidence: 0.80 >= 0.6
+2026-01-30 19:02:05,165 - agent_system - INFO - [GuardrailsAgent] guardrails_auto_respond
+2026-01-30 19:02:05,166 - agent_system - INFO - [MemoryAgent] Tool call: memory_save
+2026-01-30 19:02:05,173 - agent_system - INFO - [MemoryAgent] Tool memory_save completed in 7.19ms
+2026-01-30 19:02:05,174 - agent_system - INFO - [MemoryAgent] memory_saved
+2026-01-30 19:02:05,176 - agent_system - INFO - [System] ticket_processed

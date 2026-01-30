@@ -1,0 +1,255 @@
+[
+  {
+    "id": 1,
+    "incident": "Payment service failing",
+    "outcome": "Processing  priority ticket: Payment service failing...",
+    "timestamp": "2026-01-30T17:45:33.925027",
+    "metadata": {
+      "action": "",
+      "priority": "",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 2,
+    "incident": "Payment service failing",
+    "outcome": "Processing  priority ticket: Payment service failing...",
+    "timestamp": "2026-01-30T17:45:33.934774",
+    "metadata": {
+      "action": "",
+      "priority": "",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 3,
+    "incident": "Payment service failing",
+    "outcome": "Priority HIGH issue detected. Correlated with past incidents: Similar to past payment issues, Similar to past payment issues, Similar to past payment issues. Suggested mitigation: Check gateway logs, verify EU region connectivity.",
+    "timestamp": "2026-01-30T17:46:07.126530",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 4,
+    "incident": "Payment service failing",
+    "outcome": "Priority HIGH issue detected. Correlated with past incidents: Similar to past payment issues, Similar to past payment issues, Similar to past payment issues. Suggested mitigation: Check gateway logs, verify EU region connectivity.",
+    "timestamp": "2026-01-30T17:46:07.133746",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 5,
+    "incident": "Payment service failing intermittently for EU users",
+    "outcome": "Priority HIGH issue detected. Correlated with past incidents: Similar to past payment issues, Similar to past payment issues, Similar to past payment issues. Suggested mitigation: Check gateway logs, verify EU region connectivity.",
+    "timestamp": "2026-01-30T17:47:05.591193",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 6,
+    "incident": "Payment service failing intermittently for EU users",
+    "outcome": "Priority HIGH issue detected. Correlated with past incidents: Similar to past payment issues, Similar to past payment issues, Similar to past payment issues. Suggested mitigation: Check gateway logs, verify EU region connectivity.",
+    "timestamp": "2026-01-30T17:47:05.604282",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 7,
+    "incident": "Payment service failing",
+    "outcome": "Processing HIGH priority ticket: Payment service failing...",
+    "timestamp": "2026-01-30T17:49:56.902715",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 8,
+    "incident": "Payment service failing",
+    "outcome": "Processing HIGH priority ticket: Payment service failing...",
+    "timestamp": "2026-01-30T17:49:56.914954",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 9,
+    "incident": "Payment service failing",
+    "outcome": "Processing HIGH priority ticket: Payment service failing...",
+    "timestamp": "2026-01-30T17:50:50.874382",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 10,
+    "incident": "Payment service failing",
+    "outcome": "Processing HIGH priority ticket: Payment service failing...",
+    "timestamp": "2026-01-30T17:50:50.881844",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 11,
+    "incident": "Payment service failing",
+    "outcome": "Processing HIGH priority ticket: Payment service failing...",
+    "timestamp": "2026-01-30T17:51:20.009382",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 12,
+    "incident": "Payment service failing",
+    "outcome": "Processing HIGH priority ticket: Payment service failing...",
+    "timestamp": "2026-01-30T17:51:20.020247",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 13,
+    "incident": "Payment service failing",
+    "outcome": "Processing HIGH priority ticket: Payment service failing...",
+    "timestamp": "2026-01-30T17:51:58.057764",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 14,
+    "incident": "Payment service failing",
+    "outcome": "Processing HIGH priority ticket: Payment service failing...",
+    "timestamp": "2026-01-30T17:51:58.068888",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 15,
+    "incident": "Payment service failing",
+    "outcome": "Processing HIGH priority ticket: Payment service failing...",
+    "timestamp": "2026-01-30T17:52:36.307480",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 16,
+    "incident": "Payment service failing",
+    "outcome": "Processing HIGH priority ticket: Payment service failing...",
+    "timestamp": "2026-01-30T17:52:36.318194",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 17,
+    "incident": "Database connection error in production",
+    "outcome": "Processing HIGH priority ticket: Database connection error in production...",
+    "timestamp": "2026-01-30T17:54:12.873083",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 18,
+    "incident": "Database connection error in production",
+    "outcome": "Processing HIGH priority ticket: Database connection error in production...",
+    "timestamp": "2026-01-30T17:54:12.884203",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 19,
+    "incident": "Database connection error in production",
+    "outcome": "Processing HIGH priority ticket: Database connection error in production...",
+    "timestamp": "2026-01-30T17:54:37.077416",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 20,
+    "incident": "Database connection error in production",
+    "outcome": "Processing HIGH priority ticket: Database connection error in production...",
+    "timestamp": "2026-01-30T17:54:37.102608",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 21,
+    "incident": "Database connection error in production",
+    "outcome": "Priority HIGH issue detected. I've identified correlations with past incidents: Semantically similar | Shared terms: error, database (similarity: 1.00), Semantically similar | Shared terms: error, database (similarity: 1.00), Semantically similar | Shared terms: error, database (similarity: 1.00). Analysis indicates: Priority: HIGH | Retrieved documents: 0 | Historical incidents analyzed: 10 | Correlations found: 4 ... Suggested mitigation: Review error logs, check system health metrics, verify recent configuration changes.",
+    "timestamp": "2026-01-30T18:49:05.725715",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.8
+    }
+  },
+  {
+    "id": 22,
+    "incident": "Database connection error in production",
+    "outcome": "Priority HIGH issue detected. I've identified 1 correlation(s) with past incidents. Correlation: Semantically similar | Shared terms: error, database (similarity: 1.00). Analysis: Priority: HIGH | Retrieved documents: 0 | Historical incidents analyzed: 10 | Correlations found: 1 | Strongest correlation: 1.00 similarity (high) | ... Suggested mitigation: Check database connection pool, verify network connectivity, review connection timeout settings, check recent database migrations.",
+    "timestamp": "2026-01-30T18:57:42.936644",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.8
+    }
+  },
+  {
+    "id": 23,
+    "incident": "Database connection error in production",
+    "outcome": "Priority HIGH issue detected. I've identified 1 correlation(s) with past incidents. Correlation: Semantically similar | Shared terms: error, database (similarity: 1.00). Analysis: Priority: HIGH | Retrieved documents: 0 | Historical incidents analyzed: 10 | Correlations found: 1 | Strongest correlation: 1.00 similarity (high) | ... Suggested mitigation: Check database connection pool, verify network connectivity, review connection timeout settings, check recent database migrations.",
+    "timestamp": "2026-01-30T19:02:05.166929",
+    "metadata": {
+      "action": "AUTO_RESPOND",
+      "priority": "HIGH",
+      "confidence": 0.8
+    }
+  }
+]

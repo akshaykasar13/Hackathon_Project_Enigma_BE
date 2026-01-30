@@ -1,0 +1,82 @@
+[
+  {
+    "task_id": "19841100-a53b-4d9d-8ad1-eb7a7cd80063",
+    "timestamp": "2026-01-30T17:49:56.863385",
+    "context": {
+      "ticket": "Payment service failing",
+      "timestamp": "2026-01-30T17:49:56.849728"
+    }
+  },
+  {
+    "task_id": "24477ba4-04fe-40c9-93f3-76057ba20adf",
+    "timestamp": "2026-01-30T17:50:50.842771",
+    "context": {
+      "ticket": "Payment service failing",
+      "timestamp": "2026-01-30T17:50:50.835400"
+    }
+  },
+  {
+    "task_id": "3e250ab6-eaff-48dc-a736-a5970943e9a6",
+    "timestamp": "2026-01-30T17:51:19.978568",
+    "context": {
+      "ticket": "Payment service failing",
+      "timestamp": "2026-01-30T17:51:19.970901"
+    }
+  },
+  {
+    "task_id": "4ee3db8e-0f75-4117-a54c-a7b731552c28",
+    "timestamp": "2026-01-30T17:51:58.018257",
+    "context": {
+      "ticket": "Payment service failing",
+      "timestamp": "2026-01-30T17:51:58.006115"
+    }
+  },
+  {
+    "task_id": "885d3855-3d0c-4bd2-9375-dee13c4c7693",
+    "timestamp": "2026-01-30T17:52:36.261915",
+    "context": {
+      "ticket": "Payment service failing",
+      "timestamp": "2026-01-30T17:52:36.251877"
+    }
+  },
+  {
+    "task_id": "ba3d4451-3189-4c84-9107-a266ffad2307",
+    "timestamp": "2026-01-30T17:54:12.837683",
+    "context": {
+      "ticket": "Database connection error in production",
+      "timestamp": "2026-01-30T17:54:12.828809"
+    }
+  },
+  {
+    "task_id": "bd0bc7c1-51af-4351-8a42-e9295cf4bed7",
+    "timestamp": "2026-01-30T17:54:37.040970",
+    "context": {
+      "ticket": "Database connection error in production",
+      "timestamp": "2026-01-30T17:54:37.031870"
+    }
+  },
+  {
+    "task_id": "1935bcba-5e57-4fad-a374-599a2f4edbf7",
+    "timestamp": "2026-01-30T18:49:05.688581",
+    "context": {
+      "ticket": "Database connection error in production",
+      "timestamp": "2026-01-30T18:49:05.671856"
+    }
+  },
+  {
+    "task_id": "635b0aa6-4226-4f8c-a104-744dcd708e2e",
+    "timestamp": "2026-01-30T18:57:42.902936",
+    "context": {
+      "ticket": "Database connection error in production",
+      "timestamp": "2026-01-30T18:57:42.887304"
+    }
+  },
+  {
+    "task_id": "3ce34a3d-f4d1-4bee-b583-7423df91d0fe",
+    "timestamp": "2026-01-30T19:02:05.137899",
+    "context": {
+      "ticket": "Database connection error in production",
+      "timestamp": "2026-01-30T19:02:05.128211"
+    }
+  }
+]
