@@ -10,11 +10,10 @@ pydantic==1.10.13
 # ============================================
 crewai>=0.80.0
 crewai-tools>=0.14.0
-
 langgraph>=0.0.20
 
 # ============================================
-# LangChain Ecosystem (Pydantic v1 compatible)
+# LangChain Ecosystem
 # ============================================
 langchain>=0.1.0
 langchain-openai>=0.0.2
@@ -27,9 +26,9 @@ langchain-text-splitters>=0.0.1
 faiss-cpu>=1.7.4
 
 # ============================================
-# Document Processing
+# Document Processing (PINNED FIX)
 # ============================================
-unstructured==0.11.6
+unstructured==0.10.30
 pypdf==3.17.0
 python-docx==1.1.0
 python-pptx==0.6.23
@@ -41,11 +40,7 @@ pillow==10.1.0
 pytesseract==0.3.10
 
 # ============================================
-# Env & Config
+# Env & Streaming
 # ============================================
 python-dotenv==1.0.0
-
-# ============================================
-# Streaming
-# ============================================
 sse-starlette>=1.8.0
