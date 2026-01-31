@@ -2877,3 +2877,285 @@ openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect A
 2026-01-31 14:33:51,784 - agent_system - INFO - [MemoryAgent] Tool call: memory_save
 2026-01-31 14:33:51,802 - agent_system - INFO - [MemoryAgent] Tool memory_save completed in 17.16ms
 2026-01-31 14:33:51,803 - agent_system - INFO - [MemoryAgent] memory_saved
+2026-01-31 15:01:53,560 - agent_system - INFO - [System] ticket_received
+2026-01-31 15:01:53,574 - agent_system - INFO - [IngestionAgent] Tool call: ticket_ingestion
+2026-01-31 15:01:53,576 - agent_system - INFO - [IngestionAgent] Tool ticket_ingestion completed in 1.57ms
+2026-01-31 15:01:53,577 - agent_system - INFO - [IngestionAgent] ticket_ingested
+2026-01-31 15:01:53,579 - agent_system - INFO - [PlannerAgent] Tool call: execution_planning
+2026-01-31 15:02:04,865 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-01-31 15:02:05,005 - agent_system - WARNING - [LLM_FAILURE] PlannerAgent: LLM planning failed - AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************kBsA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+Traceback (most recent call last):
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\agents\planner.py", line 51, in plan_with_llm
+    response = chain.invoke({"ticket": ticket})
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3151, in invoke
+    input_ = context.run(step.invoke, input_, config)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 402, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1121, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 931, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1233, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1386, in _generate
+    raise e
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1381, in _generate
+    raw_response = self.client.with_raw_response.create(**payload)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_legacy_response.py", line 364, in wrapped
+    return cast(LegacyAPIResponse[R], func(*args, **kwargs))
+                                      ~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1192, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<47 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1294, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1067, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************kBsA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+2026-01-31 15:02:05,031 - agent_system - INFO - [LLM_FALLBACK] PlannerAgent: Using rule-based planning (LLM failed or unavailable)
+2026-01-31 15:02:05,031 - agent_system - INFO - [PlannerAgent] Tool execution_planning completed in 11452.61ms
+2026-01-31 15:02:05,032 - agent_system - INFO - [PlannerAgent] Decision: strategy_parallel_moderate | Reasoning: Rule-based: standard general ticket (via rules)
+2026-01-31 15:02:05,032 - agent_system - INFO - [PlannerAgent] strategy_planned
+2026-01-31 15:02:05,034 - agent_system - INFO - [IntentAgent] Tool call: intent_classification
+2026-01-31 15:02:05,046 - agent_system - INFO - [MemoryAgent] Tool call: memory_load
+2026-01-31 15:02:05,056 - agent_system - INFO - [RetrievalAgent] Tool call: document_retrieval
+2026-01-31 15:02:05,075 - agent_system - INFO - [MemoryAgent] Tool memory_load completed in 29.34ms
+2026-01-31 15:02:05,078 - agent_system - INFO - [MemoryAgent] memory_loaded
+2026-01-31 15:02:05,926 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-01-31 15:02:06,033 - agent_system - WARNING - [LLM_FAILURE] IntentAgent: LLM classification failed - AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************kBsA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+Traceback (most recent call last):
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\agents\intent.py", line 44, in classify_with_llm
+    response = chain.invoke({"ticket": text})
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3151, in invoke
+    input_ = context.run(step.invoke, input_, config)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 402, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1121, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 931, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1233, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1386, in _generate
+    raise e
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1381, in _generate
+    raw_response = self.client.with_raw_response.create(**payload)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_legacy_response.py", line 364, in wrapped
+    return cast(LegacyAPIResponse[R], func(*args, **kwargs))
+                                      ~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1192, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<47 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1294, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1067, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************kBsA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+2026-01-31 15:02:06,048 - agent_system - INFO - [LLM_FALLBACK] IntentAgent: Using rule-based classification (LLM failed or unavailable)
+2026-01-31 15:02:06,049 - agent_system - INFO - [IntentAgent] Tool intent_classification completed in 1014.71ms
+2026-01-31 15:02:06,050 - agent_system - INFO - [IntentAgent] Decision: Classified as LOW | Reasoning: No urgent indicators detected (via rules)
+2026-01-31 15:02:06,050 - agent_system - INFO - [IntentAgent] classified_low
+2026-01-31 15:02:15,844 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-01-31 15:02:15,847 - agent_system - INFO - [RetrievalAgent] Tool document_retrieval completed in 10791.64ms
+2026-01-31 15:02:15,849 - agent_system - INFO - [RetrievalAgent] retrieved_0_docs
+2026-01-31 15:02:22,696 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-01-31 15:02:27,484 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-01-31 15:02:30,241 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-01-31 15:02:33,446 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-01-31 15:02:36,280 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-01-31 15:02:38,989 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-01-31 15:02:39,598 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-01-31 15:02:39,628 - agent_system - WARNING - [LLM_FAILURE] ReasoningAgent: LLM analysis failed - AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************kBsA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+Traceback (most recent call last):
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\agents\reasoning.py", line 201, in analyze_with_llm
+    response = chain.invoke({"ticket": ticket, "context": context})
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3151, in invoke
+    input_ = context.run(step.invoke, input_, config)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 402, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1121, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 931, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1233, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1386, in _generate
+    raise e
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1381, in _generate
+    raw_response = self.client.with_raw_response.create(**payload)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_legacy_response.py", line 364, in wrapped
+    return cast(LegacyAPIResponse[R], func(*args, **kwargs))
+                                      ~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1192, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<47 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1294, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1067, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************kBsA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+2026-01-31 15:02:39,646 - agent_system - INFO - [LLM_FALLBACK] ReasoningAgent: Using rule-based analysis (LLM failed or unavailable)
+2026-01-31 15:02:39,648 - agent_system - INFO - [ReasoningAgent] Decision: analysis_general | Reasoning: Rule-based analysis: general issue with medium impact (via rules)
+2026-01-31 15:02:39,649 - agent_system - INFO - [ReasoningAgent] analysis_complete
+2026-01-31 15:02:40,025 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-01-31 15:02:40,060 - agent_system - WARNING - [LLM_FAILURE] ResponseAgent: LLM generation failed - AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************kBsA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+Traceback (most recent call last):
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\agents\response.py", line 66, in generate_response_with_llm
+    response = chain.invoke({
+        "ticket": ticket,
+        "priority": priority,
+        "context": context
+    })
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3151, in invoke
+    input_ = context.run(step.invoke, input_, config)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 402, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1121, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 931, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1233, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1386, in _generate
+    raise e
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1381, in _generate
+    raw_response = self.client.with_raw_response.create(**payload)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_legacy_response.py", line 364, in wrapped
+    return cast(LegacyAPIResponse[R], func(*args, **kwargs))
+                                      ~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1192, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<47 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1294, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1067, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************kBsA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+2026-01-31 15:02:40,066 - agent_system - INFO - [LLM_FALLBACK] ResponseAgent: Using template-based response (LLM failed or unavailable)
+2026-01-31 15:02:40,067 - agent_system - INFO - [ResponseAgent] Tool call: response_generation
+2026-01-31 15:02:40,069 - agent_system - INFO - [ResponseAgent] Tool response_generation completed in 1.35ms
+2026-01-31 15:02:40,070 - agent_system - INFO - [ResponseAgent] response_generated
+2026-01-31 15:02:40,071 - agent_system - INFO - [GuardrailsAgent] Tool call: safety_check
+2026-01-31 15:02:40,072 - agent_system - INFO - [GuardrailsAgent] Tool safety_check completed in 1.44ms
+2026-01-31 15:02:40,073 - agent_system - INFO - [GuardrailsAgent] Decision: ESCALATE | Reasoning: Banned content pattern: \b(kill|destroy|attack|hurt|harm)\w*\b
+2026-01-31 15:02:40,074 - agent_system - INFO - [GuardrailsAgent] guardrails_escalate
+2026-01-31 15:02:40,075 - agent_system - INFO - [System] ticket_processed
+2026-01-31 15:02:40,079 - agent_system - INFO - [MemoryAgent] Tool call: memory_save
+2026-01-31 15:02:40,126 - agent_system - INFO - [MemoryAgent] Tool memory_save completed in 46.27ms
+2026-01-31 15:02:40,128 - agent_system - INFO - [MemoryAgent] memory_saved

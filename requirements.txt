@@ -1,44 +1,64 @@
-# Core Framework
+# ============================================
+# Core Web Framework
+# ============================================
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
 pydantic==2.5.0
 
-# Agent Framework - CrewAI (primary), LangGraph (fallback when USE_CREWAI=false)
+# ============================================
+# Agent Framework
+# ============================================
+# CrewAI (primary agent orchestration framework)
 crewai>=0.80.0
 crewai-tools>=0.14.0
+
+# LangGraph (fallback when USE_CREWAI=false)
 langgraph>=0.0.20
 
-# LangChain (for RAG, embeddings, tools)
+# ============================================
+# LangChain (for RAG, embeddings, document processing)
+# ============================================
 langchain>=0.1.0
 langchain-openai>=0.0.2
 langchain-community>=0.0.10
 langchain-text-splitters>=0.0.1
 
-# Vector Store - FAISS (replaces ChromaDB for better Python compatibility)
+# ============================================
+# Vector Store
+# ============================================
+# FAISS is the primary vector store (ChromaDB is optional fallback)
 faiss-cpu>=1.7.4
 
+# ============================================
 # Document Processing
+# ============================================
+# Primary loaders (via langchain-community)
+unstructured==0.11.6
+
+# Fallback loaders (used when langchain loaders fail)
 pypdf==3.17.0
 python-docx==1.1.0
 python-pptx==0.6.23
-unstructured==0.11.6
 
-# OCR (Optional)
+# ============================================
+# OCR Support (for image processing)
+# ============================================
 pillow==10.1.0
 pytesseract==0.3.10
 
-# PDF Generation
-reportlab==4.0.7
-
-# Environment Variables
+# ============================================
+# Environment & Configuration
+# ============================================
 python-dotenv==1.0.0
 
-# Utilities
-uuid
-
-# Machine Learning (Optional - for semantic similarity)
-# scikit-learn>=1.3.0  # Not required - using numpy for cosine similarity
-
-# WebSocket/SSE Support (Required for live agent streaming)
+# ============================================
+# Server-Sent Events (SSE) Support
+# ============================================
+# Optional but recommended for real-time agent streaming
 sse-starlette>=1.8.0
 
+# ============================================
+# Optional Dependencies (not required for core functionality)
+# ============================================
+# chromadb>=0.4.18  # Optional: fallback vector store (FAISS is primary)
+# reportlab==4.0.7  # Optional: only used in utility scripts (generate_pdfs.py)

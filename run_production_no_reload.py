@@ -1,5 +1,5 @@
 """
-Run the server in PRODUCTION MODE.
+Run the server in PRODUCTION MODE without reload (for debugging).
 Requires OPENAI_API_KEY in .env file.
 """
 import os
@@ -41,8 +41,19 @@ os.chdir(project_root)
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
+# Verify langchain-openai is available before starting
+try:
+    import langchain_openai
+    print(f"✅ langchain-openai found at: {langchain_openai.__file__}")
+except ImportError as e:
+    print(f"❌ ERROR: langchain-openai not found: {e}")
+    print("Installing langchain-openai...")
+    subprocess.run([sys.executable, "-m", "pip", "install", "langchain-openai"], check=True)
+    import langchain_openai
+    print("✅ langchain-openai installed successfully")
+
 print("=" * 60)
-print("  STARTING SERVER IN PRODUCTION MODE")
+print("  STARTING SERVER IN PRODUCTION MODE (NO RELOAD)")
 print("=" * 60)
 print("✅ Production mode enabled")
 print("✅ Using OpenAI embeddings")
@@ -50,36 +61,12 @@ print("✅ Full RAG functionality")
 print("=" * 60)
 print()
 
-# Start uvicorn from project root
+# Start uvicorn from project root WITHOUT reload flag
 try:
     env = os.environ.copy()
     env["PYTHONPATH"] = str(project_root)
-    # Verify all critical packages are available before starting
-    required_packages = [
-        "langchain_openai",
-        "langchain_text_splitters", 
-        "langchain",
-        "langchain_community",
-        "fastapi",
-        "uvicorn"
-    ]
-    
-    missing_packages = []
-    for package in required_packages:
-        try:
-            __import__(package)
-            print(f"✅ {package} found")
-        except ImportError:
-            missing_packages.append(package.replace("_", "-"))
-            print(f"❌ {package} not found")
-    
-    if missing_packages:
-        print(f"\nInstalling missing packages: {', '.join(missing_packages)}")
-        subprocess.run([sys.executable, "-m", "pip", "install"] + missing_packages, check=True)
-        print("✅ All packages installed successfully")
-    
     subprocess.run(
-        [sys.executable, "-m", "uvicorn", "backend.main:app", "--reload"],
+        [sys.executable, "-m", "uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"],
         cwd=project_root,
         env=env
     )
