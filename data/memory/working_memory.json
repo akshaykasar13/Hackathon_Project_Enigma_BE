@@ -1,21 +1,5 @@
 [
   {
-    "task_id": "ab79202e-789f-40ec-9423-e1538f44533f",
-    "timestamp": "2026-01-31T13:02:19.815463",
-    "context": {
-      "ticket": "Have we seen this error code before?\n",
-      "timestamp": "2026-01-31T13:02:18.174863"
-    }
-  },
-  {
-    "task_id": "9b0e0e75-bc35-42b9-8859-109373762968",
-    "timestamp": "2026-01-31T13:03:20.123971",
-    "context": {
-      "ticket": "Customer sent 5000 INR and we received 1000 USD. Have we seen this before?\n",
-      "timestamp": "2026-01-31T13:03:18.337646"
-    }
-  },
-  {
     "task_id": "b4e59b85-394a-49d4-9886-ca9aea925b77",
     "timestamp": "2026-01-31T13:04:18.908811",
     "context": {
@@ -77,6 +61,22 @@
     "context": {
       "ticket": "kill me",
       "timestamp": "2026-01-31T15:01:53.558398"
+    }
+  },
+  {
+    "task_id": "b84a7856-47c8-49a7-9290-af11e3adcfd1",
+    "timestamp": "2026-01-31T20:36:26.075540",
+    "context": {
+      "ticket": "kill me",
+      "timestamp": "2026-01-31T20:36:22.345857"
+    }
+  },
+  {
+    "task_id": "c6238335-f1d0-41b9-a2a0-53668c21d34f",
+    "timestamp": "2026-01-31T20:38:53.783439",
+    "context": {
+      "ticket": "kill you",
+      "timestamp": "2026-01-31T20:38:48.610869"
     }
   }
 ]

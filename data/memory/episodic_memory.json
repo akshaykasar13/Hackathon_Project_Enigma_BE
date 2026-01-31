@@ -515,5 +515,27 @@
       "priority": "LOW",
       "confidence": 0.0
     }
+  },
+  {
+    "id": 48,
+    "incident": "kill me",
+    "outcome": "Priority LOW issue detected. I've identified 1 correlation(s) with past incidents. Correlation: Semantically similar (similarity: 1.00). Analysis: Priority: LOW | Category: general | Impact: medium | Root cause: Potential general issue based on ticket content | Confidence: medium | Analysis metho... Suggested mitigation: Review system logs, check related services, verify recent changes.",
+    "timestamp": "2026-01-31T20:36:42.168521",
+    "metadata": {
+      "action": "ESCALATE",
+      "priority": "LOW",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 49,
+    "incident": "kill you",
+    "outcome": "Based on the analysis and past incidents, it appears that the issue is categorized as a user error with a high impact. It's crucial to address this immediately. I recommend reaching out to the user to clarify the intent behind the message and provide guidance on appropriate communication within the platform. Additionally, consider implementing measures to prevent such language from being used in the future to maintain a safe and respectful environment for all users.",
+    "timestamp": "2026-01-31T20:39:15.827557",
+    "metadata": {
+      "action": "ESCALATE",
+      "priority": "HIGH",
+      "confidence": 0.0
+    }
   }
 ]
