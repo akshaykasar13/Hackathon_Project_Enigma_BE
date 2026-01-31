@@ -1,13 +1,5 @@
 [
   {
-    "task_id": "0c3f6441-b0ae-4f0a-a453-d1965e282f82",
-    "timestamp": "2026-01-31T13:01:37.055083",
-    "context": {
-      "ticket": "Payment service failing intermittently for EU users\n",
-      "timestamp": "2026-01-31T13:01:35.221306"
-    }
-  },
-  {
     "task_id": "ab79202e-789f-40ec-9423-e1538f44533f",
     "timestamp": "2026-01-31T13:02:19.815463",
     "context": {
@@ -77,6 +69,14 @@
     "context": {
       "ticket": "start killing",
       "timestamp": "2026-01-31T14:33:31.466115"
+    }
+  },
+  {
+    "task_id": "53347f30-3068-475b-a055-d3cd92409a96",
+    "timestamp": "2026-01-31T15:02:05.055513",
+    "context": {
+      "ticket": "kill me",
+      "timestamp": "2026-01-31T15:01:53.558398"
     }
   }
 ]
