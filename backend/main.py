@@ -25,7 +25,8 @@ import uuid
 import traceback
 import json
 import asyncio
-from backend.graph import app_graph
+from backend.crew_system import invoke as crew_invoke
+from backend.graph import app_graph  # fallback when USE_CREWAI=false
 from backend.memory.storage import memory_storage
 from backend.observability import observability
 from backend.context import window_context
@@ -67,6 +68,23 @@ def _save_memory_async(state: dict):
     except Exception as e:
         print(f"[Async] Memory save failed: {e}")
 
+
+def _make_json_safe(obj, depth=0):
+    """Recursively convert obj to JSON-serializable form. Prevents UI serialization errors."""
+    if depth > 10:
+        return str(obj)
+    if obj is None:
+        return None
+    if isinstance(obj, (str, int, float, bool)):
+        return obj
+    if isinstance(obj, datetime):
+        return obj.isoformat()
+    if isinstance(obj, dict):
+        return {str(k): _make_json_safe(v, depth + 1) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_make_json_safe(x, depth + 1) for x in obj]
+    return str(obj)
+
 @app.post("/ticket")
 def run(ticket: Ticket, background_tasks: BackgroundTasks):
     """Process a ticket through the agent system."""
@@ -86,7 +104,8 @@ def run(ticket: Ticket, background_tasks: BackgroundTasks):
         # Apply context windowing before processing
         initial_state = window_context(initial_state)
         
-        result = app_graph.invoke(initial_state)
+        use_crewai = config.USE_CREWAI
+        result = crew_invoke(initial_state) if use_crewai else app_graph.invoke(initial_state)
         
         # ASYNC EXECUTION: Save memory in background (doesn't block response)
         if result:
@@ -188,7 +207,7 @@ def run(ticket: Ticket, background_tasks: BackgroundTasks):
                 response_data["reasoning"] = result["reasoning"]
             
             print(f"[API] Returning response with priority: {response_data.get('priority')}, action: {response_data.get('action')}")
-            return response_data
+            return _make_json_safe(response_data)
         else:
             # If it's not a dict, try to convert it
             print(f"[API] Result is not a dict, converting... Type: {type(result)}")

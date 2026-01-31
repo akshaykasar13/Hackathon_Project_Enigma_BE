@@ -1,89 +1,137 @@
 
-============================================================
-Document 34 - Page 1
-============================================================
+======================================================================
+PAYMENT & FINANCIAL SERVICES - Document 34 - Page 1 of 6
+Document ID: PAY-034 | Domain: Payment Gateway & Transaction Processing
+======================================================================
 
-Transaction reconciliation and settlement procedures.
-Payment webhook security and signature verification mechanisms.
+Payment gateway configuration for EU region: PSD2 compliance, SCA requirements, and GDPR data handling.
 
-Page 1 of 5 in payment service document 34.
-This document contains payment and financial service technical documentation.
-Payment Service Document ID: PAY-034
+Webhook retry: 3 attempts at 1h, 4h, 24h. Implement idempotent handlers for duplicate events.
 
-Payment service technical details:
-- Payment gateway implementation notes and procedures
-- Payment API configuration and setup instructions
-- Payment service troubleshooting and maintenance guides
-- Financial transaction processing workflows
+Financial reporting: transaction reports, revenue analytics, and regulatory reporting formats.
 
+Additional context:
+- Payment gateway configuration requires secure token handling and PCI-DSS compliance.
+- EU region transactions mandate PSD2 and Strong Customer Authentication (SCA).
+- Error code 5003 indicates gateway connection timeout; check network and gateway health.
+- For INR/USD discrepancies verify FX rate source and conversion timestamp.
 
-============================================================
-Document 34 - Page 2
-============================================================
-
-Payment fraud detection and prevention mechanisms.
-Payment service monitoring dashboards and alerting configurations.
-
-Page 2 of 5 in payment service document 34.
-This document contains payment and financial service technical documentation.
-Payment Service Document ID: PAY-034
-
-Payment service technical details:
-- Payment gateway implementation notes and procedures
-- Payment API configuration and setup instructions
-- Payment service troubleshooting and maintenance guides
-- Financial transaction processing workflows
+Troubleshooting steps:
+1. Verify gateway connectivity and SSL certificate validity
+2. Check transaction logs for specific error codes
+3. Validate amount and currency for multi-currency transactions
 
 
-============================================================
-Document 34 - Page 3
-============================================================
+======================================================================
+PAYMENT & FINANCIAL SERVICES - Document 34 - Page 2 of 6
+Document ID: PAY-034 | Domain: Payment Gateway & Transaction Processing
+======================================================================
 
-Merchant account management and configuration guidelines.
-Payment gateway failover and disaster recovery procedures.
+Payment user authentication: 3DS2 flows, biometric verification, and risk-based authentication.
 
-Page 3 of 5 in payment service document 34.
-This document contains payment and financial service technical documentation.
-Payment Service Document ID: PAY-034
+Gateway failover: primary EU, secondary US. Health check every 30s. Auto-switch on 3 consecutive failures.
 
-Payment service technical details:
-- Payment gateway implementation notes and procedures
-- Payment API configuration and setup instructions
-- Payment service troubleshooting and maintenance guides
-- Financial transaction processing workflows
+Payment SLA and uptime: 99.9% target, incident response times, and status page communication.
 
+Additional context:
+- Payment gateway configuration requires secure token handling and PCI-DSS compliance.
+- EU region transactions mandate PSD2 and Strong Customer Authentication (SCA).
+- Error code 5003 indicates gateway connection timeout; check network and gateway health.
+- For INR/USD discrepancies verify FX rate source and conversion timestamp.
 
-============================================================
-Document 34 - Page 4
-============================================================
-
-Payment webhook handling and event processing architecture.
-Payment transaction audit logging and compliance reporting.
-
-Page 4 of 5 in payment service document 34.
-This document contains payment and financial service technical documentation.
-Payment Service Document ID: PAY-034
-
-Payment service technical details:
-- Payment gateway implementation notes and procedures
-- Payment API configuration and setup instructions
-- Payment service troubleshooting and maintenance guides
-- Financial transaction processing workflows
+Troubleshooting steps:
+1. Verify gateway connectivity and SSL certificate validity
+2. Check transaction logs for specific error codes
+3. Validate amount and currency for multi-currency transactions
 
 
-============================================================
-Document 34 - Page 5
-============================================================
+======================================================================
+PAYMENT & FINANCIAL SERVICES - Document 34 - Page 3 of 6
+Document ID: PAY-034 | Domain: Payment Gateway & Transaction Processing
+======================================================================
 
-Financial reporting and analytics for payment transactions.
-Payment PCI-DSS compliance checklist and security requirements.
+Payment transaction logging: structured logs, trace IDs, and observability for incident investigation.
 
-Page 5 of 5 in payment service document 34.
-This document contains payment and financial service technical documentation.
-Payment Service Document ID: PAY-034
+Refund must be <= original amount. Partial refunds supported. Full refund voids original transaction.
 
-Payment service technical details:
-- Payment gateway implementation notes and procedures
-- Payment API configuration and setup instructions
-- Payment service troubleshooting and maintenance guides
-- Financial transaction processing workflows
+Error code 5003: Payment gateway connection timeout. Check network connectivity and gateway health.
+
+Additional context:
+- Payment gateway configuration requires secure token handling and PCI-DSS compliance.
+- EU region transactions mandate PSD2 and Strong Customer Authentication (SCA).
+- Error code 5003 indicates gateway connection timeout; check network and gateway health.
+- For INR/USD discrepancies verify FX rate source and conversion timestamp.
+
+Troubleshooting steps:
+1. Verify gateway connectivity and SSL certificate validity
+2. Check transaction logs for specific error codes
+3. Validate amount and currency for multi-currency transactions
+
+
+======================================================================
+PAYMENT & FINANCIAL SERVICES - Document 34 - Page 4 of 6
+Document ID: PAY-034 | Domain: Payment Gateway & Transaction Processing
+======================================================================
+
+Payment service deployment: blue-green releases, canary deployments, and rollback procedures.
+
+3DS2 challenge: customer may receive OTP from bank. Timeout 5 minutes. Handle challenge completion.
+
+Error code 4001: Invalid payment method. Verify card details and expiry. Support 3DS if required.
+
+Additional context:
+- Payment gateway configuration requires secure token handling and PCI-DSS compliance.
+- EU region transactions mandate PSD2 and Strong Customer Authentication (SCA).
+- Error code 5003 indicates gateway connection timeout; check network and gateway health.
+- For INR/USD discrepancies verify FX rate source and conversion timestamp.
+
+Troubleshooting steps:
+1. Verify gateway connectivity and SSL certificate validity
+2. Check transaction logs for specific error codes
+3. Validate amount and currency for multi-currency transactions
+
+
+======================================================================
+PAYMENT & FINANCIAL SERVICES - Document 34 - Page 5 of 6
+Document ID: PAY-034 | Domain: Payment Gateway & Transaction Processing
+======================================================================
+
+Billing and invoicing: subscription management, proration, tax calculation, and invoice generation.
+
+Settlement cycle: T+2 for cards, T+1 for bank transfer. Check processor-specific timelines.
+
+Error code 4002: Insufficient funds. Customer must use alternative payment method or add funds.
+
+Additional context:
+- Payment gateway configuration requires secure token handling and PCI-DSS compliance.
+- EU region transactions mandate PSD2 and Strong Customer Authentication (SCA).
+- Error code 5003 indicates gateway connection timeout; check network and gateway health.
+- For INR/USD discrepancies verify FX rate source and conversion timestamp.
+
+Troubleshooting steps:
+1. Verify gateway connectivity and SSL certificate validity
+2. Check transaction logs for specific error codes
+3. Validate amount and currency for multi-currency transactions
+
+
+======================================================================
+PAYMENT & FINANCIAL SERVICES - Document 34 - Page 6 of 6
+Document ID: PAY-034 | Domain: Payment Gateway & Transaction Processing
+======================================================================
+
+Refund and chargeback processing: initiation, status tracking, dispute resolution, and reason codes.
+
+Payment reconciliation: match transaction ID, amount, currency. Flag mismatches for manual review.
+
+EU payment failures: Verify PSD2 compliance, SCA completion, and issuer 3DS configuration.
+
+Additional context:
+- Payment gateway configuration requires secure token handling and PCI-DSS compliance.
+- EU region transactions mandate PSD2 and Strong Customer Authentication (SCA).
+- Error code 5003 indicates gateway connection timeout; check network and gateway health.
+- For INR/USD discrepancies verify FX rate source and conversion timestamp.
+
+Troubleshooting steps:
+1. Verify gateway connectivity and SSL certificate validity
+2. Check transaction logs for specific error codes
+3. Validate amount and currency for multi-currency transactions

@@ -3,15 +3,19 @@ fastapi==0.104.1
 uvicorn[standard]==0.24.0
 pydantic==2.5.0
 
-# LangChain & LangGraph
+# Agent Framework - CrewAI (primary), LangGraph (fallback when USE_CREWAI=false)
+crewai>=0.80.0
+crewai-tools>=0.14.0
 langgraph>=0.0.20
+
+# LangChain (for RAG, embeddings, tools)
 langchain>=0.1.0
 langchain-openai>=0.0.2
 langchain-community>=0.0.10
 langchain-text-splitters>=0.0.1
 
-# Vector Store
-chromadb==0.4.18
+# Vector Store - FAISS (replaces ChromaDB for better Python compatibility)
+faiss-cpu>=1.7.4
 
 # Document Processing
 pypdf==3.17.0

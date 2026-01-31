@@ -1,107 +1,137 @@
 
-============================================================
-Document 30 - Page 1
-============================================================
+======================================================================
+PAYMENT & FINANCIAL SERVICES - Document 30 - Page 1 of 6
+Document ID: PAY-030 | Domain: Payment Gateway & Transaction Processing
+======================================================================
 
-Billing and invoicing system architecture for financial services.
-Payment gateway API rate limiting and throttling mechanisms.
+Payment API integration guidelines: REST endpoints, authentication, webhook callbacks, and error code handling.
 
-Page 1 of 6 in payment service document 30.
-This document contains payment and financial service technical documentation.
-Payment Service Document ID: PAY-030
+Payment gateway requires secure token handling. Never store raw card numbers. Use payment tokens.
 
-Payment service technical details:
-- Payment gateway implementation notes and procedures
-- Payment API configuration and setup instructions
-- Payment service troubleshooting and maintenance guides
-- Financial transaction processing workflows
+Payment gateway configuration for EU region: PSD2 compliance, SCA requirements, and GDPR data handling.
 
+Additional context:
+- Payment gateway configuration requires secure token handling and PCI-DSS compliance.
+- EU region transactions mandate PSD2 and Strong Customer Authentication (SCA).
+- Error code 5003 indicates gateway connection timeout; check network and gateway health.
+- For INR/USD discrepancies verify FX rate source and conversion timestamp.
 
-============================================================
-Document 30 - Page 2
-============================================================
-
-Refund and chargeback processing procedures and workflows.
-Payment transaction encryption and secure data transmission protocols.
-
-Page 2 of 6 in payment service document 30.
-This document contains payment and financial service technical documentation.
-Payment Service Document ID: PAY-030
-
-Payment service technical details:
-- Payment gateway implementation notes and procedures
-- Payment API configuration and setup instructions
-- Payment service troubleshooting and maintenance guides
-- Financial transaction processing workflows
+Troubleshooting steps:
+1. Verify gateway connectivity and SSL certificate validity
+2. Check transaction logs for specific error codes
+3. Validate amount and currency for multi-currency transactions
 
 
-============================================================
-Document 30 - Page 3
-============================================================
+======================================================================
+PAYMENT & FINANCIAL SERVICES - Document 30 - Page 2 of 6
+Document ID: PAY-030 | Domain: Payment Gateway & Transaction Processing
+======================================================================
 
-Payment processor integration and API endpoint documentation.
-Payment reconciliation processes and automated settlement workflows.
+Financial transaction security protocols: TLS 1.3, tokenization, encryption at rest and in transit.
 
-Page 3 of 6 in payment service document 30.
-This document contains payment and financial service technical documentation.
-Payment Service Document ID: PAY-030
+EU region mandates PSD2 and Strong Customer Authentication (SCA) for card payments.
 
-Payment service technical details:
-- Payment gateway implementation notes and procedures
-- Payment API configuration and setup instructions
-- Payment service troubleshooting and maintenance guides
-- Financial transaction processing workflows
+Payment user authentication: 3DS2 flows, biometric verification, and risk-based authentication.
 
+Additional context:
+- Payment gateway configuration requires secure token handling and PCI-DSS compliance.
+- EU region transactions mandate PSD2 and Strong Customer Authentication (SCA).
+- Error code 5003 indicates gateway connection timeout; check network and gateway health.
+- For INR/USD discrepancies verify FX rate source and conversion timestamp.
 
-============================================================
-Document 30 - Page 4
-============================================================
-
-Financial service compliance requirements for EU and global regions.
-Payment fraud detection algorithms and machine learning models.
-
-Page 4 of 6 in payment service document 30.
-This document contains payment and financial service technical documentation.
-Payment Service Document ID: PAY-030
-
-Payment service technical details:
-- Payment gateway implementation notes and procedures
-- Payment API configuration and setup instructions
-- Payment service troubleshooting and maintenance guides
-- Financial transaction processing workflows
+Troubleshooting steps:
+1. Verify gateway connectivity and SSL certificate validity
+2. Check transaction logs for specific error codes
+3. Validate amount and currency for multi-currency transactions
 
 
-============================================================
-Document 30 - Page 5
-============================================================
+======================================================================
+PAYMENT & FINANCIAL SERVICES - Document 30 - Page 3 of 6
+Document ID: PAY-030 | Domain: Payment Gateway & Transaction Processing
+======================================================================
 
-Transaction reconciliation and settlement procedures.
-Payment merchant onboarding procedures and KYC verification processes.
+Payment processing performance monitoring: latency metrics, throughput, success rates, and SLA thresholds.
 
-Page 5 of 6 in payment service document 30.
-This document contains payment and financial service technical documentation.
-Payment Service Document ID: PAY-030
+Error 5003 indicates gateway timeout. Typical causes: network issues, gateway overload, DNS failure.
 
-Payment service technical details:
-- Payment gateway implementation notes and procedures
-- Payment API configuration and setup instructions
-- Payment service troubleshooting and maintenance guides
-- Financial transaction processing workflows
+Payment transaction logging: structured logs, trace IDs, and observability for incident investigation.
+
+Additional context:
+- Payment gateway configuration requires secure token handling and PCI-DSS compliance.
+- EU region transactions mandate PSD2 and Strong Customer Authentication (SCA).
+- Error code 5003 indicates gateway connection timeout; check network and gateway health.
+- For INR/USD discrepancies verify FX rate source and conversion timestamp.
+
+Troubleshooting steps:
+1. Verify gateway connectivity and SSL certificate validity
+2. Check transaction logs for specific error codes
+3. Validate amount and currency for multi-currency transactions
 
 
-============================================================
-Document 30 - Page 6
-============================================================
+======================================================================
+PAYMENT & FINANCIAL SERVICES - Document 30 - Page 4 of 6
+Document ID: PAY-030 | Domain: Payment Gateway & Transaction Processing
+======================================================================
 
-Payment fraud detection and prevention mechanisms.
-Payment subscription billing and recurring charge management.
+Payment database management: transaction logs, audit trails, backup procedures, and data retention policies.
 
-Page 6 of 6 in payment service document 30.
-This document contains payment and financial service technical documentation.
-Payment Service Document ID: PAY-030
+Connection pooling for payment DB: set max_connections=50, connection_timeout=30s.
 
-Payment service technical details:
-- Payment gateway implementation notes and procedures
-- Payment API configuration and setup instructions
-- Payment service troubleshooting and maintenance guides
-- Financial transaction processing workflows
+Payment service deployment: blue-green releases, canary deployments, and rollback procedures.
+
+Additional context:
+- Payment gateway configuration requires secure token handling and PCI-DSS compliance.
+- EU region transactions mandate PSD2 and Strong Customer Authentication (SCA).
+- Error code 5003 indicates gateway connection timeout; check network and gateway health.
+- For INR/USD discrepancies verify FX rate source and conversion timestamp.
+
+Troubleshooting steps:
+1. Verify gateway connectivity and SSL certificate validity
+2. Check transaction logs for specific error codes
+3. Validate amount and currency for multi-currency transactions
+
+
+======================================================================
+PAYMENT & FINANCIAL SERVICES - Document 30 - Page 5 of 6
+Document ID: PAY-030 | Domain: Payment Gateway & Transaction Processing
+======================================================================
+
+Payment gateway configuration for EU region: PSD2 compliance, SCA requirements, and GDPR data handling.
+
+For INR to USD discrepancy: verify FX rate source, conversion timestamp, and rounding rules.
+
+Billing and invoicing: subscription management, proration, tax calculation, and invoice generation.
+
+Additional context:
+- Payment gateway configuration requires secure token handling and PCI-DSS compliance.
+- EU region transactions mandate PSD2 and Strong Customer Authentication (SCA).
+- Error code 5003 indicates gateway connection timeout; check network and gateway health.
+- For INR/USD discrepancies verify FX rate source and conversion timestamp.
+
+Troubleshooting steps:
+1. Verify gateway connectivity and SSL certificate validity
+2. Check transaction logs for specific error codes
+3. Validate amount and currency for multi-currency transactions
+
+
+======================================================================
+PAYMENT & FINANCIAL SERVICES - Document 30 - Page 6 of 6
+Document ID: PAY-030 | Domain: Payment Gateway & Transaction Processing
+======================================================================
+
+Payment user authentication: 3DS2 flows, biometric verification, and risk-based authentication.
+
+Chargeback reason code 10.4: customer disputes transaction. Gather proof of delivery and authorization.
+
+Refund and chargeback processing: initiation, status tracking, dispute resolution, and reason codes.
+
+Additional context:
+- Payment gateway configuration requires secure token handling and PCI-DSS compliance.
+- EU region transactions mandate PSD2 and Strong Customer Authentication (SCA).
+- Error code 5003 indicates gateway connection timeout; check network and gateway health.
+- For INR/USD discrepancies verify FX rate source and conversion timestamp.
+
+Troubleshooting steps:
+1. Verify gateway connectivity and SSL certificate validity
+2. Check transaction logs for specific error codes
+3. Validate amount and currency for multi-currency transactions

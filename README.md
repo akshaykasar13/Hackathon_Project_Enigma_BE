@@ -2,6 +2,20 @@
 
 Intelligent Support & Incident Co-Pilot - Collaborative Agent System Backend.
 
+## Execution Model
+
+The system demonstrates all three required execution patterns:
+
+| Type | Where | What |
+|------|-------|------|
+| **Serial** | `backend/crew_system.py` | ingest → planner → reason → respond → guard — each step depends on the previous |
+| **Parallel** | `backend/crew_system.py` | Intent, Memory, Retrieval run in parallel via `ThreadPoolExecutor` after Planner |
+| **Async** | `backend/main.py` | Memory save runs in `BackgroundTasks.add_task()` — does not block the response |
+
+Flow: `Ingestion` → `Planner` → `[Intent | Memory | Retrieval]` (parallel) → `Reasoning` → `Response` → `Guardrails` → END (+ async memory persist).
+
+**Framework:** CrewAI (primary). Set `USE_CREWAI=false` to use LangGraph.
+
 ## Chunking Strategy (RAG)
 
 - **Chunk Size: 1000** – Balances context window size with retrieval precision for support documentation. Larger chunks preserve more context; 1000 chars fits typical FAQ/runbook paragraphs.

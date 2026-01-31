@@ -8,7 +8,7 @@ from backend import config
 logger = logging.getLogger("agent_system")
 
 def generate_response_with_llm(state):
-    """Generate response using LLM (OpenAI)."""
+    """Generate response using LLM (OpenAI). Retries up to MAX_LLM_RETRIES on failure."""
     try:
         from langchain_openai import ChatOpenAI
         from langchain_core.prompts import ChatPromptTemplate

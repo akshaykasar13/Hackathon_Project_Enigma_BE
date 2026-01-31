@@ -17,6 +17,9 @@ load_dotenv(_load_env if _load_env.exists() else None)
 # Test mode check
 TEST_MODE = os.getenv("TEST_MODE", "false").lower() == "true"
 
+# Agent framework: True = CrewAI, False = LangGraph
+USE_CREWAI = os.getenv("USE_CREWAI", "true").lower() == "true"
+
 # OpenAI Configuration
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 if not OPENAI_API_KEY and not TEST_MODE:
@@ -53,8 +56,9 @@ else:
 BACKEND_PORT = int(os.getenv("BACKEND_PORT", "8000"))
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
 
-# Vector Store Configuration (data at project root)
-CHROMA_PERSIST_DIR = os.getenv("CHROMA_PERSIST_DIR", str(PROJECT_ROOT / "data" / "chroma"))
+# Vector Store Configuration (data at project root) - using FAISS
+FAISS_INDEX_DIR = os.getenv("FAISS_INDEX_DIR", str(PROJECT_ROOT / "data" / "faiss_index"))
+CHROMA_PERSIST_DIR = os.getenv("CHROMA_PERSIST_DIR", str(PROJECT_ROOT / "data" / "chroma"))  # deprecated, kept for compatibility
 DOCS_DIR = os.getenv("DOCS_DIR", str(PROJECT_ROOT / "data" / "docs"))
 CHUNK_SIZE = int(os.getenv("CHUNK_SIZE", "1000"))
 CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", "200"))
