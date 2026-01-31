@@ -19,13 +19,14 @@ except ImportError:
         def __init__(self, generator):
             self.generator = generator
 from pydantic import BaseModel, Field
-from typing import Optional, List
+from typing import Optional, List, Literal
 from datetime import datetime
 import uuid
 import traceback
 import json
 import asyncio
-from backend.graph import app_graph
+from backend.crew_system import invoke as crew_invoke
+from backend.graph import app_graph  # fallback when USE_CREWAI=false
 from backend.memory.storage import memory_storage
 from backend.observability import observability
 from backend.context import window_context
@@ -46,13 +47,26 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+class ConversationMessage(BaseModel):
+    role: Literal["user", "assistant"]
+    content: str
+
 class Ticket(BaseModel):
     ticket: str = Field(..., min_length=1, description="Ticket or query text")
+    conversation_history: Optional[List[ConversationMessage]] = Field(
+        default=None,
+        description="Optional multi-turn chat history: [{ role: 'user'|'assistant', content: string }]"
+    )
 
 class MemoryUpdate(BaseModel):
     content: Optional[str] = None
     outcome: Optional[str] = None
     metadata: Optional[dict] = None
+
+class EpisodicMemoryPatch(BaseModel):
+    """PATCH body for episodic memory - frontend uses incident/outcome."""
+    incident: Optional[str] = None
+    outcome: Optional[str] = None
 
 class SemanticMemoryUpdate(BaseModel):
     content: Optional[str] = None
@@ -67,6 +81,23 @@ def _save_memory_async(state: dict):
     except Exception as e:
         print(f"[Async] Memory save failed: {e}")
 
+
+def _make_json_safe(obj, depth=0):
+    """Recursively convert obj to JSON-serializable form. Prevents UI serialization errors."""
+    if depth > 10:
+        return str(obj)
+    if obj is None:
+        return None
+    if isinstance(obj, (str, int, float, bool)):
+        return obj
+    if isinstance(obj, datetime):
+        return obj.isoformat()
+    if isinstance(obj, dict):
+        return {str(k): _make_json_safe(v, depth + 1) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_make_json_safe(x, depth + 1) for x in obj]
+    return str(obj)
+
 @app.post("/ticket")
 def run(ticket: Ticket, background_tasks: BackgroundTasks):
     """Process a ticket through the agent system."""
@@ -78,6 +109,10 @@ def run(ticket: Ticket, background_tasks: BackgroundTasks):
             "task_id": task_id,
             "timestamp": datetime.now().isoformat()
         }
+        if ticket.conversation_history:
+            hist = [{"role": m.role, "content": m.content} for m in ticket.conversation_history]
+            # Keep last 20 turns to prevent unbounded context
+            initial_state["conversation_history"] = hist[-20:] if len(hist) > 20 else hist
         print(f"[API] Processing ticket: {ticket.ticket[:50]}...")
         
         # Log ticket processing start
@@ -86,7 +121,8 @@ def run(ticket: Ticket, background_tasks: BackgroundTasks):
         # Apply context windowing before processing
         initial_state = window_context(initial_state)
         
-        result = app_graph.invoke(initial_state)
+        use_crewai = config.USE_CREWAI
+        result = crew_invoke(initial_state) if use_crewai else app_graph.invoke(initial_state)
         
         # ASYNC EXECUTION: Save memory in background (doesn't block response)
         if result:
@@ -188,7 +224,7 @@ def run(ticket: Ticket, background_tasks: BackgroundTasks):
                 response_data["reasoning"] = result["reasoning"]
             
             print(f"[API] Returning response with priority: {response_data.get('priority')}, action: {response_data.get('action')}")
-            return response_data
+            return _make_json_safe(response_data)
         else:
             # If it's not a dict, try to convert it
             print(f"[API] Result is not a dict, converting... Type: {type(result)}")
@@ -360,6 +396,21 @@ def get_episodic_memory_by_id(memory_id: int):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to retrieve memory: {str(e)}"
         )
+
+@app.patch("/memory/episodic/{memory_id}")
+def patch_episodic_memory(memory_id: int, update: EpisodicMemoryPatch):
+    """Patch episodic memory - accepts incident and/or outcome (for frontend edit)."""
+    updates = {}
+    if update.incident is not None:
+        updates["incident"] = update.incident
+    if update.outcome is not None:
+        updates["outcome"] = update.outcome
+    if not updates:
+        return {"success": False, "message": "No fields to update"}
+    success = memory_storage.update_episodic_memory(memory_id, updates)
+    if success:
+        return {"success": True, "message": "Memory updated"}
+    return {"success": False, "message": "Memory not found"}
 
 @app.put("/memory/episodic/{memory_id}")
 def update_episodic_memory(memory_id: int, update: MemoryUpdate):

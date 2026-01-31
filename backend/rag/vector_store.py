@@ -1,26 +1,84 @@
 """
 Vector store module for RAG (Retrieval-Augmented Generation).
 Supports: PDF, Word (.docx), TXT, PPTX, Images (with OCR)
+Uses fallback loaders (pypdf, python-docx, python-pptx) when LangChain loaders fail.
 """
 from langchain_openai import OpenAIEmbeddings
-from langchain_community.document_loaders import (
-    PyPDFLoader,
-    TextLoader,
-    UnstructuredWordDocumentLoader,
-    UnstructuredPowerPointLoader
-)
+from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from backend import config
 import os
 
-# Try to import Chroma, fallback to mock if not available
+# Optional loaders - use fallbacks if not available
+def _load_pdf(filepath):
+    try:
+        from langchain_community.document_loaders import PyPDFLoader
+        loader = PyPDFLoader(filepath)
+        return loader.load()
+    except Exception:
+        try:
+            from pypdf import PdfReader
+            reader = PdfReader(filepath)
+            docs = [Document(page_content=p.extract_text() or "", metadata={"source": filepath, "page": i + 1}) for i, p in enumerate(reader.pages)]
+            return docs
+        except ImportError:
+            raise RuntimeError("`pypdf` package not found, please install it with `pip install pypdf`")
+
+def _load_docx(filepath):
+    try:
+        from langchain_community.document_loaders import UnstructuredWordDocumentLoader
+        loader = UnstructuredWordDocumentLoader(filepath)
+        return loader.load()
+    except Exception:
+        try:
+            from docx import Document as DocxDocument
+            doc = DocxDocument(filepath)
+            text = "\n".join(p.text for p in doc.paragraphs)
+            return [Document(page_content=text, metadata={"source": filepath})]
+        except ImportError:
+            raise RuntimeError("unstructured or python-docx not found. Install: `pip install unstructured` or `pip install python-docx`")
+
+def _load_pptx(filepath):
+    try:
+        from langchain_community.document_loaders import UnstructuredPowerPointLoader
+        loader = UnstructuredPowerPointLoader(filepath)
+        return loader.load()
+    except Exception:
+        try:
+            from pptx import Presentation
+            prs = Presentation(filepath)
+            parts = []
+            for i, slide in enumerate(prs.slides):
+                slide_text = []
+                for shape in slide.shapes:
+                    if hasattr(shape, "text") and shape.text:
+                        slide_text.append(shape.text)
+                parts.append("\n".join(slide_text))
+            text = "\n\n".join(parts)
+            return [Document(page_content=text, metadata={"source": filepath})]
+        except ImportError:
+            raise RuntimeError("unstructured or python-pptx not found. Install: `pip install unstructured` or `pip install python-pptx`")
+
 try:
-    from langchain_community.vectorstores import Chroma
-    CHROMA_AVAILABLE = True
+    from langchain_community.document_loaders import TextLoader
+except ImportError:
+    TextLoader = None
+
+# Try to import FAISS first, fallback to Chroma, then mock
+FAISS_AVAILABLE = False
+CHROMA_AVAILABLE = False
+try:
+    from langchain_community.vectorstores import FAISS
+    FAISS_AVAILABLE = True
 except (ImportError, Exception) as e:
-    CHROMA_AVAILABLE = False
-    print(f"[VectorStore] Warning: Chroma not available: {e}")
-    print("[VectorStore] Will use mock vector store")
+    print(f"[VectorStore] FAISS not available: {e}")
+    try:
+        from langchain_community.vectorstores import Chroma
+        CHROMA_AVAILABLE = True
+        print("[VectorStore] Using Chroma as fallback")
+    except (ImportError, Exception) as e2:
+        print(f"[VectorStore] Chroma not available: {e2}")
+        print("[VectorStore] Will use mock vector store")
 
 # Import mock embeddings for test mode
 if config.TEST_MODE:
@@ -71,32 +129,42 @@ class MockVectorStore:
         """Persist (mock - no-op)."""
         pass
 
-# Initialize vector store - use Chroma if available, otherwise mock
+# Initialize vector store - prefer FAISS, fallback to Chroma, then mock
 _db = None
 
 def get_db():
-    """Get or create the vector store instance."""
+    """Get or create the vector store instance. Uses FAISS if available."""
     global _db
     if _db is None:
-        if CHROMA_AVAILABLE:
+        if FAISS_AVAILABLE:
             try:
-                _db = Chroma(
-                    persist_directory=config.CHROMA_PERSIST_DIR,
-                    embedding_function=embedding_function
-                )
+                import os
+                index_path = config.FAISS_INDEX_DIR
+                if os.path.exists(index_path) and os.path.exists(os.path.join(index_path, "index.faiss")):
+                    _db = FAISS.load_local(index_path, embedding_function, allow_dangerous_deserialization=True)
+                    print("[VectorStore] Loaded FAISS index from", index_path)
+                else:
+                    # Create minimal empty index until first ingest
+                    _db = FAISS.from_texts([" "], embedding_function)
+                    print("[VectorStore] Created new FAISS index (run ingest to populate)")
             except Exception as e:
-                print(f"[VectorStore] Could not initialize ChromaDB: {e}")
-                print("[VectorStore] Falling back to mock vector store")
-                _db = MockVectorStore(
-                    persist_directory=config.CHROMA_PERSIST_DIR,
-                    embedding_function=embedding_function
-                )
+                print(f"[VectorStore] Could not initialize FAISS: {e}")
+                _db = _create_fallback_db()
         else:
-            _db = MockVectorStore(
+            _db = _create_fallback_db()
+    return _db
+
+def _create_fallback_db():
+    """Create Chroma or Mock fallback."""
+    if CHROMA_AVAILABLE:
+        try:
+            return Chroma(
                 persist_directory=config.CHROMA_PERSIST_DIR,
                 embedding_function=embedding_function
             )
-    return _db
+        except Exception as e:
+            print(f"[VectorStore] Chroma init failed: {e}")
+    return MockVectorStore(embedding_function=embedding_function)
 
 # For backward compatibility - create a simple wrapper
 class DBWrapper:
@@ -146,23 +214,23 @@ def ingest_docs(docs_dir: str = None):
         
         try:
             if filename.endswith(".pdf"):
-                loader = PyPDFLoader(filepath)
-                docs = loader.load()
+                docs = _load_pdf(filepath)
                 print(f"Loaded PDF {filename}: {len(docs)} pages")
                 
             elif filename.endswith((".docx", ".doc")):
-                loader = UnstructuredWordDocumentLoader(filepath)
-                docs = loader.load()
+                docs = _load_docx(filepath)
                 print(f"Loaded Word {filename}: {len(docs)} pages")
                 
             elif filename.endswith(".txt"):
-                loader = TextLoader(filepath, encoding='utf-8')
-                docs = loader.load()
+                if TextLoader:
+                    docs = TextLoader(filepath, encoding='utf-8').load()
+                else:
+                    with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+                        docs = [Document(page_content=f.read(), metadata={"source": filepath})]
                 print(f"Loaded TXT {filename}: {len(docs)} pages")
                 
             elif filename.endswith((".pptx", ".ppt")):
-                loader = UnstructuredPowerPointLoader(filepath)
-                docs = loader.load()
+                docs = _load_pptx(filepath)
                 print(f"Loaded PowerPoint {filename}: {len(docs)} slides")
                 
             elif filename.lower().endswith((".png", ".jpg", ".jpeg", ".gif", ".bmp")):
@@ -188,9 +256,18 @@ def ingest_docs(docs_dir: str = None):
             continue
     
     if all_chunks:
-        db.add_documents(all_chunks)
-        db.persist()
-        print(f"\nTotal chunks ingested: {len(all_chunks)} (chunk_size={CHUNK_SIZE}, overlap={CHUNK_OVERLAP})")
+        global _db
+        if FAISS_AVAILABLE:
+            import os
+            os.makedirs(config.FAISS_INDEX_DIR, exist_ok=True)
+            _db = FAISS.from_documents(all_chunks, embedding_function)
+            _db.save_local(config.FAISS_INDEX_DIR)
+            print(f"\nTotal chunks ingested: {len(all_chunks)} (chunk_size={CHUNK_SIZE}, overlap={CHUNK_OVERLAP})")
+            print(f"[VectorStore] FAISS index saved to {config.FAISS_INDEX_DIR}")
+        else:
+            db.add_documents(all_chunks)
+            db.persist()
+            print(f"\nTotal chunks ingested: {len(all_chunks)} (chunk_size={CHUNK_SIZE}, overlap={CHUNK_OVERLAP})")
     else:
         print("No supported files found to ingest")
     

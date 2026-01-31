@@ -37,98 +37,126 @@ def cleanup_existing_files():
     else:
         print(f"[SUCCESS] No existing files found in {docs_dir}\n")
 
-# Payment/Financial Service Domain Content Templates
+# Payment/Financial Service Domain - Rich content for quality RAG testing
+# Covers: runbooks, FAQs, API docs, compliance, incident response, troubleshooting
+
 base_content = [
-    "Payment gateway integration architecture and secure token handling procedures.",
-    "Transaction processing workflows and error recovery mechanisms for financial services.",
-    "Payment API integration guidelines and PCI-DSS compliance requirements.",
-    "Financial transaction security protocols and authentication mechanisms.",
-    "Payment processing performance monitoring and optimization strategies.",
-    "Payment database management and transaction backup procedures.",
-    "Payment gateway configuration and troubleshooting guides for EU region.",
-    "Payment user authentication and authorization workflows for financial services.",
-    "Payment transaction logging and observability implementation details.",
-    "Payment service deployment and CI/CD pipeline configurations.",
-    "Billing and invoicing system architecture for financial services.",
-    "Refund and chargeback processing procedures and workflows.",
-    "Payment processor integration and API endpoint documentation.",
-    "Financial service compliance requirements for EU and global regions.",
-    "Transaction reconciliation and settlement procedures.",
-    "Payment fraud detection and prevention mechanisms.",
-    "Merchant account management and configuration guidelines.",
-    "Payment webhook handling and event processing architecture.",
-    "Financial reporting and analytics for payment transactions.",
-    "Payment service level agreements and uptime requirements.",
+    "Payment gateway integration architecture and secure token handling procedures for PCI-DSS compliance.",
+    "Transaction processing workflows and error recovery mechanisms for financial services including retry logic and idempotency.",
+    "Payment API integration guidelines: REST endpoints, authentication, webhook callbacks, and error code handling.",
+    "Financial transaction security protocols: TLS 1.3, tokenization, encryption at rest and in transit.",
+    "Payment processing performance monitoring: latency metrics, throughput, success rates, and SLA thresholds.",
+    "Payment database management: transaction logs, audit trails, backup procedures, and data retention policies.",
+    "Payment gateway configuration for EU region: PSD2 compliance, SCA requirements, and GDPR data handling.",
+    "Payment user authentication: 3DS2 flows, biometric verification, and risk-based authentication.",
+    "Payment transaction logging: structured logs, trace IDs, and observability for incident investigation.",
+    "Payment service deployment: blue-green releases, canary deployments, and rollback procedures.",
+    "Billing and invoicing: subscription management, proration, tax calculation, and invoice generation.",
+    "Refund and chargeback processing: initiation, status tracking, dispute resolution, and reason codes.",
+    "Payment processor integration: Stripe, Adyen, Braintree API documentation and migration guides.",
+    "Financial compliance: PCI-DSS Level 1, SOC 2, ISO 27001 requirements for payment systems.",
+    "Transaction reconciliation: daily settlement, mismatch resolution, and reconciliation report generation.",
+    "Payment fraud detection: velocity checks, device fingerprinting, and ML-based risk scoring.",
+    "Merchant account management: onboarding, KYC verification, and settlement schedule configuration.",
+    "Payment webhooks: event types, signature verification, retry policy, and idempotency handling.",
+    "Financial reporting: transaction reports, revenue analytics, and regulatory reporting formats.",
+    "Payment SLA and uptime: 99.9% target, incident response times, and status page communication.",
+    "Error code 5003: Payment gateway connection timeout. Check network connectivity and gateway health.",
+    "Error code 4001: Invalid payment method. Verify card details and expiry. Support 3DS if required.",
+    "Error code 4002: Insufficient funds. Customer must use alternative payment method or add funds.",
+    "EU payment failures: Verify PSD2 compliance, SCA completion, and issuer 3DS configuration.",
+    "Intermittent payment failures: Review gateway logs, check rate limits, verify certificate expiry.",
+    "Currency mismatch: Ensure amount and currency code match. INR to USD conversion requires FX rates.",
+    "Duplicate transaction prevention: Use idempotency keys. Check idempotency_key in request headers.",
+    "Webhook delivery failures: Verify endpoint URL, SSL certificate, and signature validation logic.",
 ]
 
 variations = [
-    "Payment gateway integration requires secure token handling and PCI-DSS compliance.",
-    "EU region payment compliance mandates specific data processing and GDPR rules.",
-    "Payment transaction connection pooling improves system performance and reduces latency.",
-    "Payment error code 5003 indicates gateway connection timeout issues requiring immediate attention.",
-    "Payment service incident response procedures for critical financial system failures.",
-    "Payment gateway load balancing configuration for high availability and redundancy.",
-    "Payment transaction cache invalidation strategies for distributed financial systems.",
-    "Payment message queue processing and event-driven architecture for real-time transactions.",
-    "Payment microservices communication patterns and protocols for financial services.",
-    "Payment service container orchestration and auto-scaling policies for peak transaction volumes.",
-    "Payment gateway API rate limiting and throttling mechanisms.",
-    "Payment transaction encryption and secure data transmission protocols.",
-    "Payment reconciliation processes and automated settlement workflows.",
-    "Payment fraud detection algorithms and machine learning models.",
-    "Payment merchant onboarding procedures and KYC verification processes.",
-    "Payment subscription billing and recurring charge management.",
-    "Payment dispute resolution and chargeback handling procedures.",
-    "Payment currency conversion and multi-currency transaction support.",
-    "Payment webhook security and signature verification mechanisms.",
-    "Payment service monitoring dashboards and alerting configurations.",
-    "Payment gateway failover and disaster recovery procedures.",
-    "Payment transaction audit logging and compliance reporting.",
-    "Payment PCI-DSS compliance checklist and security requirements.",
-    "Payment gateway performance benchmarks and SLA monitoring.",
-    "Payment service integration testing and sandbox environment setup.",
+    "Payment gateway requires secure token handling. Never store raw card numbers. Use payment tokens.",
+    "EU region mandates PSD2 and Strong Customer Authentication (SCA) for card payments.",
+    "Error 5003 indicates gateway timeout. Typical causes: network issues, gateway overload, DNS failure.",
+    "Connection pooling for payment DB: set max_connections=50, connection_timeout=30s.",
+    "For INR to USD discrepancy: verify FX rate source, conversion timestamp, and rounding rules.",
+    "Chargeback reason code 10.4: customer disputes transaction. Gather proof of delivery and authorization.",
+    "Payment API rate limit: 100 requests/second. Use exponential backoff for 429 responses.",
+    "PCI-DSS: Never log full card numbers. Mask to last 4 digits. Secure log storage required.",
+    "Webhook retry: 3 attempts at 1h, 4h, 24h. Implement idempotent handlers for duplicate events.",
+    "Gateway failover: primary EU, secondary US. Health check every 30s. Auto-switch on 3 consecutive failures.",
+    "Refund must be <= original amount. Partial refunds supported. Full refund voids original transaction.",
+    "3DS2 challenge: customer may receive OTP from bank. Timeout 5 minutes. Handle challenge completion.",
+    "Settlement cycle: T+2 for cards, T+1 for bank transfer. Check processor-specific timelines.",
+    "Payment reconciliation: match transaction ID, amount, currency. Flag mismatches for manual review.",
+    "Merchant KYC: business registration, bank account verification, beneficial owner disclosure.",
+    "Subscription billing: prorate on upgrade/downgrade. Credit unused portion. Send invoice 7 days before charge.",
+    "Multi-currency: store amount in minor units (cents). Display in major units. Use ISO 4217 codes.",
+    "Fraud score > 80: block transaction. Score 50-80: require 3DS. Score < 50: auto-approve.",
+    "Audit log retention: 7 years for financial transactions. Immutable storage. Tamper-evident.",
+    "Incident severity: P1 payment down, P2 degraded, P3 single merchant. P1 requires 15-min acknowledgment.",
 ]
 
 def generate_pdf(filename, doc_number):
-    """Generate a PDF with 5-6 pages."""
+    """Generate a PDF with 5-6 pages of payment/financial domain content."""
     c = canvas.Canvas(filename, pagesize=letter)
     width, height = letter
     num_pages = random.randint(5, 6)
     
     for page_num in range(num_pages):
-        c.setFont("Helvetica-Bold", 16)
-        c.drawString(50, height - 50, f"Document {doc_number} - Page {page_num + 1}")
+        c.setFont("Helvetica-Bold", 14)
+        c.drawString(50, height - 50, f"Payment & Financial Services - Document {doc_number} - Page {page_num + 1}/{num_pages}")
+        c.setFont("Helvetica", 9)
+        c.drawString(50, height - 68, f"Document ID: PAY-{doc_number:03d} | Classification: Internal Use")
         
-        y_position = height - 100
-        c.setFont("Helvetica", 12)
+        y_position = height - 95
+        c.setFont("Helvetica", 11)
         
+        # Main content (2-3 paragraphs per page)
         content_index = (doc_number + page_num) % len(base_content)
         variation_index = (doc_number * 2 + page_num) % len(variations)
+        extra_index = (doc_number * 3 + page_num) % len(base_content)
         
         lines = [
             base_content[content_index],
+            "",
             variations[variation_index],
-            f"Page {page_num + 1} of {num_pages} in payment service document {doc_number}.",
-            "This document contains payment and financial service technical documentation.",
-            f"Payment Service Document ID: PAY-{doc_number:03d}",
+            "",
+            base_content[extra_index],
+            "",
+            "Key considerations for payment systems: secure tokenization, PCI-DSS compliance, audit logging.",
+            "For EU transactions ensure PSD2/SCA. For USD/INR verify FX rates and conversion timestamps.",
         ]
         
         for line in lines:
-            if y_position > 50:
-                c.drawString(50, y_position, line)
-                y_position -= 30
+            if y_position > 60 and line:
+                # Simple wrap: truncate long lines, draw
+                max_chars = 95
+                if len(line) > max_chars:
+                    parts = [line[i:i+max_chars] for i in range(0, len(line), max_chars)]
+                    for part in parts[:3]:  # Max 3 lines per paragraph
+                        if y_position > 60:
+                            c.drawString(50, y_position, part)
+                            y_position -= 14
+                else:
+                    c.drawString(50, y_position, line)
+                    y_position -= 14
+            elif not line:
+                y_position -= 6
         
-        # Payment domain filler content
-        filler = [
-            "Payment gateway configuration parameters and secure environment variables.",
-            "Payment transaction testing procedures and validation criteria.",
-            "Financial service compliance requirements and audit procedures.",
+        # Section: Troubleshooting / Runbook
+        y_position -= 10
+        c.setFont("Helvetica-Bold", 10)
+        if y_position > 80:
+            c.drawString(50, y_position, "Troubleshooting:")
+            y_position -= 16
+        c.setFont("Helvetica", 10)
+        troubleshoot = [
+            "- Check gateway health endpoint. Verify SSL certificate expiry.",
+            "- Review transaction logs for error codes. 5003 = timeout, 4001 = invalid method.",
+            "- For currency mismatch: verify amount in minor units, currency ISO code.",
         ]
-        
-        for line in filler:
-            if y_position > 50:
-                c.drawString(50, y_position, line)
-                y_position -= 25
+        for t in troubleshoot:
+            if y_position > 60:
+                c.drawString(55, y_position, t[:85])
+                y_position -= 14
         
         c.showPage()
     
@@ -136,29 +164,37 @@ def generate_pdf(filename, doc_number):
     print(f"Generated PDF: {filename} ({num_pages} pages)")
 
 def generate_txt(filename, doc_number):
-    """Generate a TXT file with 5-6 pages of content."""
+    """Generate a TXT file with 5-6 pages of payment/financial domain content."""
     num_pages = random.randint(5, 6)
     content_lines = []
     
     for page_num in range(num_pages):
-        content_lines.append(f"\n{'='*60}")
-        content_lines.append(f"Document {doc_number} - Page {page_num + 1}")
-        content_lines.append(f"{'='*60}\n")
+        content_lines.append(f"\n{'='*70}")
+        content_lines.append(f"PAYMENT & FINANCIAL SERVICES - Document {doc_number} - Page {page_num + 1} of {num_pages}")
+        content_lines.append(f"Document ID: PAY-{doc_number:03d} | Domain: Payment Gateway & Transaction Processing")
+        content_lines.append(f"{'='*70}\n")
         
         content_index = (doc_number + page_num) % len(base_content)
         variation_index = (doc_number * 2 + page_num) % len(variations)
+        extra_index = (doc_number * 3 + page_num) % len(base_content)
         
         content_lines.append(base_content[content_index])
+        content_lines.append("")
         content_lines.append(variations[variation_index])
-        content_lines.append(f"\nPage {page_num + 1} of {num_pages} in payment service document {doc_number}.")
-        content_lines.append("This document contains payment and financial service technical documentation.")
-        content_lines.append(f"Payment Service Document ID: PAY-{doc_number:03d}\n")
-        
-        content_lines.append("Payment service technical details:")
-        content_lines.append("- Payment gateway implementation notes and procedures")
-        content_lines.append("- Payment API configuration and setup instructions")
-        content_lines.append("- Payment service troubleshooting and maintenance guides")
-        content_lines.append("- Financial transaction processing workflows\n")
+        content_lines.append("")
+        content_lines.append(base_content[extra_index])
+        content_lines.append("")
+        content_lines.append("Additional context:")
+        content_lines.append("- Payment gateway configuration requires secure token handling and PCI-DSS compliance.")
+        content_lines.append("- EU region transactions mandate PSD2 and Strong Customer Authentication (SCA).")
+        content_lines.append("- Error code 5003 indicates gateway connection timeout; check network and gateway health.")
+        content_lines.append("- For INR/USD discrepancies verify FX rate source and conversion timestamp.")
+        content_lines.append("")
+        content_lines.append("Troubleshooting steps:")
+        content_lines.append("1. Verify gateway connectivity and SSL certificate validity")
+        content_lines.append("2. Check transaction logs for specific error codes")
+        content_lines.append("3. Validate amount and currency for multi-currency transactions")
+        content_lines.append("")
     
     with open(filename, 'w', encoding='utf-8') as f:
         f.write('\n'.join(content_lines))
@@ -166,28 +202,28 @@ def generate_txt(filename, doc_number):
     print(f"Generated TXT: {filename} ({num_pages} pages)")
 
 def generate_word(filename, doc_number):
-    """Generate a Word document using python-docx."""
+    """Generate a Word document with 5-6 pages of payment/financial content."""
     try:
         from docx import Document
-        from docx.shared import Inches
+        from docx.shared import Inches, Pt
         
         num_pages = random.randint(5, 6)
         doc = Document()
         
         for page_num in range(num_pages):
-            # Add title
-            doc.add_heading(f'Document {doc_number} - Page {page_num + 1}', level=1)
+            doc.add_heading(f'Payment & Financial Services - Document {doc_number} - Page {page_num + 1} of {num_pages}', level=1)
+            doc.add_paragraph(f'Document ID: PAY-{doc_number:03d}', style='Intense Quote')
             
             content_index = (doc_number + page_num) % len(base_content)
             variation_index = (doc_number * 2 + page_num) % len(variations)
+            extra_index = (doc_number * 3 + page_num) % len(base_content)
             
-            # Add content
             doc.add_paragraph(base_content[content_index])
             doc.add_paragraph(variations[variation_index])
-            doc.add_paragraph(f"Page {page_num + 1} of {num_pages} in payment service document {doc_number}.")
-            doc.add_paragraph(f"Payment Service Document ID: PAY-{doc_number:03d}")
+            doc.add_paragraph(base_content[extra_index])
+            doc.add_paragraph("Key considerations: PCI-DSS compliance, secure tokenization, EU PSD2/SCA for card payments.")
+            doc.add_paragraph("Troubleshooting: Error 5003 = gateway timeout. Error 4001 = invalid payment method. Verify FX rates for multi-currency.")
             
-            # Add page break (except for last page)
             if page_num < num_pages - 1:
                 doc.add_page_break()
         
@@ -219,7 +255,7 @@ def generate_word(filename, doc_number):
         print(f"  Note: Install python-docx for proper .docx generation")
 
 def generate_pptx_content(filename, doc_number):
-    """Generate PowerPoint presentation using python-pptx."""
+    """Generate PowerPoint with 5-6 slides of payment/financial content."""
     try:
         from pptx import Presentation
         from pptx.util import Inches, Pt
@@ -228,29 +264,23 @@ def generate_pptx_content(filename, doc_number):
         prs = Presentation()
         
         for slide_num in range(num_slides):
-            # Add slide with title and content layout
-            slide_layout = prs.slide_layouts[1]  # Title and Content layout
+            slide_layout = prs.slide_layouts[1]
             slide = prs.slides.add_slide(slide_layout)
             
             content_index = (doc_number + slide_num) % len(base_content)
             variation_index = (doc_number * 2 + slide_num) % len(variations)
             
-            # Set title
             title = slide.shapes.title
-            title.text = f"Payment Service Doc {doc_number} - Slide {slide_num + 1}"
+            title.text = f"Payment & Financial - Doc {doc_number} - Slide {slide_num + 1}/{num_slides}"
             
-            # Set content
             content = slide.placeholders[1]
             tf = content.text_frame
             tf.text = base_content[content_index]
             
-            p = tf.add_paragraph()
-            p.text = variations[variation_index]
-            p.level = 1
-            
-            p = tf.add_paragraph()
-            p.text = f"Payment Service Document ID: PAY-{doc_number:03d}"
-            p.level = 1
+            for text in [variations[variation_index], f"Doc ID: PAY-{doc_number:03d}", "Domain: Payment gateway, transactions, compliance"]:
+                p = tf.add_paragraph()
+                p.text = text
+                p.level = 1
         
         prs.save(filename)
         print(f"Generated PPTX: {filename} ({num_slides} slides)")
@@ -284,8 +314,8 @@ if __name__ == "__main__":
     print("="*80)
     print("  PAYMENT/FINANCIAL SERVICE DOMAIN FILE GENERATION")
     print("="*80)
-    print("\nGenerating 100 files (PDF, Word, TXT, PPTX) with 5-6 pages each...")
-    print("All files will contain payment gateway, transaction processing, and financial service content.\n")
+    print("\nGenerating 100 files (PDF, Word, TXT, PPTX) - each 5-6 pages - payment/financial domain.")
+    print("Content: runbooks, error codes, compliance, troubleshooting, API docs, incident response.\n")
     
     # Clean up existing files first
     cleanup_existing_files()
@@ -315,21 +345,28 @@ if __name__ == "__main__":
         generate_pptx_content(filename, i+75)
         file_count += 1
     
-    # Generate sample images with text (for OCR indexing)
+    # Generate sample images with payment/financial text (for OCR indexing)
     try:
         from PIL import Image
         from PIL import ImageDraw, ImageFont
-        for i in range(1, 6):
+        img_texts = [
+            "Payment Gateway - Error 5003: Connection timeout. Check gateway health.",
+            "EU Payment - PSD2/SCA required. 3DS authentication mandatory.",
+            "INR to USD: Verify FX rate. Amount in minor units. Currency code ISO 4217.",
+            "Refund & Chargeback - Reason code 10.4. Gather proof of delivery.",
+            "PCI-DSS: Never log full card. Mask last 4. Secure tokenization required.",
+        ]
+        for i, img_text in enumerate(img_texts, 1):
             img_path = DOCS_DIR / f"doc_image_{i:03d}.png"
-            img = Image.new("RGB", (800, 200), color=(255, 255, 255))
+            img = Image.new("RGB", (900, 180), color=(255, 255, 255))
             d = ImageDraw.Draw(img)
-            text = f"Payment Service Document {i}. Payment gateway EU region. Error code 5003."
-            d.text((10, 80), text, fill=(0, 0, 0))
+            d.text((15, 70), f"Payment Doc {i}: {img_text}", fill=(0, 0, 0))
+            d.text((15, 150), f"Document ID: PAY-IMG-{i:03d}", fill=(80, 80, 80))
             img.save(str(img_path))
             file_count += 1
             print(f"Generated image: {img_path.name}")
     except ImportError:
-        print("Skipping images: Pillow not installed")
+        print("Skipping images: Install Pillow for image generation")
     
     print(f"\n[SUCCESS] Generated {file_count} files in {DOCS_DIR}/")
     print(f"\nBreakdown:")

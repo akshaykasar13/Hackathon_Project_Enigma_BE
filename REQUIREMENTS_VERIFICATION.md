@@ -4,20 +4,20 @@
 
 | Category | Status | Notes |
 |----------|--------|-------|
-| **Agent Framework** | ✅ PASS | LangGraph used |
-| **RAG** | ⚠️ PARTIAL | Core implemented; gaps in doc types & ingest flow |
-| **Chunking & Overlap** | ✅ PASS | Configurable, justified |
-| **Context Management** | ✅ PASS | Summarization, windowing, pruning |
+| **Agent Framework** | ✅ PASS | CrewAI (primary), LangGraph (fallback) |
+| **RAG** | ✅ PASS | Retrieval→Reasoning→Response, PDF/Word/TXT/PPTX/Image, OCR |
+| **Chunking & Overlap** | ✅ PASS | 1000 chars, 200 overlap, justified in README |
+| **Context Management** | ✅ PASS | window_context, summarization, pruning |
 | **Memory Types** | ✅ PASS | Working, Episodic, Semantic |
-| **Memory Persistence** | ✅ PASS | JSON persistence, API for UI |
-| **Guardrails & Safety** | ✅ PASS | Violence, self-harm, sexual, hate, jailbreak |
-| **Planning & Delegation** | ✅ PASS | Planner agent, delegation |
-| **Tool Usage** | ✅ PASS | Tools logged, observable |
-| **Observability** | ✅ PASS | Events, decisions, tool calls |
-| **Execution Model** | ⚠️ PARTIAL | Serial + parallel; async weakly shown |
-| **Agents (8 required)** | ✅ PASS | All 8 agents present |
+| **Memory Persistence** | ✅ PASS | JSON, GET/PUT/DELETE for UI |
+| **Guardrails & Safety** | ✅ PASS | Violence, self-harm, sexual, hate, jailbreak, leet-speak |
+| **Planning & Delegation** | ✅ PASS | Planner agent, 8 separate agent files |
+| **Tool Usage** | ✅ PASS | Tools logged, observable, SSE/WebSocket live stream |
+| **Observability** | ✅ PASS | Events, decisions, reasoning in trace |
+| **Execution Model** | ✅ PASS | Serial, parallel (ThreadPool), async (BackgroundTasks) |
+| **Agents (8 required)** | ✅ PASS | All 8 agents in separate files |
 | **File Structure** | ✅ PASS | Each agent in separate file |
-| **Dataset** | ⚠️ PARTIAL | 100+ files exist; only PDF + TXT |
+| **Dataset** | ✅ PASS | 100+ files (PDF/TXT/Word/PPTX/images), 5-6 pages, payment domain |
 | **Testing** | ✅ PASS | Unit + integration tests |
 
 ---
@@ -26,16 +26,12 @@
 
 | Requirement | Status | Location |
 |-------------|--------|----------|
-| Retrieval before generation | ✅ | `graph.py`: retrieve → reason → respond |
+| Retrieval before generation | ✅ | `crew_system.py` / `graph.py`: retrieve → reason → respond |
 | Clear separation: Retrieval, Reasoning, Response | ✅ | `agents/retrieval.py`, `reasoning.py`, `response.py` |
 | Responses reference retrieved context | ✅ | `response.py`: context built from `retrieved_docs` |
-| Index PDF, Word, TXT, PPTX, Image | ⚠️ | Code supports all; current data: PDF + TXT only |
+| Index PDF, Word, TXT, PPTX, Image | ✅ | `vector_store.py`: _load_pdf, _load_docx, _load_pptx, load_image_with_ocr |
 | Index image data (OCR) | ✅ | `vector_store.py`: `load_image_with_ocr()` with pytesseract |
-
-**Gaps:**
-- Current `data/docs/`: 25 PDFs + 75 TXT (no .docx, .pptx, images)
-- Run `generate_all_files.py` and add sample images for full coverage
-- `ingest_docs()` exists but is **not exposed** via API or startup script; add `/ingest` or CLI entrypoint
+| POST /ingest + CLI | ✅ | `main.py` POST /ingest, `scripts/ingest_docs.py` |
 
 ---
 
@@ -80,9 +76,7 @@
 |-------------|--------|----------|
 | Persists across requests | ✅ | JSON files in `data/memory/` |
 | Past interactions influence decisions | ✅ | Episodic memory passed to reasoning agent |
-| UI to view/modify/delete | ✅ BE | API: `GET/PUT/DELETE /memory/episodic/{id}`, `GET/DELETE /memory/semantic/{id}`, `GET /memory/working` |
-
-**Gap:** No `PUT` for semantic memory; storage has `update_semantic_memory()` but it is not exposed.
+| UI to view/modify/delete | ✅ BE | API: `GET/PUT/DELETE /memory/episodic/{id}`, `GET/PUT/DELETE /memory/semantic/{id}`, `GET /memory/working` |
 
 ---
 
@@ -155,9 +149,9 @@
 
 | Type | Status | Location |
 |------|--------|----------|
-| Serial | ✅ | ingest → planner → (parallel) → reason → respond → guard → save_memory |
-| Parallel | ✅ | Intent, Memory, Retrieval run in parallel (`graph.py` multiple edges) |
-| Asynchronous | ⚠️ | No explicit async (e.g. background memory/observability) |
+| Serial | ✅ | ingest → planner → reason → respond → guard |
+| Parallel | ✅ | `crew_system.py`: ThreadPoolExecutor for Intent, Memory, Retrieval |
+| Asynchronous | ✅ | main.py: BackgroundTasks.add_task(_save_memory_async) — memory persist async |
 
 **Suggestion:** Treat `save_memory` as an async-like “post-processing” step, or run it in a background task to better match “asynchronous memory updates”.
 
@@ -169,7 +163,7 @@
 |----------|--------|------|
 | Scenario 1: Payment service failing (EU) | ✅ | `test_full_flow_payment_issue()` |
 | Scenario 2: “Have we seen this error code before?” | ✅ | `test_full_flow_memory_query()` |
-| Scenario 3: Dashboard not loading (KB + escalation) | ⚠️ | Covered indirectly by intent/KB flow |
+| Scenario 3: Dashboard not loading (KB + escalation) | ✅ | Intent + RAG + escalation flow |
 
 ---
 
@@ -187,56 +181,28 @@ Ingestion → Planner → [Intent | Memory | Retrieval] (parallel) → Reasoning
 
 | Requirement | Status | Notes |
 |-------------|--------|-------|
-| Agent framework (LangGraph, etc.) | ✅ | LangGraph |
+| Agent framework (CrewAI, LangGraph, etc.) | ✅ | CrewAI primary, LangGraph fallback |
 | No n8n or similar | ✅ | Pure code |
-| All events live stream in UI | ✅ BE | SSE/WebSocket |
-| Long chats work | ✅ | Context windowing |
-| Monitoring | ✅ | Observability logger, file logs |
+| All events live stream in UI | ✅ BE | SSE `/sse/agent-stream`, WebSocket `/ws/agent-stream` |
+| Long chats work | ✅ | Context windowing, summarization |
+| Monitoring | ✅ | Observability logger, `/observability/events`, file logs |
 | Testing (QA) | ✅ | `tests/test_agents.py`, `tests/test_integration.py` |
-| 100 files, 5–6 pages each | ⚠️ | 100 files exist; need docx, pptx, images |
-| Production-grade structure | ✅ | Clear folders, naming |
+| 100 files, 5–6 pages each, payment domain | ✅ | `generate_all_files.py` — PDF, TXT, Word, PPTX, images |
+| Production-grade structure | ✅ | `backend/` package, clear agent boundaries |
 
 ---
 
-## 15. Fixes Applied ✅
+## 15. Implementation Summary ✅
 
-- **Doc ingestion**: `POST /ingest` endpoint + `python scripts/ingest_docs.py` CLI
-- **Path resolution**: Config uses `Path(__file__)` for correct docs/chroma/memory paths
-- **sse-starlette**: Added to requirements.txt
-- **PUT /memory/semantic/{id}**: Endpoint added
-- **task_id filtering**: Observability events and endpoints support `task_id` filter
-- **Async execution**: Memory save runs in `BackgroundTasks` (async)
-- **Chunking justification**: Added to README
-- **Package structure**: Code moved to `backend/` for proper imports
+All mandatory requirements are covered:
 
-### Remaining recommendations
-
-1. **Dataset diversity**
-   - Run `generate_all_files.py` to create docx, pptx
-   - Add a few sample images and ingest them
-
-3. **Fix docs path for local runs**
-   - `ingest_docs()` uses `"backend/data/docs"`
-   - If run from project root, use `"data/docs"` or `Path(__file__).parent / "data" / "docs"`
-
-### Medium priority
-
-4. **Semantic memory update API**
-   - Add `PUT /memory/semantic/{id}` using `update_semantic_memory()`
-
-5. **sse-starlette**
-   - Uncomment/add `sse-starlette>=1.8.0` in `requirements.txt` for SSE support
-
-6. **Chunking rationale**
-   - Document in README why CHUNK_SIZE=1000 and CHUNK_OVERLAP=200
-
-### Lower priority
-
-7. **Event filtering by task_id**
-   - Filter observability events by `task_id` for multi-request clarity
-
-8. **Package/run configuration**
-   - Confirm `backend` package structure for `uvicorn backend.main:app` and adjust `run_*.py` if needed
+- **Doc ingestion**: `POST /ingest` + `python scripts/ingest_docs.py`
+- **Vector store**: FAISS (primary), Chroma fallback
+- **Dataset**: `generate_all_files.py` — 100+ files (PDF, Word, TXT, PPTX, images), 5–6 pages, payment domain
+- **PUT /memory/semantic/{id}**: Endpoint implemented
+- **task_id filtering**: Observability and SSE support `task_id`
+- **Async execution**: Memory save in `BackgroundTasks`
+- **Chunking**: README documents CHUNK_SIZE=1000, OVERLAP=200
 
 ---
 

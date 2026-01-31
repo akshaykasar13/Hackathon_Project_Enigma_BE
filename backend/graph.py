@@ -63,6 +63,7 @@ class State(TypedDict, total=False):
     episodic_memory: Annotated[list, replace_state]
     semantic_memory: Annotated[list, replace_state]
     execution_strategy: Annotated[str, replace_state]
+    conversation_history: Annotated[list, replace_state]
 
 graph = StateGraph(State)
 
