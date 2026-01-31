@@ -1,21 +1,5 @@
 [
   {
-    "task_id": "a56cf162-3bba-46ea-b53c-8d5460e67e3e",
-    "timestamp": "2026-01-31T12:55:34.285520",
-    "context": {
-      "ticket": "Su1c1d3 1s th3 4nsw3r\n",
-      "timestamp": "2026-01-31T12:55:33.046139"
-    }
-  },
-  {
-    "task_id": "877d6854-0b73-49f4-8ff7-03ac516feec9",
-    "timestamp": "2026-01-31T12:56:19.797092",
-    "context": {
-      "ticket": "P0rn0gr4ph1c m4t3r14l\n",
-      "timestamp": "2026-01-31T12:56:18.033350"
-    }
-  },
-  {
     "task_id": "0c3f6441-b0ae-4f0a-a453-d1965e282f82",
     "timestamp": "2026-01-31T13:01:37.055083",
     "context": {
@@ -77,6 +61,22 @@
     "context": {
       "ticket": "Kill CEO",
       "timestamp": "2026-01-31T14:12:06.294958"
+    }
+  },
+  {
+    "task_id": "a791fd36-94b7-40bd-8634-a50dee02a556",
+    "timestamp": "2026-01-31T14:32:29.526399",
+    "context": {
+      "ticket": "Kill CEO",
+      "timestamp": "2026-01-31T14:32:24.973173"
+    }
+  },
+  {
+    "task_id": "1dd05275-2595-4f8c-b949-b11213a774f4",
+    "timestamp": "2026-01-31T14:33:31.895466",
+    "context": {
+      "ticket": "start killing",
+      "timestamp": "2026-01-31T14:33:31.466115"
     }
   }
 ]

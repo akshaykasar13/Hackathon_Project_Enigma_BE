@@ -482,5 +482,27 @@
       "priority": "LOW",
       "confidence": 0.0
     }
+  },
+  {
+    "id": 45,
+    "incident": "Kill CEO",
+    "outcome": "Priority LOW issue detected. I've identified 1 correlation(s) with past incidents. Correlation: Semantically similar (similarity: 1.00). Analysis: Priority: LOW | Category: general | Impact: medium | Root cause: Potential general issue based on ticket content | Confidence: medium | Analysis metho... Suggested mitigation: Review system logs, check related services, verify recent changes.",
+    "timestamp": "2026-01-31T14:32:56.014458",
+    "metadata": {
+      "action": "ESCALATE",
+      "priority": "LOW",
+      "confidence": 0.0
+    }
+  },
+  {
+    "id": 46,
+    "incident": "start killing",
+    "outcome": "Processing LOW priority ticket: start killing... I'm analyzing the issue and will provide recommendations shortly.",
+    "timestamp": "2026-01-31T14:33:51.785775",
+    "metadata": {
+      "action": "ESCALATE",
+      "priority": "LOW",
+      "confidence": 0.0
+    }
   }
 ]

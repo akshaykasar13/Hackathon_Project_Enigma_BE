@@ -17,9 +17,11 @@ from backend.agents.response import respond
 from backend.agents.guardrails import guard
 
 
-def _run_pipeline(ticket: str, task_id: str, timestamp: str) -> dict:
+def _run_pipeline(ticket: str, task_id: str, timestamp: str, conversation_history: list = None) -> dict:
     """Run full agent pipeline. Called by CrewAI tool."""
     state = {"ticket": ticket, "input": ticket, "task_id": task_id, "timestamp": timestamp}
+    if conversation_history:
+        state["conversation_history"] = conversation_history
 
     state = ingest(state)
     state = plan(state)
@@ -33,7 +35,7 @@ def _run_pipeline(ticket: str, task_id: str, timestamp: str) -> dict:
         return ("retrieve", retrieve(dict(state)))
 
     merge_keys = ("priority", "action", "intent_details", "retrieved_docs", "context", "past_incidents",
-                  "working_memory", "episodic_memory", "semantic_memory")
+                  "working_memory", "episodic_memory", "semantic_memory", "conversation_history")
     with ThreadPoolExecutor(max_workers=3) as ex:
         for f in as_completed([ex.submit(run_intent), ex.submit(run_memory), ex.submit(run_retrieve)]):
             name, res = f.result()
@@ -52,6 +54,7 @@ def invoke(inputs: dict) -> dict:
     ticket = inputs.get("ticket", inputs.get("input", ""))
     task_id = inputs.get("task_id", "default")
     timestamp = inputs.get("timestamp", datetime.now().isoformat())
+    conversation_history = inputs.get("conversation_history") or []
 
     use_crewai = False
     try:
@@ -65,10 +68,11 @@ def invoke(inputs: dict) -> dict:
     if use_crewai:
         try:
             @tool("Process support ticket through the agent pipeline")
-            def process_ticket(ticket: str, task_id: str, timestamp: str) -> str:
-                """Process ticket. Required: ticket, task_id, timestamp."""
+            def process_ticket(ticket: str, task_id: str, timestamp: str, conversation_history: str = "[]") -> str:
+                """Process ticket. Required: ticket, task_id, timestamp. Optional: conversation_history as JSON."""
                 import json
-                r = _run_pipeline(ticket, task_id, timestamp)
+                hist = json.loads(conversation_history) if isinstance(conversation_history, str) else (conversation_history or [])
+                r = _run_pipeline(ticket, task_id, timestamp, hist)
                 return json.dumps({k: v for k, v in r.items() if v is not None}, default=str)
 
             from backend import config
@@ -83,7 +87,8 @@ def invoke(inputs: dict) -> dict:
             agent = Agent(role="Support Orchestrator", goal="Process tickets via process_ticket tool",
                          backstory="You call process_ticket with ticket, task_id, timestamp.",
                          tools=[process_ticket], verbose=True, llm=llm)
-            task = Task(description=f"Call process_ticket with ticket='{ticket[:150]}', task_id='{task_id}', timestamp='{timestamp}'",
+            hist_json = __import__("json").dumps(conversation_history)
+            task = Task(description=f"Call process_ticket with ticket='{ticket[:150]}', task_id='{task_id}', timestamp='{timestamp}', conversation_history='{hist_json[:200]}'",
                        expected_output="JSON with priority, action, response", agent=agent)
             crew = Crew(agents=[agent], tasks=[task], verbose=True)
             crew.kickoff(inputs={})
@@ -93,9 +98,9 @@ def invoke(inputs: dict) -> dict:
             state = json.loads(out) if out.strip().startswith("{") else {"response": out}
         except Exception as e:
             print(f"[CrewAI] Fallback to direct pipeline: {e}")
-            state = _run_pipeline(ticket, task_id, timestamp)
+            state = _run_pipeline(ticket, task_id, timestamp, conversation_history)
     else:
-        state = _run_pipeline(ticket, task_id, timestamp)
+        state = _run_pipeline(ticket, task_id, timestamp, conversation_history)
 
     state["task_id"] = task_id
     state["timestamp"] = timestamp

@@ -19,7 +19,7 @@ except ImportError:
         def __init__(self, generator):
             self.generator = generator
 from pydantic import BaseModel, Field
-from typing import Optional, List
+from typing import Optional, List, Literal
 from datetime import datetime
 import uuid
 import traceback
@@ -47,13 +47,26 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+class ConversationMessage(BaseModel):
+    role: Literal["user", "assistant"]
+    content: str
+
 class Ticket(BaseModel):
     ticket: str = Field(..., min_length=1, description="Ticket or query text")
+    conversation_history: Optional[List[ConversationMessage]] = Field(
+        default=None,
+        description="Optional multi-turn chat history: [{ role: 'user'|'assistant', content: string }]"
+    )
 
 class MemoryUpdate(BaseModel):
     content: Optional[str] = None
     outcome: Optional[str] = None
     metadata: Optional[dict] = None
+
+class EpisodicMemoryPatch(BaseModel):
+    """PATCH body for episodic memory - frontend uses incident/outcome."""
+    incident: Optional[str] = None
+    outcome: Optional[str] = None
 
 class SemanticMemoryUpdate(BaseModel):
     content: Optional[str] = None
@@ -96,6 +109,10 @@ def run(ticket: Ticket, background_tasks: BackgroundTasks):
             "task_id": task_id,
             "timestamp": datetime.now().isoformat()
         }
+        if ticket.conversation_history:
+            hist = [{"role": m.role, "content": m.content} for m in ticket.conversation_history]
+            # Keep last 20 turns to prevent unbounded context
+            initial_state["conversation_history"] = hist[-20:] if len(hist) > 20 else hist
         print(f"[API] Processing ticket: {ticket.ticket[:50]}...")
         
         # Log ticket processing start
@@ -379,6 +396,21 @@ def get_episodic_memory_by_id(memory_id: int):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to retrieve memory: {str(e)}"
         )
+
+@app.patch("/memory/episodic/{memory_id}")
+def patch_episodic_memory(memory_id: int, update: EpisodicMemoryPatch):
+    """Patch episodic memory - accepts incident and/or outcome (for frontend edit)."""
+    updates = {}
+    if update.incident is not None:
+        updates["incident"] = update.incident
+    if update.outcome is not None:
+        updates["outcome"] = update.outcome
+    if not updates:
+        return {"success": False, "message": "No fields to update"}
+    success = memory_storage.update_episodic_memory(memory_id, updates)
+    if success:
+        return {"success": True, "message": "Memory updated"}
+    return {"success": False, "message": "Memory not found"}
 
 @app.put("/memory/episodic/{memory_id}")
 def update_episodic_memory(memory_id: int, update: MemoryUpdate):

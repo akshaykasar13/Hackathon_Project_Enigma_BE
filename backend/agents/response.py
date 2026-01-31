@@ -25,9 +25,13 @@ def generate_response_with_llm(state):
         past_incidents = state.get("past_incidents", [])
         retrieved_docs = state.get("retrieved_docs", [])
         reasoning = state.get("reasoning", "")
+        conversation_history = state.get("conversation_history", [])
         
         # Build context
         context_parts = []
+        if conversation_history:
+            conv_text = "\n".join(f"{m.get('role', 'user')}: {m.get('content', '')}" for m in conversation_history[-10:])
+            context_parts.append(f"Conversation history:\n{conv_text}")
         if retrieved_docs:
             context_parts.append(f"Retrieved Knowledge:\n{chr(10).join(retrieved_docs[:3])}")
         if past_incidents:
@@ -78,8 +82,9 @@ def generate_response_fallback(state):
     past_incidents = state.get("past_incidents", [])
     retrieved_docs = state.get("retrieved_docs", [])
     reasoning = state.get("reasoning", "")
+    conversation_history = state.get("conversation_history", [])
     
-    # Build response based on scenario
+    # Build response based on scenario (conversation_history available for multi-turn context)
     if "have we seen" in ticket.lower() or "error code" in ticket.lower():
         # Memory query scenario
         response = f"Based on historical data, I found {len(past_incidents)} similar incidents. "
