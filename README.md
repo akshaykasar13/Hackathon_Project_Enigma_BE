@@ -36,3 +36,4 @@ Flow: `Ingestion` → `Planner` → `[Intent | Memory | Retrieval]` (parallel) �
 - `POST /ingest` – Ingest documents for RAG
 - `GET /sse/agent-stream` – Live agent events (optional `?task_id=`)
 - `GET/PUT/DELETE /memory/episodic`, `/memory/semantic`, `/memory/working`
+# test
