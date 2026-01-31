@@ -1,22 +1,20 @@
 # ============================================
 # Core Web Framework
 # ============================================
-fastapi==0.104.1
+fastapi==0.103.2
 uvicorn[standard]==0.24.0
-pydantic==2.5.0
+pydantic==1.10.13
 
 # ============================================
 # Agent Framework
 # ============================================
-# CrewAI (primary agent orchestration framework)
 crewai>=0.80.0
 crewai-tools>=0.14.0
 
-# LangGraph (fallback when USE_CREWAI=false)
 langgraph>=0.0.20
 
 # ============================================
-# LangChain (for RAG, embeddings, document processing)
+# LangChain Ecosystem (Pydantic v1 compatible)
 # ============================================
 langchain>=0.1.0
 langchain-openai>=0.0.2
@@ -26,39 +24,28 @@ langchain-text-splitters>=0.0.1
 # ============================================
 # Vector Store
 # ============================================
-# FAISS is the primary vector store (ChromaDB is optional fallback)
 faiss-cpu>=1.7.4
 
 # ============================================
 # Document Processing
 # ============================================
-# Primary loaders (via langchain-community)
 unstructured==0.11.6
-
-# Fallback loaders (used when langchain loaders fail)
 pypdf==3.17.0
 python-docx==1.1.0
 python-pptx==0.6.23
 
 # ============================================
-# OCR Support (for image processing)
+# OCR Support
 # ============================================
 pillow==10.1.0
 pytesseract==0.3.10
 
 # ============================================
-# Environment & Configuration
+# Env & Config
 # ============================================
 python-dotenv==1.0.0
 
 # ============================================
-# Server-Sent Events (SSE) Support
+# Streaming
 # ============================================
-# Optional but recommended for real-time agent streaming
 sse-starlette>=1.8.0
-
-# ============================================
-# Optional Dependencies (not required for core functionality)
-# ============================================
-# chromadb>=0.4.18  # Optional: fallback vector store (FAISS is primary)
-# reportlab==4.0.7  # Optional: only used in utility scripts (generate_pdfs.py)
