@@ -9,7 +9,12 @@ from backend.memory.storage import memory_storage
 logger = logging.getLogger("agent_system")
 
 def calculate_semantic_similarity(text1, text2):
-    """Calculate semantic similarity using embeddings (if available)."""
+    """
+    Calculate semantic similarity using embeddings (if available).
+    
+    NOTE: When mem0 is enabled, use memory_storage.search_episodic_memory() instead
+    for better semantic search. This function is kept for backward compatibility.
+    """
     if config.TEST_MODE or not config.OPENAI_API_KEY or config.OPENAI_API_KEY == "test-key-not-used":
         # Fallback: simple keyword overlap
         words1 = set(text1.lower().split())
@@ -50,7 +55,49 @@ def calculate_semantic_similarity(text1, text2):
         return len(intersection) / len(union) if union else 0.0
 
 def find_correlated_incidents(ticket, past_incidents, threshold=0.3):
-    """Find incidents correlated with current ticket using semantic similarity."""
+    """
+    Find incidents correlated with current ticket using semantic similarity.
+    
+    OPTIMIZED: Uses mem0's semantic search when available for better results.
+    Falls back to manual similarity calculation if mem0 not available.
+    """
+    from backend.memory.storage import memory_storage
+    
+    # Check if mem0 is being used (better semantic search)
+    if hasattr(memory_storage, '_using_mem0') and memory_storage._using_mem0:
+        # Use mem0's built-in semantic search - much more efficient!
+        try:
+            # mem0 search returns results already ranked by semantic similarity
+            search_results = memory_storage.search_episodic_memory(ticket)
+            
+            correlations = []
+            for idx, result in enumerate(search_results[:5]):  # Top 5 from mem0
+                incident = result.get("incident", "")
+                if not incident:
+                    continue
+                
+                # mem0 already ranks by relevance, so we assign similarity based on position
+                # Top result gets highest similarity, etc.
+                similarity = max(0.9 - (idx * 0.1), 0.5)  # 0.9, 0.8, 0.7, 0.6, 0.5
+                
+                correlation_type = "high" if similarity >= 0.7 else "medium" if similarity >= 0.6 else "low"
+                
+                correlations.append({
+                    "incident": incident[:100] + "..." if len(incident) > 100 else incident,
+                    "similarity": round(similarity, 2),
+                    "type": correlation_type,
+                    "reason": "Semantically similar (via mem0)",
+                    "source": "mem0"
+                })
+            
+            if correlations:
+                logger.info(f"[ReasoningAgent] Found {len(correlations)} correlations using mem0 semantic search")
+                return correlations
+        except Exception as e:
+            logger.warning(f"[ReasoningAgent] mem0 search failed, falling back to manual: {e}")
+            # Fall through to manual calculation
+    
+    # Fallback: Manual similarity calculation (original method)
     correlations = []
     ticket_lower = ticket.lower()
     
@@ -83,7 +130,7 @@ def find_correlated_incidents(ticket, past_incidents, threshold=0.3):
         
         incident_lower = incident.lower()
         
-        # Calculate semantic similarity
+        # Calculate semantic similarity (manual calculation)
         similarity = calculate_semantic_similarity(ticket, incident)
         
         # Also check keyword matches
@@ -107,7 +154,8 @@ def find_correlated_incidents(ticket, past_incidents, threshold=0.3):
                     "incident": incident[:100] + "..." if len(incident) > 100 else incident,
                     "similarity": round(similarity, 2),
                     "type": correlation_type,
-                    "reason": " | ".join(reason)
+                    "reason": " | ".join(reason),
+                    "source": "manual"
                 })
     
     # Sort by similarity

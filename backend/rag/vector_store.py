@@ -258,7 +258,6 @@ def ingest_docs(docs_dir: str = None):
     if all_chunks:
         global _db
         if FAISS_AVAILABLE:
-            import os
             os.makedirs(config.FAISS_INDEX_DIR, exist_ok=True)
             _db = FAISS.from_documents(all_chunks, embedding_function)
             _db.save_local(config.FAISS_INDEX_DIR)

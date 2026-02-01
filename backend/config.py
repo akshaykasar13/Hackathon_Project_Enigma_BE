@@ -66,3 +66,9 @@ CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", "200"))
 # Memory Configuration (data at project root)
 MEMORY_DIR = os.getenv("MEMORY_DIR", str(PROJECT_ROOT / "data" / "memory"))
 
+# Mem0 Configuration (for semantic memory management)
+USE_MEM0 = os.getenv("USE_MEM0", "false").lower() == "true"  # Feature flag - disabled by default
+MEM0_FALLBACK_TO_JSON = os.getenv("MEM0_FALLBACK_TO_JSON", "true").lower() == "true"  # Safety fallback
+MEM0_SEARCH_LIMIT = int(os.getenv("MEM0_SEARCH_LIMIT", "10"))  # Max results from mem0 search
+MEM0_SIMILARITY_THRESHOLD = float(os.getenv("MEM0_SIMILARITY_THRESHOLD", "0.3"))  # Minimum similarity score
+

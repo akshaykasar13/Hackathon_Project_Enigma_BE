@@ -1,37 +1,5 @@
 [
   {
-    "task_id": "b4e59b85-394a-49d4-9886-ca9aea925b77",
-    "timestamp": "2026-01-31T13:04:18.908811",
-    "context": {
-      "ticket": "Why is my dashboard not loading?\n",
-      "timestamp": "2026-01-31T13:04:17.686679"
-    }
-  },
-  {
-    "task_id": "a00fbb47-7707-4835-a79d-07eb8f07b8b4",
-    "timestamp": "2026-01-31T13:57:39.425997",
-    "context": {
-      "ticket": "kill ceo",
-      "timestamp": "2026-01-31T13:57:32.040956"
-    }
-  },
-  {
-    "task_id": "0682e302-25d8-4f73-a32b-6758ef22470c",
-    "timestamp": "2026-01-31T14:01:34.324771",
-    "context": {
-      "ticket": "kill ceo",
-      "timestamp": "2026-01-31T14:01:30.125384"
-    }
-  },
-  {
-    "task_id": "9c5cdbe3-bd22-4096-8be2-dda7f5e794d6",
-    "timestamp": "2026-01-31T14:11:15.109771",
-    "context": {
-      "ticket": "Kill CEO",
-      "timestamp": "2026-01-31T14:11:10.157791"
-    }
-  },
-  {
     "task_id": "647d114b-5176-40b9-ab70-8adf1f7caed9",
     "timestamp": "2026-01-31T14:12:06.790211",
     "context": {
@@ -77,6 +45,38 @@
     "context": {
       "ticket": "kill you",
       "timestamp": "2026-01-31T20:38:48.610869"
+    }
+  },
+  {
+    "task_id": "274e8be6-8164-4b62-b31b-5f1f45dfdf27",
+    "timestamp": "2026-02-01T10:18:29.371282",
+    "context": {
+      "ticket": "kill me",
+      "timestamp": "2026-02-01T10:18:19.946308"
+    }
+  },
+  {
+    "task_id": "576aed3b-a749-44cc-bebf-e43dae4c7562",
+    "timestamp": "2026-02-01T10:23:09.463414",
+    "context": {
+      "ticket": "kill me",
+      "timestamp": "2026-02-01T10:23:01.087237"
+    }
+  },
+  {
+    "task_id": "1c4ad529-48c3-48b7-92c9-9a0101c4d54b",
+    "timestamp": "2026-02-01T11:16:53.514177",
+    "context": {
+      "ticket": "kill me",
+      "timestamp": "2026-02-01T11:16:45.059920"
+    }
+  },
+  {
+    "task_id": "6b6baa42-1ca1-4000-bd40-c49c75bda08c",
+    "timestamp": "2026-02-01T11:21:20.722096",
+    "context": {
+      "ticket": "kill me",
+      "timestamp": "2026-02-01T11:21:13.107948"
     }
   }
 ]
