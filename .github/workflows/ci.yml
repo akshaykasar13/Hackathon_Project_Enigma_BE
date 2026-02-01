@@ -1,29 +1,32 @@
-name: Backend CI (POC)
+name: Deploy Backend (POC)
 
 on:
   push:
-    branches: [ POC ]
-  pull_request:
-    branches: [ POC ]
+    branches:
+      - POC
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Deploy Backend to EC2
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          python-version: '3.10'
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd Hackathon_Project_Enigma_BE
+            git checkout POC
+            git pull origin POC
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+            docker stop enigma-backend || true
+            docker rm enigma-backend || true
 
-      - name: Run basic sanity check
-        run: |
-          python -c "print('Backend CI for POC branch successful')"
+            docker build -t enigma-be .
+            docker run -d \
+              --name enigma-backend \
+              -p 80:8000 \
+              -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
+              enigma-be
