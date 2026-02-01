@@ -143,6 +143,7 @@ def guard(state):
     
     ticket = state.get("ticket", "")
     response = state.get("response", "")
+    reasoning = state.get("reasoning", "")
     
     tool_call = observability.log_tool_call("safety_check", "GuardrailsAgent", {"ticket": ticket[:100]}, state.get("task_id"))
     
