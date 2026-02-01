@@ -5068,3 +5068,997 @@ openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect A
 2026-02-01 11:54:20,946 - agent_system - INFO - [MemoryAgent] Tool memory_save completed in 1885.82ms
 2026-02-01 11:54:20,949 - agent_system - INFO - [MemoryAgent] memory_saved
 2026-02-01 11:54:20,989 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:00:31,775 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:00:31,840 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:00:33,556 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:00:33,692 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:00:36,804 - agent_system - INFO - [System] ticket_received
+2026-02-01 13:00:36,838 - agent_system - INFO - [IngestionAgent] Tool call: ticket_ingestion
+2026-02-01 13:00:36,842 - agent_system - INFO - [IngestionAgent] Tool ticket_ingestion completed in 4.35ms
+2026-02-01 13:00:36,846 - agent_system - INFO - [IngestionAgent] ticket_ingested
+2026-02-01 13:00:36,849 - agent_system - INFO - [PlannerAgent] Tool call: execution_planning
+2026-02-01 13:00:46,005 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:00:46,008 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | PlannerAgent/execution_planning | Tokens: 237 (237+0) | Cost: $0.000118 | Latency: 2351.95ms
+2026-02-01 13:00:46,249 - agent_system - WARNING - [LLM_FAILURE] PlannerAgent: LLM planning failed - AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************6acA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+Traceback (most recent call last):
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\agents\planner.py", line 54, in plan_with_llm
+    response = chain.invoke({"ticket": ticket})
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3151, in invoke
+    input_ = context.run(step.invoke, input_, config)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 402, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1121, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 931, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1233, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\observability\llm_wrapper.py", line 44, in _generate
+    result = super()._generate(messages, stop, run_manager, **kwargs)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1386, in _generate
+    raise e
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1381, in _generate
+    raw_response = self.client.with_raw_response.create(**payload)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_legacy_response.py", line 364, in wrapped
+    return cast(LegacyAPIResponse[R], func(*args, **kwargs))
+                                      ~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1192, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<47 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1294, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1067, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************6acA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+2026-02-01 13:00:46,260 - agent_system - INFO - [LLM_FALLBACK] PlannerAgent: Using rule-based planning (LLM failed or unavailable)
+2026-02-01 13:00:46,262 - agent_system - INFO - [PlannerAgent] Tool execution_planning completed in 9412.86ms
+2026-02-01 13:00:46,264 - agent_system - INFO - [PlannerAgent] Decision: strategy_parallel_moderate | Reasoning: Rule-based: standard general ticket (via rules)
+2026-02-01 13:00:46,267 - agent_system - INFO - [PlannerAgent] strategy_planned
+2026-02-01 13:00:46,273 - agent_system - INFO - [IntentAgent] Tool call: intent_classification
+2026-02-01 13:00:46,287 - agent_system - INFO - [MemoryAgent] Tool call: memory_load
+2026-02-01 13:00:46,301 - agent_system - INFO - [RetrievalAgent] Tool call: document_retrieval
+2026-02-01 13:00:46,353 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2026-02-01 13:00:46,655 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:00:46,702 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | IntentAgent/intent_classification | Tokens: 204 (204+0) | Cost: $0.000102 | Latency: 399.93ms
+2026-02-01 13:00:46,756 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2026-02-01 13:00:46,794 - agent_system - WARNING - [LLM_FAILURE] IntentAgent: LLM classification failed - AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************6acA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+Traceback (most recent call last):
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\agents\intent.py", line 47, in classify_with_llm
+    response = chain.invoke({"ticket": text})
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3151, in invoke
+    input_ = context.run(step.invoke, input_, config)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 402, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1121, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 931, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1233, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\observability\llm_wrapper.py", line 44, in _generate
+    result = super()._generate(messages, stop, run_manager, **kwargs)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1386, in _generate
+    raise e
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1381, in _generate
+    raw_response = self.client.with_raw_response.create(**payload)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_legacy_response.py", line 364, in wrapped
+    return cast(LegacyAPIResponse[R], func(*args, **kwargs))
+                                      ~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1192, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<47 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1294, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1067, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************6acA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+2026-02-01 13:00:46,824 - agent_system - INFO - [LLM_FALLBACK] IntentAgent: Using rule-based classification (LLM failed or unavailable)
+2026-02-01 13:00:46,825 - agent_system - INFO - [IntentAgent] Tool intent_classification completed in 551.63ms
+2026-02-01 13:00:46,830 - agent_system - INFO - [IntentAgent] Decision: Classified as LOW | Reasoning: No urgent indicators detected (via rules)
+2026-02-01 13:00:46,832 - agent_system - INFO - [IntentAgent] classified_low
+2026-02-01 13:00:48,071 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:00:48,078 - agent_system - ERROR - [RetrievalAgent] Tool document_retrieval failed: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************6acA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+2026-02-01 13:00:48,082 - agent_system - INFO - [RetrievalAgent] retrieved_0_docs
+2026-02-01 13:00:48,089 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:00:50,767 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:00:53,203 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:00:53,788 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:00:53,826 - agent_system - INFO - [MemoryAgent] Tool memory_load completed in 7538.45ms
+2026-02-01 13:00:53,828 - agent_system - INFO - [MemoryAgent] memory_loaded
+2026-02-01 13:00:55,704 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:00:56,272 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:00:56,279 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | ReasoningAgent/root_cause_analysis | Tokens: 182 (182+0) | Cost: $0.000091 | Latency: 445.00ms
+2026-02-01 13:00:56,335 - agent_system - WARNING - [LLM_FAILURE] ReasoningAgent: LLM analysis failed - AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************6acA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+Traceback (most recent call last):
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\agents\reasoning.py", line 252, in analyze_with_llm
+    response = chain.invoke({"ticket": ticket, "context": context})
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3151, in invoke
+    input_ = context.run(step.invoke, input_, config)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 402, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1121, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 931, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1233, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\observability\llm_wrapper.py", line 44, in _generate
+    result = super()._generate(messages, stop, run_manager, **kwargs)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1386, in _generate
+    raise e
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1381, in _generate
+    raw_response = self.client.with_raw_response.create(**payload)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_legacy_response.py", line 364, in wrapped
+    return cast(LegacyAPIResponse[R], func(*args, **kwargs))
+                                      ~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1192, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<47 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1294, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1067, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************6acA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+2026-02-01 13:00:56,354 - agent_system - INFO - [LLM_FALLBACK] ReasoningAgent: Using rule-based analysis (LLM failed or unavailable)
+2026-02-01 13:00:56,355 - agent_system - INFO - [ReasoningAgent] Decision: analysis_general | Reasoning: Rule-based analysis: general issue with medium impact (via rules)
+2026-02-01 13:00:56,355 - agent_system - INFO - [ReasoningAgent] analysis_complete
+2026-02-01 13:00:56,773 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:00:56,777 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | ResponseAgent/response_generation | Tokens: 162 (162+0) | Cost: $0.000081 | Latency: 406.61ms
+2026-02-01 13:00:56,893 - agent_system - WARNING - [LLM_FAILURE] ResponseAgent: LLM generation failed - AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************6acA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+Traceback (most recent call last):
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\agents\response.py", line 68, in generate_response_with_llm
+    response = chain.invoke({
+        "ticket": ticket,
+        "priority": priority,
+        "context": context
+    })
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3151, in invoke
+    input_ = context.run(step.invoke, input_, config)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 402, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1121, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 931, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1233, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\observability\llm_wrapper.py", line 44, in _generate
+    result = super()._generate(messages, stop, run_manager, **kwargs)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1386, in _generate
+    raise e
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1381, in _generate
+    raw_response = self.client.with_raw_response.create(**payload)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_legacy_response.py", line 364, in wrapped
+    return cast(LegacyAPIResponse[R], func(*args, **kwargs))
+                                      ~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1192, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<47 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1294, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1067, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************6acA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+2026-02-01 13:00:56,912 - agent_system - INFO - [LLM_FALLBACK] ResponseAgent: Using template-based response (LLM failed or unavailable)
+2026-02-01 13:00:56,913 - agent_system - INFO - [ResponseAgent] Tool call: response_generation
+2026-02-01 13:00:56,914 - agent_system - INFO - [ResponseAgent] Tool response_generation completed in 1.27ms
+2026-02-01 13:00:56,915 - agent_system - INFO - [ResponseAgent] response_generated
+2026-02-01 13:00:56,917 - agent_system - INFO - [GuardrailsAgent] Tool call: safety_check
+2026-02-01 13:00:56,919 - agent_system - INFO - [GuardrailsAgent] Tool safety_check completed in 1.96ms
+2026-02-01 13:00:56,920 - agent_system - INFO - [GuardrailsAgent] Decision: ESCALATE | Reasoning: Banned content pattern: \b(kill|destroy|attack|hurt|harm)\w*\b
+2026-02-01 13:00:56,920 - agent_system - INFO - [GuardrailsAgent] guardrails_escalate
+2026-02-01 13:00:56,922 - agent_system - INFO - [System] ticket_processed
+2026-02-01 13:00:56,938 - agent_system - INFO - [MemoryAgent] Tool call: memory_save
+2026-02-01 13:00:57,312 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:00:57,333 - agent_system - INFO - [MemoryAgent] Tool memory_save completed in 394.97ms
+2026-02-01 13:00:57,333 - agent_system - INFO - [MemoryAgent] memory_saved
+2026-02-01 13:00:58,382 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:04:23,147 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:04:23,171 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:04:25,191 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:04:25,211 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:04:44,977 - agent_system - INFO - [System] ticket_received
+2026-02-01 13:04:44,987 - agent_system - INFO - [IngestionAgent] Tool call: ticket_ingestion
+2026-02-01 13:04:44,990 - agent_system - INFO - [IngestionAgent] Tool ticket_ingestion completed in 2.49ms
+2026-02-01 13:04:44,992 - agent_system - INFO - [IngestionAgent] ticket_ingested
+2026-02-01 13:04:44,995 - agent_system - INFO - [PlannerAgent] Tool call: execution_planning
+2026-02-01 13:04:52,663 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:04:52,665 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | PlannerAgent/execution_planning | Tokens: 249 (249+0) | Cost: $0.000124 | Latency: 480.86ms
+2026-02-01 13:04:52,734 - agent_system - WARNING - [LLM_FAILURE] PlannerAgent: LLM planning failed - AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-****************************************************************************************************************************************************************pQAA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+Traceback (most recent call last):
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\agents\planner.py", line 54, in plan_with_llm
+    response = chain.invoke({"ticket": ticket})
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3151, in invoke
+    input_ = context.run(step.invoke, input_, config)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 402, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1121, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 931, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1233, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\observability\llm_wrapper.py", line 44, in _generate
+    result = super()._generate(messages, stop, run_manager, **kwargs)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1386, in _generate
+    raise e
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1381, in _generate
+    raw_response = self.client.with_raw_response.create(**payload)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_legacy_response.py", line 364, in wrapped
+    return cast(LegacyAPIResponse[R], func(*args, **kwargs))
+                                      ~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1192, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<47 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1294, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1067, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-****************************************************************************************************************************************************************pQAA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+2026-02-01 13:04:52,742 - agent_system - INFO - [LLM_FALLBACK] PlannerAgent: Using rule-based planning (LLM failed or unavailable)
+2026-02-01 13:04:52,743 - agent_system - INFO - [PlannerAgent] Tool execution_planning completed in 7748.30ms
+2026-02-01 13:04:52,743 - agent_system - INFO - [PlannerAgent] Decision: strategy_parallel_moderate | Reasoning: Rule-based: high priority financial ticket (via rules)
+2026-02-01 13:04:52,744 - agent_system - INFO - [PlannerAgent] strategy_planned
+2026-02-01 13:04:52,748 - agent_system - INFO - [IntentAgent] Tool call: intent_classification
+2026-02-01 13:04:52,762 - agent_system - INFO - [MemoryAgent] Tool call: memory_load
+2026-02-01 13:04:52,768 - agent_system - INFO - [RetrievalAgent] Tool call: document_retrieval
+2026-02-01 13:04:52,784 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2026-02-01 13:04:52,878 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2026-02-01 13:04:53,125 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:04:53,364 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | IntentAgent/intent_classification | Tokens: 215 (215+0) | Cost: $0.000107 | Latency: 604.59ms
+2026-02-01 13:04:53,399 - agent_system - WARNING - [LLM_FAILURE] IntentAgent: LLM classification failed - AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-****************************************************************************************************************************************************************pQAA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+Traceback (most recent call last):
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\agents\intent.py", line 47, in classify_with_llm
+    response = chain.invoke({"ticket": text})
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3151, in invoke
+    input_ = context.run(step.invoke, input_, config)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 402, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1121, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 931, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1233, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\observability\llm_wrapper.py", line 44, in _generate
+    result = super()._generate(messages, stop, run_manager, **kwargs)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1386, in _generate
+    raise e
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1381, in _generate
+    raw_response = self.client.with_raw_response.create(**payload)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_legacy_response.py", line 364, in wrapped
+    return cast(LegacyAPIResponse[R], func(*args, **kwargs))
+                                      ~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1192, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<47 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1294, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1067, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-****************************************************************************************************************************************************************pQAA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+2026-02-01 13:04:53,433 - agent_system - INFO - [LLM_FALLBACK] IntentAgent: Using rule-based classification (LLM failed or unavailable)
+2026-02-01 13:04:53,436 - agent_system - INFO - [IntentAgent] Tool intent_classification completed in 688.73ms
+2026-02-01 13:04:53,439 - agent_system - INFO - [IntentAgent] Decision: Classified as LOW | Reasoning: No urgent indicators detected (via rules)
+2026-02-01 13:04:53,440 - agent_system - INFO - [IntentAgent] classified_low
+2026-02-01 13:04:53,803 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:04:53,808 - agent_system - ERROR - [RetrievalAgent] Tool document_retrieval failed: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-****************************************************************************************************************************************************************pQAA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+2026-02-01 13:04:53,811 - agent_system - INFO - [RetrievalAgent] retrieved_0_docs
+2026-02-01 13:04:54,010 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:04:55,232 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:04:56,473 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:04:56,984 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:04:57,007 - agent_system - INFO - [MemoryAgent] Tool memory_load completed in 4244.35ms
+2026-02-01 13:04:57,008 - agent_system - INFO - [MemoryAgent] memory_loaded
+2026-02-01 13:04:58,389 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:04:58,919 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:04:58,925 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | ReasoningAgent/root_cause_analysis | Tokens: 193 (193+0) | Cost: $0.000097 | Latency: 493.21ms
+2026-02-01 13:04:58,995 - agent_system - WARNING - [LLM_FAILURE] ReasoningAgent: LLM analysis failed - AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-****************************************************************************************************************************************************************pQAA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+Traceback (most recent call last):
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\agents\reasoning.py", line 252, in analyze_with_llm
+    response = chain.invoke({"ticket": ticket, "context": context})
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3151, in invoke
+    input_ = context.run(step.invoke, input_, config)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 402, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1121, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 931, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1233, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\observability\llm_wrapper.py", line 44, in _generate
+    result = super()._generate(messages, stop, run_manager, **kwargs)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1386, in _generate
+    raise e
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1381, in _generate
+    raw_response = self.client.with_raw_response.create(**payload)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_legacy_response.py", line 364, in wrapped
+    return cast(LegacyAPIResponse[R], func(*args, **kwargs))
+                                      ~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1192, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<47 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1294, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1067, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-****************************************************************************************************************************************************************pQAA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+2026-02-01 13:04:59,028 - agent_system - INFO - [LLM_FALLBACK] ReasoningAgent: Using rule-based analysis (LLM failed or unavailable)
+2026-02-01 13:04:59,030 - agent_system - INFO - [ReasoningAgent] Decision: analysis_billing | Reasoning: Rule-based analysis: billing issue with medium impact (via rules)
+2026-02-01 13:04:59,031 - agent_system - INFO - [ReasoningAgent] analysis_complete
+2026-02-01 13:04:59,419 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-02-01 13:04:59,423 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | ResponseAgent/response_generation | Tokens: 173 (173+0) | Cost: $0.000087 | Latency: 376.10ms
+2026-02-01 13:04:59,496 - agent_system - WARNING - [LLM_FAILURE] ResponseAgent: LLM generation failed - AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-****************************************************************************************************************************************************************pQAA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+Traceback (most recent call last):
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\agents\response.py", line 68, in generate_response_with_llm
+    response = chain.invoke({
+        "ticket": ticket,
+        "priority": priority,
+        "context": context
+    })
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3151, in invoke
+    input_ = context.run(step.invoke, input_, config)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 402, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1121, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 931, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1233, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\observability\llm_wrapper.py", line 44, in _generate
+    result = super()._generate(messages, stop, run_manager, **kwargs)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1386, in _generate
+    raise e
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_openai\chat_models\base.py", line 1381, in _generate
+    raw_response = self.client.with_raw_response.create(**payload)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_legacy_response.py", line 364, in wrapped
+    return cast(LegacyAPIResponse[R], func(*args, **kwargs))
+                                      ~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1192, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<47 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1294, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1067, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-****************************************************************************************************************************************************************pQAA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}
+2026-02-01 13:04:59,525 - agent_system - INFO - [LLM_FALLBACK] ResponseAgent: Using template-based response (LLM failed or unavailable)
+2026-02-01 13:04:59,526 - agent_system - INFO - [ResponseAgent] Tool call: response_generation
+2026-02-01 13:04:59,529 - agent_system - INFO - [ResponseAgent] Tool response_generation completed in 2.66ms
+2026-02-01 13:04:59,531 - agent_system - INFO - [ResponseAgent] response_generated
+2026-02-01 13:04:59,532 - agent_system - INFO - [GuardrailsAgent] Tool call: safety_check
+2026-02-01 13:08:15,513 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:08:15,579 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:08:18,218 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:08:19,035 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:08:34,237 - agent_system - INFO - [System] ticket_received
+2026-02-01 13:08:34,254 - agent_system - INFO - [IngestionAgent] Tool call: ticket_ingestion
+2026-02-01 13:08:34,255 - agent_system - INFO - [IngestionAgent] Tool ticket_ingestion completed in 1.50ms
+2026-02-01 13:08:34,257 - agent_system - INFO - [IngestionAgent] ticket_ingested
+2026-02-01 13:08:34,259 - agent_system - INFO - [PlannerAgent] Tool call: execution_planning
+2026-02-01 13:08:42,628 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:08:42,680 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | PlannerAgent/execution_planning | Tokens: 243 (243+0) | Cost: $0.000121 | Latency: 2227.39ms
+2026-02-01 13:08:42,733 - agent_system - WARNING - [LLM_FAILURE] PlannerAgent: LLM planning failed - TypeError: 'ChatGeneration' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\agents\planner.py", line 54, in plan_with_llm
+    response = chain.invoke({"ticket": ticket})
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3151, in invoke
+    input_ = context.run(step.invoke, input_, config)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 402, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1121, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 931, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1233, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\observability\llm_wrapper.py", line 69, in _generate
+    response_preview = result.generations[0][0].text if hasattr(result.generations[0][0], 'text') else str(result.generations[0][0])
+                                                                ~~~~~~~~~~~~~~~~~~~~~^^^
+TypeError: 'ChatGeneration' object is not subscriptable
+2026-02-01 13:08:42,739 - agent_system - INFO - [LLM_FALLBACK] PlannerAgent: Using rule-based planning (LLM failed or unavailable)
+2026-02-01 13:08:42,740 - agent_system - INFO - [PlannerAgent] Tool execution_planning completed in 8480.96ms
+2026-02-01 13:08:42,740 - agent_system - INFO - [PlannerAgent] Decision: strategy_parallel_moderate | Reasoning: Rule-based: high priority financial ticket (via rules)
+2026-02-01 13:08:42,741 - agent_system - INFO - [PlannerAgent] strategy_planned
+2026-02-01 13:08:42,742 - agent_system - INFO - [IntentAgent] Tool call: intent_classification
+2026-02-01 13:08:42,747 - agent_system - INFO - [MemoryAgent] Tool call: memory_load
+2026-02-01 13:08:42,754 - agent_system - INFO - [RetrievalAgent] Tool call: document_retrieval
+2026-02-01 13:08:42,785 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2026-02-01 13:08:42,902 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2026-02-01 13:08:44,230 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:08:44,543 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:08:44,578 - agent_system - INFO - [RetrievalAgent] Tool document_retrieval completed in 1823.80ms
+2026-02-01 13:08:44,580 - agent_system - INFO - [RetrievalAgent] retrieved_3_docs
+2026-02-01 13:08:46,323 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:08:48,634 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:08:49,827 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:08:50,336 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:08:50,348 - mem0.memory.main - INFO - Total existing memories: 0
+2026-02-01 13:08:51,844 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:08:51,850 - mem0.memory.main - INFO - {'id': '0', 'text': 'Task context: Payments getting stuck in dead queue', 'event': 'ADD', 'old_memory': None}
+2026-02-01 13:08:53,171 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+2026-02-01 13:08:53,173 - openai._base_client - INFO - Retrying request to /chat/completions in 0.415310 seconds
+2026-02-01 13:08:54,764 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:08:54,771 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | IntentAgent/intent_classification | Tokens: 209 (209+0) | Cost: $0.000104 | Latency: 12011.43ms
+2026-02-01 13:08:54,823 - agent_system - WARNING - [LLM_FAILURE] IntentAgent: LLM classification failed - TypeError: 'ChatGeneration' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\agents\intent.py", line 47, in classify_with_llm
+    response = chain.invoke({"ticket": text})
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3151, in invoke
+    input_ = context.run(step.invoke, input_, config)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 402, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1121, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 931, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1233, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\observability\llm_wrapper.py", line 69, in _generate
+    response_preview = result.generations[0][0].text if hasattr(result.generations[0][0], 'text') else str(result.generations[0][0])
+                                                                ~~~~~~~~~~~~~~~~~~~~~^^^
+TypeError: 'ChatGeneration' object is not subscriptable
+2026-02-01 13:08:54,838 - agent_system - INFO - [LLM_FALLBACK] IntentAgent: Using rule-based classification (LLM failed or unavailable)
+2026-02-01 13:08:54,841 - agent_system - INFO - [IntentAgent] Tool intent_classification completed in 12098.67ms
+2026-02-01 13:08:54,844 - agent_system - INFO - [IntentAgent] Decision: Classified as LOW | Reasoning: No urgent indicators detected (via rules)
+2026-02-01 13:08:54,847 - agent_system - INFO - [IntentAgent] classified_low
+2026-02-01 13:09:04,004 - mem0.vector_stores.chroma - INFO - Inserting 1 vectors into collection agent_memories
+2026-02-01 13:09:06,726 - agent_system - INFO - [MemoryAgent] Tool memory_load completed in 23979.46ms
+2026-02-01 13:09:06,727 - agent_system - INFO - [MemoryAgent] memory_loaded
+2026-02-01 13:09:08,311 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:09:11,542 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:09:11,563 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | ReasoningAgent/root_cause_analysis | Tokens: 238 (238+0) | Cost: $0.000119 | Latency: 3185.13ms
+2026-02-01 13:09:11,586 - agent_system - WARNING - [LLM_FAILURE] ReasoningAgent: LLM analysis failed - TypeError: 'ChatGeneration' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\agents\reasoning.py", line 252, in analyze_with_llm
+    response = chain.invoke({"ticket": ticket, "context": context})
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3151, in invoke
+    input_ = context.run(step.invoke, input_, config)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 402, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1121, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 931, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1233, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\observability\llm_wrapper.py", line 69, in _generate
+    response_preview = result.generations[0][0].text if hasattr(result.generations[0][0], 'text') else str(result.generations[0][0])
+                                                                ~~~~~~~~~~~~~~~~~~~~~^^^
+TypeError: 'ChatGeneration' object is not subscriptable
+2026-02-01 13:09:11,591 - agent_system - INFO - [LLM_FALLBACK] ReasoningAgent: Using rule-based analysis (LLM failed or unavailable)
+2026-02-01 13:09:11,592 - agent_system - INFO - [ReasoningAgent] Decision: analysis_billing | Reasoning: Rule-based analysis: billing issue with medium impact (via rules)
+2026-02-01 13:09:11,592 - agent_system - INFO - [ReasoningAgent] analysis_complete
+2026-02-01 13:09:14,253 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:09:14,255 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | ResponseAgent/response_generation | Tokens: 672 (672+0) | Cost: $0.000336 | Latency: 2650.29ms
+2026-02-01 13:09:14,303 - agent_system - WARNING - [LLM_FAILURE] ResponseAgent: LLM generation failed - TypeError: 'ChatGeneration' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\agents\response.py", line 68, in generate_response_with_llm
+    response = chain.invoke({
+        "ticket": ticket,
+        "priority": priority,
+        "context": context
+    })
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3151, in invoke
+    input_ = context.run(step.invoke, input_, config)
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 402, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1121, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 931, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\AmlanB\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1233, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\AmlanB\Documents\hackathon 2\Hackathon_Project_Enigma_BE\backend\observability\llm_wrapper.py", line 69, in _generate
+    response_preview = result.generations[0][0].text if hasattr(result.generations[0][0], 'text') else str(result.generations[0][0])
+                                                                ~~~~~~~~~~~~~~~~~~~~~^^^
+TypeError: 'ChatGeneration' object is not subscriptable
+2026-02-01 13:09:14,321 - agent_system - INFO - [LLM_FALLBACK] ResponseAgent: Using template-based response (LLM failed or unavailable)
+2026-02-01 13:09:14,324 - agent_system - INFO - [ResponseAgent] Tool call: response_generation
+2026-02-01 13:09:14,326 - agent_system - INFO - [ResponseAgent] Tool response_generation completed in 1.76ms
+2026-02-01 13:09:14,328 - agent_system - INFO - [ResponseAgent] response_generated
+2026-02-01 13:09:14,341 - agent_system - INFO - [GuardrailsAgent] Tool call: safety_check
+2026-02-01 13:13:54,574 - agent_system - INFO - [System] ticket_received
+2026-02-01 13:13:54,583 - agent_system - INFO - [IngestionAgent] Tool call: ticket_ingestion
+2026-02-01 13:13:54,585 - agent_system - INFO - [IngestionAgent] Tool ticket_ingestion completed in 2.17ms
+2026-02-01 13:13:54,586 - agent_system - INFO - [IngestionAgent] ticket_ingested
+2026-02-01 13:13:54,588 - agent_system - INFO - [PlannerAgent] Tool call: execution_planning
+2026-02-01 13:14:03,362 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:14:03,387 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | PlannerAgent/execution_planning | Tokens: 334 (231+103) | Cost: $0.000270 | Latency: 2761.52ms
+2026-02-01 13:14:03,454 - agent_system - INFO - [PlannerAgent] Tool execution_planning completed in 8865.19ms
+2026-02-01 13:14:03,456 - agent_system - INFO - [PlannerAgent] Decision: strategy_serial_complex | Reasoning: This ticket requires a deep analysis to identify the root cause of payments getting stuck in the dead queue. It may involve checking historical data, system logs, and performing a step-by-step investigation to resolve the issue. (via LLM)
+2026-02-01 13:14:03,459 - agent_system - INFO - [PlannerAgent] strategy_planned
+2026-02-01 13:14:03,470 - agent_system - INFO - [IntentAgent] Tool call: intent_classification
+2026-02-01 13:14:03,479 - agent_system - INFO - [MemoryAgent] Tool call: memory_load
+2026-02-01 13:14:03,501 - agent_system - INFO - [RetrievalAgent] Tool call: document_retrieval
+2026-02-01 13:14:03,567 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2026-02-01 13:14:03,721 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2026-02-01 13:14:04,876 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:14:04,891 - agent_system - INFO - [RetrievalAgent] Tool document_retrieval completed in 1390.49ms
+2026-02-01 13:14:04,894 - agent_system - INFO - [RetrievalAgent] retrieved_3_docs
+2026-02-01 13:14:05,166 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:14:05,203 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:14:05,210 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | IntentAgent/intent_classification | Tokens: 252 (207+45) | Cost: $0.000171 | Latency: 1693.28ms
+2026-02-01 13:14:05,232 - agent_system - INFO - [IntentAgent] Tool intent_classification completed in 1762.03ms
+2026-02-01 13:14:05,233 - agent_system - INFO - [IntentAgent] Decision: Classified as HIGH | Reasoning: critical issue affecting financial transactions (via LLM)
+2026-02-01 13:14:05,234 - agent_system - INFO - [IntentAgent] classified_high
+2026-02-01 13:14:07,627 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:14:09,366 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:14:10,294 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:14:10,817 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:14:10,828 - mem0.memory.main - INFO - Total existing memories: 0
+2026-02-01 13:14:11,771 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:14:11,776 - mem0.memory.main - INFO - {'id': '0', 'text': 'Task context: Payments getting stuck in dead queue', 'event': 'ADD', 'old_memory': None}
+2026-02-01 13:14:13,687 - mem0.vector_stores.chroma - INFO - Inserting 1 vectors into collection agent_memories
+2026-02-01 13:14:16,225 - agent_system - INFO - [MemoryAgent] Tool memory_load completed in 12746.12ms
+2026-02-01 13:14:16,231 - agent_system - INFO - [MemoryAgent] memory_loaded
+2026-02-01 13:14:18,346 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:14:21,137 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:14:21,148 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | ReasoningAgent/root_cause_analysis | Tokens: 401 (249+152) | Cost: $0.000353 | Latency: 2639.31ms
+2026-02-01 13:14:21,192 - agent_system - INFO - [ReasoningAgent] Decision: analysis_technical | Reasoning: The issue seems to be related to intermittent payment failures causing payments to get stuck in a dead queue. It is crucial to review logs, check configurations, and investigate the payment processing system to resolve the issue. Escalation may be necessary for further investigation and resolution. (via LLM)
+2026-02-01 13:14:21,195 - agent_system - INFO - [ReasoningAgent] analysis_complete
+2026-02-01 13:14:24,400 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:14:24,407 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | ResponseAgent/response_generation | Tokens: 850 (663+187) | Cost: $0.000612 | Latency: 3174.90ms
+2026-02-01 13:14:24,441 - agent_system - INFO - [ResponseAgent] Tool call: response_generation
+2026-02-01 13:14:24,445 - agent_system - INFO - [ResponseAgent] Tool response_generation completed in 2.97ms
+2026-02-01 13:14:24,448 - agent_system - INFO - [ResponseAgent] response_generated
+2026-02-01 13:14:24,450 - agent_system - INFO - [GuardrailsAgent] Tool call: safety_check
+2026-02-01 13:14:26,022 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:14:26,031 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | GuardrailsAgent/safety_check | Tokens: 442 (377+65) | Cost: $0.000286 | Latency: 1549.87ms
+2026-02-01 13:14:26,057 - agent_system - INFO - [GuardrailsAgent] Tool safety_check completed in 1606.81ms
+2026-02-01 13:14:26,058 - agent_system - INFO - [GuardrailsAgent] Decision: AUTO_RESPOND | Reasoning: Safe (LLM): The response is related to a technical issue with payments and provides actionable recommendations to address the problem. No harmful or inappropriate content detected.
+2026-02-01 13:14:26,060 - agent_system - INFO - [GuardrailsAgent] guardrails_auto_respond
+2026-02-01 13:14:26,064 - agent_system - INFO - [System] ticket_processed
+2026-02-01 13:14:26,082 - agent_system - INFO - [MemoryAgent] Tool call: memory_save
+2026-02-01 13:14:26,939 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:14:26,954 - mem0.memory.main - INFO - Total existing memories: 0
+2026-02-01 13:14:27,879 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:14:28,370 - agent_system - INFO - [MemoryAgent] Tool memory_save completed in 2287.72ms
+2026-02-01 13:14:28,370 - agent_system - INFO - [MemoryAgent] memory_saved
+2026-02-01 13:14:58,530 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:15:00,029 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:15:01,555 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:15:02,913 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:15:04,532 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:15:06,995 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:15:08,800 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:15:10,128 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:15:11,628 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:15:13,097 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:17:57,101 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:18:00,115 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:18:01,639 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:18:03,046 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:18:04,385 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:18:06,098 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:18:07,733 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:25:01,162 - agent_system - INFO - [System] ticket_received
+2026-02-01 13:25:01,296 - agent_system - INFO - [IngestionAgent] Tool call: ticket_ingestion
+2026-02-01 13:25:01,320 - agent_system - INFO - [IngestionAgent] Tool ticket_ingestion completed in 30.79ms
+2026-02-01 13:25:01,360 - agent_system - INFO - [IngestionAgent] ticket_ingested
+2026-02-01 13:25:01,384 - agent_system - INFO - [PlannerAgent] Tool call: execution_planning
+2026-02-01 13:25:08,874 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:25:08,953 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | PlannerAgent/execution_planning | Tokens: 346 (236+110) | Cost: $0.000283 | Latency: 6837.18ms
+2026-02-01 13:25:09,207 - agent_system - INFO - [PlannerAgent] Tool execution_planning completed in 7822.69ms
+2026-02-01 13:25:09,221 - agent_system - INFO - [PlannerAgent] Decision: strategy_parallel_moderate | Reasoning: This issue requires immediate attention due to the financial discrepancy. It is of high priority as it involves a significant amount. The complexity is moderate as it may involve investigating payment processing systems and historical transaction records to identify the root cause of the discrepancy. (via LLM)
+2026-02-01 13:25:09,225 - agent_system - INFO - [PlannerAgent] strategy_planned
+2026-02-01 13:25:09,243 - agent_system - INFO - [IntentAgent] Tool call: intent_classification
+2026-02-01 13:25:09,254 - agent_system - INFO - [MemoryAgent] Tool call: memory_load
+2026-02-01 13:25:09,276 - agent_system - INFO - [RetrievalAgent] Tool call: document_retrieval
+2026-02-01 13:25:09,991 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:25:10,078 - agent_system - INFO - [RetrievalAgent] Tool document_retrieval completed in 801.90ms
+2026-02-01 13:25:10,124 - agent_system - INFO - [RetrievalAgent] retrieved_3_docs
+2026-02-01 13:25:10,354 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:25:10,390 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | IntentAgent/intent_classification | Tokens: 255 (212+43) | Cost: $0.000170 | Latency: 1080.55ms
+2026-02-01 13:25:10,428 - agent_system - INFO - [IntentAgent] Tool intent_classification completed in 1184.34ms
+2026-02-01 13:25:10,443 - agent_system - INFO - [IntentAgent] Decision: Classified as HIGH | Reasoning: financial issue with significant amount mismatch (via LLM)
+2026-02-01 13:25:10,470 - agent_system - INFO - [IntentAgent] classified_high
+2026-02-01 13:25:13,882 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:25:17,782 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:25:20,962 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:25:22,024 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:25:22,462 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:25:22,491 - mem0.memory.main - INFO - Total existing memories: 0
+2026-02-01 13:25:23,421 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:25:23,425 - mem0.memory.main - INFO - {'id': '0', 'text': 'Customer paid 50000 but merchant received 5000', 'event': 'ADD', 'old_memory': None}
+2026-02-01 13:25:23,437 - mem0.vector_stores.chroma - INFO - Inserting 1 vectors into collection agent_memories
+2026-02-01 13:25:26,346 - agent_system - INFO - [MemoryAgent] Tool memory_load completed in 17091.16ms
+2026-02-01 13:25:26,346 - agent_system - INFO - [MemoryAgent] memory_loaded
+2026-02-01 13:25:30,071 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:25:32,870 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:25:32,889 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | ReasoningAgent/root_cause_analysis | Tokens: 397 (254+143) | Cost: $0.000342 | Latency: 2248.18ms
+2026-02-01 13:25:32,924 - agent_system - INFO - [ReasoningAgent] Decision: analysis_billing | Reasoning: The discrepancy in the payment amounts indicates a currency mismatch issue. It is crucial to investigate the currency conversion process and verify the exchange rate used to rectify the error. Escalation may be needed to address the impact on the customer and ensure proper resolution. (via LLM)
+2026-02-01 13:25:32,930 - agent_system - INFO - [ReasoningAgent] analysis_complete
+2026-02-01 13:25:35,426 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:25:35,440 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | ResponseAgent/response_generation | Tokens: 953 (772+181) | Cost: $0.000657 | Latency: 2482.60ms
+2026-02-01 13:25:35,624 - agent_system - INFO - [ResponseAgent] Tool call: response_generation
+2026-02-01 13:25:35,627 - agent_system - INFO - [ResponseAgent] Tool response_generation completed in 3.14ms
+2026-02-01 13:25:35,633 - agent_system - INFO - [ResponseAgent] response_generated
+2026-02-01 13:25:35,635 - agent_system - INFO - [GuardrailsAgent] Tool call: safety_check
+2026-02-01 13:25:37,026 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:25:37,035 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | GuardrailsAgent/safety_check | Tokens: 421 (364+57) | Cost: $0.000267 | Latency: 1359.54ms
+2026-02-01 13:25:37,060 - agent_system - INFO - [GuardrailsAgent] Tool safety_check completed in 1424.84ms
+2026-02-01 13:25:37,067 - agent_system - INFO - [GuardrailsAgent] Decision: AUTO_RESPOND | Reasoning: Safe (LLM): The response provides a detailed analysis of the billing issue and offers actionable steps to resolve it.
+2026-02-01 13:25:37,069 - agent_system - INFO - [GuardrailsAgent] guardrails_auto_respond
+2026-02-01 13:25:37,072 - agent_system - INFO - [System] ticket_processed
+2026-02-01 13:25:37,091 - agent_system - INFO - [MemoryAgent] Tool call: memory_save
+2026-02-01 13:25:38,150 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:25:38,168 - mem0.memory.main - INFO - Total existing memories: 0
+2026-02-01 13:25:40,686 - agent_system - INFO - [MemoryAgent] Tool memory_save completed in 3595.14ms
+2026-02-01 13:25:40,687 - agent_system - INFO - [MemoryAgent] memory_saved
+2026-02-01 13:25:41,477 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:26:42,859 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:34:14,503 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:34:20,449 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:34:22,723 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:34:36,812 - agent_system - INFO - [System] ticket_received
+2026-02-01 13:34:36,835 - agent_system - INFO - [IngestionAgent] Tool call: ticket_ingestion
+2026-02-01 13:34:36,837 - agent_system - INFO - [IngestionAgent] Tool ticket_ingestion completed in 1.79ms
+2026-02-01 13:34:36,842 - agent_system - INFO - [IngestionAgent] ticket_ingested
+2026-02-01 13:34:36,854 - agent_system - INFO - [PlannerAgent] Tool call: execution_planning
+2026-02-01 13:34:39,336 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:34:39,349 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | PlannerAgent/execution_planning | Tokens: 333 (235+98) | Cost: $0.000264 | Latency: 2449.70ms
+2026-02-01 13:34:39,367 - agent_system - INFO - [PlannerAgent] Tool execution_planning completed in 2513.42ms
+2026-02-01 13:34:39,368 - agent_system - INFO - [PlannerAgent] Decision: strategy_parallel_simple | Reasoning: This is a simple request that can be handled in parallel. It requires checking the historical ticketing system for the number of times the user has created tickets related to 'killing'. (via LLM)
+2026-02-01 13:34:39,369 - agent_system - INFO - [PlannerAgent] strategy_planned
+2026-02-01 13:34:39,373 - agent_system - INFO - [IntentAgent] Tool call: intent_classification
+2026-02-01 13:34:39,385 - agent_system - INFO - [MemoryAgent] Tool call: memory_load
+2026-02-01 13:34:39,395 - agent_system - INFO - [RetrievalAgent] Tool call: document_retrieval
+2026-02-01 13:34:39,934 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:34:39,946 - agent_system - INFO - [RetrievalAgent] Tool document_retrieval completed in 551.36ms
+2026-02-01 13:34:39,947 - agent_system - INFO - [RetrievalAgent] retrieved_3_docs
+2026-02-01 13:34:40,403 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:34:40,411 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | IntentAgent/intent_classification | Tokens: 254 (211+43) | Cost: $0.000170 | Latency: 1013.73ms
+2026-02-01 13:34:40,426 - agent_system - INFO - [IntentAgent] Tool intent_classification completed in 1053.27ms
+2026-02-01 13:34:40,429 - agent_system - INFO - [IntentAgent] Decision: Classified as LOW | Reasoning: general inquiry about ticket creation history (via LLM)
+2026-02-01 13:34:40,432 - agent_system - INFO - [IntentAgent] classified_low
+2026-02-01 13:34:40,852 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:34:42,348 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:34:43,862 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:34:44,657 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:34:44,661 - mem0.memory.main - INFO - Total existing memories: 0
+2026-02-01 13:34:45,996 - agent_system - INFO - [MemoryAgent] Tool memory_load completed in 6610.61ms
+2026-02-01 13:34:45,997 - agent_system - INFO - [MemoryAgent] memory_loaded
+2026-02-01 13:34:47,648 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:34:49,639 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:34:49,671 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | ReasoningAgent/root_cause_analysis | Tokens: 361 (250+111) | Cost: $0.000291 | Latency: 1920.14ms
+2026-02-01 13:34:49,736 - agent_system - INFO - [ReasoningAgent] Decision: analysis_user_error | Reasoning: The user's query seems to be a misunderstanding or error in creating tickets related to killing. The context provided does not indicate any technical issue or system bug. A user training session on the correct ticket creation process would be beneficial. (via LLM)
+2026-02-01 13:34:49,739 - agent_system - INFO - [ReasoningAgent] analysis_complete
+2026-02-01 13:34:51,302 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:34:51,307 - agent_system - INFO - [AI Metrics] LLM Call: gpt-3.5-turbo | ResponseAgent/response_generation | Tokens: 1170 (1070+100) | Cost: $0.000685 | Latency: 1538.69ms
+2026-02-01 13:34:51,329 - agent_system - INFO - [ResponseAgent] Tool call: response_generation
+2026-02-01 13:34:51,330 - agent_system - INFO - [ResponseAgent] Tool response_generation completed in 1.48ms
+2026-02-01 13:34:51,332 - agent_system - INFO - [ResponseAgent] response_generated
+2026-02-01 13:34:51,334 - agent_system - INFO - [GuardrailsAgent] Tool call: safety_check
+2026-02-01 13:34:51,335 - agent_system - INFO - [GuardrailsAgent] Tool safety_check completed in 1.11ms
+2026-02-01 13:34:51,335 - agent_system - INFO - [GuardrailsAgent] Decision: ESCALATE | Reasoning: Banned content pattern: \b(kill|destroy|attack|hurt|harm)\w*\b
+2026-02-01 13:34:51,338 - agent_system - INFO - [GuardrailsAgent] guardrails_escalate
+2026-02-01 13:34:51,341 - agent_system - INFO - [System] ticket_processed
+2026-02-01 13:34:51,358 - agent_system - INFO - [MemoryAgent] Tool call: memory_save
+2026-02-01 13:34:52,548 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:34:53,181 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:34:53,214 - mem0.memory.main - INFO - Total existing memories: 1
+2026-02-01 13:34:53,571 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:34:54,301 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-01 13:34:54,309 - mem0.memory.main - INFO - {'id': '0', 'text': 'Merchants are facing payment issues in USD', 'event': 'NONE'}
+2026-02-01 13:34:54,312 - mem0.memory.main - INFO - NOOP for Memory.
+2026-02-01 13:34:54,313 - mem0.memory.main - INFO - {'id': '1', 'text': 'Created two tickets related to payment issues: one about payments getting stuck in a dead queue and another regarding a currency mismatch', 'event': 'ADD'}
+2026-02-01 13:34:54,315 - mem0.vector_stores.chroma - INFO - Inserting 1 vectors into collection agent_memories
+2026-02-01 13:34:55,273 - agent_system - INFO - [MemoryAgent] Tool memory_save completed in 3915.22ms
+2026-02-01 13:34:55,276 - agent_system - INFO - [MemoryAgent] memory_saved
+2026-02-01 13:35:16,307 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:36:08,752 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:36:08,939 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:36:08,947 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:36:09,090 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-02-01 13:36:09,224 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"

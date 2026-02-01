@@ -336,8 +336,35 @@ class Mem0MemoryStorage:
             user_id = self._episodic_memory_user_prefix + "default"
             # Use provided limit or config default, but cap at reasonable max
             search_limit = limit if limit else config.MEM0_SEARCH_LIMIT * 10  # Allow more for get operations
-            # mem0.search() requires a query - use a broad query to get all episodic memories
-            memories = self.memory.search(query="incident", user_id=user_id, limit=min(search_limit, 1000))  # Cap at 1000
+            # mem0.search() requires a query - use multiple broad queries to get all episodic memories
+            # Try different queries to catch all memories
+            all_memories = []
+            queries = ["incident", "ticket", "issue", "problem", "error", "support", "request"]
+            seen_ids = set()
+            
+            for query in queries:
+                try:
+                    memories = self.memory.search(query=query, user_id=user_id, limit=min(search_limit, 1000))
+                    for m in memories:
+                        # Use memory content as unique identifier to avoid duplicates
+                        if isinstance(m, dict):
+                            mem_id = str(m.get("memory", "")) + str(m.get("metadata", {}).get("timestamp", ""))
+                            if mem_id not in seen_ids:
+                                seen_ids.add(mem_id)
+                                all_memories.append(m)
+                except Exception as e:
+                    print(f"[Mem0MemoryStorage] Search with query '{query}' failed: {e}")
+                    continue
+            
+            # If still no results, try with a very generic query
+            if not all_memories:
+                try:
+                    memories = self.memory.search(query="memory", user_id=user_id, limit=min(search_limit, 1000))
+                    all_memories = list(memories) if memories else []
+                except Exception as e:
+                    print(f"[Mem0MemoryStorage] Generic search failed: {e}")
+            
+            memories = all_memories[:min(search_limit, 1000)]  # Limit results
             # Convert to our format
             result = []
             for idx, m in enumerate(memories, 1):
@@ -445,8 +472,34 @@ class Mem0MemoryStorage:
                 # Get all semantic memories (less efficient)
                 user_id = self._semantic_memory_user_prefix + "document"  # Default
             # Use configurable limit, but allow more for get operations
-            # mem0.search() requires a query - use a broad query to get all semantic memories
-            memories = self.memory.search(query="document", user_id=user_id, limit=config.MEM0_SEARCH_LIMIT * 10)
+            # mem0.search() requires a query - use multiple broad queries to get all semantic memories
+            all_memories = []
+            queries = ["document", "content", "information", "knowledge", "data", "text", "memory"]
+            seen_ids = set()
+            
+            for query in queries:
+                try:
+                    memories = self.memory.search(query=query, user_id=user_id, limit=config.MEM0_SEARCH_LIMIT * 10)
+                    for m in memories:
+                        # Use memory content as unique identifier to avoid duplicates
+                        if isinstance(m, dict):
+                            mem_id = str(m.get("memory", "")) + str(m.get("metadata", {}).get("timestamp", ""))
+                            if mem_id not in seen_ids:
+                                seen_ids.add(mem_id)
+                                all_memories.append(m)
+                except Exception as e:
+                    print(f"[Mem0MemoryStorage] Search with query '{query}' failed: {e}")
+                    continue
+            
+            # If still no results, try with a very generic query
+            if not all_memories:
+                try:
+                    memories = self.memory.search(query="semantic", user_id=user_id, limit=config.MEM0_SEARCH_LIMIT * 10)
+                    all_memories = list(memories) if memories else []
+                except Exception as e:
+                    print(f"[Mem0MemoryStorage] Generic search failed: {e}")
+            
+            memories = all_memories[:config.MEM0_SEARCH_LIMIT * 10]  # Limit results
             result = []
             for idx, m in enumerate(memories, 1):
                 # Handle both dict and string responses
@@ -534,9 +587,9 @@ class MemoryStorage:
                 else:
                     self._impl = Mem0MemoryStorage()
                     self._using_mem0 = True
-                    print("[MemoryStorage] ✅ Using mem0 with semantic search capabilities")
+                    print("[MemoryStorage] [OK] Using mem0 with semantic search capabilities")
             except Exception as e:
-                print(f"[MemoryStorage] ⚠️  mem0 initialization failed: {e}")
+                print(f"[MemoryStorage] [WARNING] mem0 initialization failed: {e}")
                 if config.MEM0_FALLBACK_TO_JSON:
                     print("[MemoryStorage] Falling back to JSON storage")
                     self._impl = self._json_fallback

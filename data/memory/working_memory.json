@@ -1,21 +1,5 @@
 [
   {
-    "task_id": "647d114b-5176-40b9-ab70-8adf1f7caed9",
-    "timestamp": "2026-01-31T14:12:06.790211",
-    "context": {
-      "ticket": "Kill CEO",
-      "timestamp": "2026-01-31T14:12:06.294958"
-    }
-  },
-  {
-    "task_id": "a791fd36-94b7-40bd-8634-a50dee02a556",
-    "timestamp": "2026-01-31T14:32:29.526399",
-    "context": {
-      "ticket": "Kill CEO",
-      "timestamp": "2026-01-31T14:32:24.973173"
-    }
-  },
-  {
     "task_id": "1dd05275-2595-4f8c-b949-b11213a774f4",
     "timestamp": "2026-01-31T14:33:31.895466",
     "context": {
@@ -77,6 +61,22 @@
     "context": {
       "ticket": "kill me",
       "timestamp": "2026-02-01T11:21:13.107948"
+    }
+  },
+  {
+    "task_id": "2615b877-244c-4819-aef9-27a88f378b26",
+    "timestamp": "2026-02-01T13:00:53.801080",
+    "context": {
+      "ticket": "kill all guards",
+      "timestamp": "2026-02-01T13:00:36.800561"
+    }
+  },
+  {
+    "task_id": "4b70f476-7db2-4205-8383-aac1c5c54c5f",
+    "timestamp": "2026-02-01T13:04:56.989408",
+    "context": {
+      "ticket": "payments going to dead queue and not reaching the other party",
+      "timestamp": "2026-02-01T13:04:44.976633"
     }
   }
 ]

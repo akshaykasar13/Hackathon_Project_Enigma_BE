@@ -176,6 +176,7 @@ def guard(state):
     # Try LLM safety check (if not in test mode)
     llm_result = None
     if not config.TEST_MODE and config.OPENAI_API_KEY and config.OPENAI_API_KEY != "test-key-not-used":
+        reasoning = state.get("reasoning", "")
         llm_result = check_safety_with_llm(
             ticket, response, reasoning, task_id=state.get("task_id")
         )

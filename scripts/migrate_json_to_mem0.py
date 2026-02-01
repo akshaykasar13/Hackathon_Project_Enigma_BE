@@ -249,7 +249,7 @@ def main():
     print("  3. Migrate to mem0")
     print("  4. Verify migration")
     print("  5. Test search quality improvement")
-    print("\n⚠️  Original JSON files will be preserved as backup")
+    print("\n[NOTE] Original JSON files will be preserved as backup")
     print("=" * 60)
     
     response = input("\nProceed with migration? (yes/no): ")

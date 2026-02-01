@@ -58,15 +58,35 @@ class ObservableChatOpenAI(ChatOpenAI):
                 prompt_tokens = len(prompt_text) // 4
             
             if completion_tokens == 0 and result.generations:
-                response_text = result.generations[0][0].text if result.generations[0] else ""
-                completion_tokens = len(response_text) // 4
+                # Handle different structures: result.generations can be list of lists or list of ChatGeneration
+                try:
+                    if result.generations[0] and isinstance(result.generations[0], list):
+                        response_text = result.generations[0][0].text if result.generations[0] else ""
+                    elif result.generations[0] and hasattr(result.generations[0], 'text'):
+                        response_text = result.generations[0].text
+                    else:
+                        response_text = str(result.generations[0]) if result.generations[0] else ""
+                    completion_tokens = len(response_text) // 4
+                except (IndexError, AttributeError, TypeError):
+                    completion_tokens = 0
             
             latency_ms = (time.time() - start_time) * 1000
             
             # Track the call
             response_preview = None
-            if result.generations and result.generations[0]:
-                response_preview = result.generations[0][0].text if hasattr(result.generations[0][0], 'text') else str(result.generations[0][0])
+            if result.generations:
+                try:
+                    # Handle different structures
+                    if result.generations[0] and isinstance(result.generations[0], list):
+                        if result.generations[0][0]:
+                            gen = result.generations[0][0]
+                            response_preview = gen.text if hasattr(gen, 'text') else str(gen)
+                    elif result.generations[0] and hasattr(result.generations[0], 'text'):
+                        response_preview = result.generations[0].text
+                    elif result.generations[0]:
+                        response_preview = str(result.generations[0])
+                except (IndexError, AttributeError, TypeError):
+                    response_preview = None
             
             ai_metrics.track_llm_call(
                 model=self.model_name,
