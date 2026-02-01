@@ -3,22 +3,25 @@ Intent agent for understanding user intent.
 Uses OpenAI LLM for intelligent classification with rule-based fallback.
 """
 import logging
+from typing import Optional
 from backend import config
 from backend.observability import observability
 
 logger = logging.getLogger("agent_system")
 
 
-def classify_with_llm(text: str) -> dict:
+def classify_with_llm(text: str, task_id: Optional[str] = None) -> dict:
     """Use OpenAI LLM to classify ticket intent, urgency, and priority."""
     try:
-        from langchain_openai import ChatOpenAI
+        from backend.observability import create_observable_llm
         from langchain_core.prompts import ChatPromptTemplate
         
-        llm = ChatOpenAI(
+        llm = create_observable_llm(
+            agent_name="IntentAgent",
+            operation="intent_classification",
+            task_id=task_id,
             model="gpt-3.5-turbo",
-            temperature=0,
-            openai_api_key=config.OPENAI_API_KEY
+            temperature=0
         )
         
         prompt = ChatPromptTemplate.from_messages([
@@ -123,7 +126,7 @@ def classify(state):
         # Try LLM classification first (if not in test mode)
         result = None
         if not config.TEST_MODE and config.OPENAI_API_KEY and config.OPENAI_API_KEY != "test-key-not-used":
-            result = classify_with_llm(text)
+            result = classify_with_llm(text, task_id=state.get("task_id"))
         
         # Fallback to rules if LLM failed or in test mode
         if not result:

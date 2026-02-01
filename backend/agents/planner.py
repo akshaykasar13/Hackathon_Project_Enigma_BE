@@ -3,22 +3,25 @@ Planner agent for task planning and orchestration.
 Uses OpenAI LLM for intelligent strategy planning with rule-based fallback.
 """
 import logging
+from typing import Optional
 from backend import config
 from backend.observability import observability
 
 logger = logging.getLogger("agent_system")
 
 
-def plan_with_llm(ticket: str) -> dict:
+def plan_with_llm(ticket: str, task_id: Optional[str] = None) -> dict:
     """Use OpenAI LLM to plan execution strategy."""
     try:
-        from langchain_openai import ChatOpenAI
+        from backend.observability import create_observable_llm
         from langchain_core.prompts import ChatPromptTemplate
         
-        llm = ChatOpenAI(
+        llm = create_observable_llm(
+            agent_name="PlannerAgent",
+            operation="execution_planning",
+            task_id=task_id,
             model="gpt-3.5-turbo",
-            temperature=0,
-            openai_api_key=config.OPENAI_API_KEY
+            temperature=0
         )
         
         prompt = ChatPromptTemplate.from_messages([
@@ -120,7 +123,7 @@ def plan(state):
     # Try LLM planning first (if not in test mode)
     result = None
     if not config.TEST_MODE and config.OPENAI_API_KEY and config.OPENAI_API_KEY != "test-key-not-used":
-        result = plan_with_llm(ticket)
+        result = plan_with_llm(ticket, task_id=state.get("task_id"))
     
     # Fallback to rules if LLM failed or in test mode
     if not result:

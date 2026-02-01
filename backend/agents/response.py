@@ -10,13 +10,15 @@ logger = logging.getLogger("agent_system")
 def generate_response_with_llm(state):
     """Generate response using LLM (OpenAI). Retries up to MAX_LLM_RETRIES on failure."""
     try:
-        from langchain_openai import ChatOpenAI
+        from backend.observability import create_observable_llm
         from langchain_core.prompts import ChatPromptTemplate
         
-        llm = ChatOpenAI(
+        llm = create_observable_llm(
+            agent_name="ResponseAgent",
+            operation="response_generation",
+            task_id=state.get("task_id"),
             model="gpt-3.5-turbo",
-            temperature=0.7,
-            openai_api_key=config.OPENAI_API_KEY
+            temperature=0.7
         )
         
         ticket = state.get("ticket", "")

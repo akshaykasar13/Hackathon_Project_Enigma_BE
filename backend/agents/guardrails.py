@@ -5,6 +5,7 @@ Handles: violence, self-harm, sexual content, hate speech, jailbreak attempts.
 """
 import logging
 import re
+from typing import Optional
 
 from backend import config
 
@@ -66,16 +67,18 @@ def calculate_confidence(state):
     return min(confidence, 1.0)
 
 
-def check_safety_with_llm(ticket: str, response: str, reasoning: str) -> dict:
+def check_safety_with_llm(ticket: str, response: str, reasoning: str, task_id: Optional[str] = None) -> dict:
     """Use OpenAI LLM for nuanced safety and quality assessment."""
     try:
-        from langchain_openai import ChatOpenAI
+        from backend.observability import create_observable_llm
         from langchain_core.prompts import ChatPromptTemplate
 
-        llm = ChatOpenAI(
+        llm = create_observable_llm(
+            agent_name="GuardrailsAgent",
+            operation="safety_check",
+            task_id=task_id,
             model="gpt-3.5-turbo",
-            temperature=0,
-            openai_api_key=config.OPENAI_API_KEY
+            temperature=0
         )
 
         prompt = ChatPromptTemplate.from_messages([
@@ -174,7 +177,7 @@ def guard(state):
     llm_result = None
     if not config.TEST_MODE and config.OPENAI_API_KEY and config.OPENAI_API_KEY != "test-key-not-used":
         llm_result = check_safety_with_llm(
-            ticket, response, state.get("reasoning", "")
+            ticket, response, reasoning, task_id=state.get("task_id")
         )
 
     CONFIDENCE_THRESHOLD = 0.6

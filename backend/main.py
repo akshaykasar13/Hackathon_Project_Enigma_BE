@@ -374,6 +374,42 @@ def get_tool_calls(agent_name: Optional[str] = None, task_id: Optional[str] = No
         "total": len(observability.tool_calls)
     }
 
+# AI Metrics Endpoints
+@app.get("/observability/ai-metrics/summary")
+def get_ai_metrics_summary(days: int = 1):
+    """Get AI metrics summary for the last N days."""
+    from backend.observability import ai_metrics
+    return ai_metrics.get_summary(days=days)
+
+@app.get("/observability/ai-metrics/llm-calls")
+def get_ai_llm_calls(limit: int = 100, task_id: Optional[str] = None):
+    """Get recent LLM calls with token usage and costs."""
+    from backend.observability import ai_metrics
+    return {
+        "llm_calls": ai_metrics.get_recent_llm_calls(limit=limit, task_id=task_id),
+        "total": len(ai_metrics.llm_calls)
+    }
+
+@app.get("/observability/ai-metrics/embedding-calls")
+def get_ai_embedding_calls(limit: int = 100):
+    """Get recent embedding calls."""
+    from backend.observability import ai_metrics
+    return {
+        "embedding_calls": ai_metrics.get_recent_embedding_calls(limit=limit),
+        "total": len(ai_metrics.embedding_calls)
+    }
+
+@app.get("/observability/ai-metrics/export")
+def export_ai_metrics(days: int = 30):
+    """Export AI metrics to JSON (returns data, doesn't create file)."""
+    from backend.observability import ai_metrics
+    return {
+        "summary": ai_metrics.get_summary(days=days),
+        "recent_llm_calls": ai_metrics.get_recent_llm_calls(limit=1000),
+        "recent_embedding_calls": ai_metrics.get_recent_embedding_calls(limit=1000),
+        "exported_at": datetime.now().isoformat()
+    }
+
 # Memory Management Endpoints
 @app.get("/memory/episodic")
 def get_episodic_memory(limit: Optional[int] = None):

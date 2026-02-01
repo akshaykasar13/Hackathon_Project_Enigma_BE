@@ -3,6 +3,7 @@ Reasoning agent for logical reasoning and problem-solving.
 Uses OpenAI LLM for root cause analysis and semantic similarity for correlation.
 """
 import logging
+from typing import Optional
 from backend import config
 from backend.memory.storage import memory_storage
 
@@ -196,16 +197,18 @@ def identify_patterns(ticket, past_incidents, correlations):
     
     return patterns
 
-def analyze_with_llm(ticket: str, correlations: list, patterns: list, retrieved_docs: list, past_incidents: list) -> dict:
+def analyze_with_llm(ticket: str, correlations: list, patterns: list, retrieved_docs: list, past_incidents: list, task_id: Optional[str] = None) -> dict:
     """Use OpenAI LLM for deep root cause analysis and recommendations."""
     try:
-        from langchain_openai import ChatOpenAI
+        from backend.observability import create_observable_llm
         from langchain_core.prompts import ChatPromptTemplate
         
-        llm = ChatOpenAI(
+        llm = create_observable_llm(
+            agent_name="ReasoningAgent",
+            operation="root_cause_analysis",
+            task_id=task_id,
             model="gpt-3.5-turbo",
-            temperature=0.3,
-            openai_api_key=config.OPENAI_API_KEY
+            temperature=0.3
         )
         
         # Build context for LLM
@@ -331,7 +334,7 @@ def reason(state):
     # Use LLM for deep analysis (if available)
     llm_analysis = None
     if not config.TEST_MODE and config.OPENAI_API_KEY and config.OPENAI_API_KEY != "test-key-not-used":
-        llm_analysis = analyze_with_llm(ticket, correlations, patterns, retrieved_docs, past_incidents)
+        llm_analysis = analyze_with_llm(ticket, correlations, patterns, retrieved_docs, past_incidents, task_id=state.get("task_id"))
     
     # Fallback to rules if LLM failed
     if not llm_analysis:
